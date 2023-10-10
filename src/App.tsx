@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { createGlobalStyle } from "styled-components";
+import Home from "./components/Home";
+import Navigation from "./components/Navigation";
 
-function App() {
+const GlobalStyle = createGlobalStyle`
+  * { margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 1500px;
+  margin: auto;
+  }
+`;
+
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <GlobalStyle></GlobalStyle>
+      <Navigation></Navigation>
+      <Home></Home>
     </div>
   );
-}
+};
 
 export default App;
