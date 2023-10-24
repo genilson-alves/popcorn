@@ -1,5 +1,39 @@
 import styled from "styled-components";
 
+import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle`
+  * { 
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Overpass', sans-serif;
+  }
+
+  body {
+    color: black;
+    background-color: #edede9;    
+  }
+`;
+
+export const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: blue;
+  font-size: 2rem;
+`;
+
+export const Error = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: red;
+  font-size: 2rem;
+`;
+
 export const Navigation = styled.nav`
   display: flex;
   align-items: center;
@@ -52,32 +86,54 @@ export const Link = styled.a`
 `;
 
 export const Something = styled.div`
-  margin: 40px auto;
+  display: flex;
+  margin: auto;
   padding: 50px;
   border-radius: 40px;
-  background-color: pink;
-  width: 50vw;
-  height: 50vh;
 `;
 
 export const Poster = styled.div`
-  border-radius: 5px;
+  flex: 1;
   img {
+    width: 100%;
+    border-radius: 10px;
   }
 `;
 
-export const Overview = styled.div``;
+export const Overview = styled.div`
+  flex: 4;
+  margin: 0px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+`;
 
-export const Title = styled.div``;
+export const Information = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const Title = styled.div`
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0077b6;
+`;
 
 export const Synopsis = styled.div``;
 
 export const ReleaseDate = styled.div``;
 
-export const Score = styled.div``;
-
-export const Rating = styled.div``;
-
-export const RatingNumber = styled.div``;
+export const Score = styled.div`
+  font-weight: bold;
+  background-color: #06d6a0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  width: 70px;
+  height: 70px;
+  gap: 20px;
+  border-radius: 10px;
+`;
 
 export const Footer = styled.footer``;
