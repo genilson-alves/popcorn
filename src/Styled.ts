@@ -11,27 +11,15 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    color: black;
     background-color: #edede9;    
   }
 `;
 
-export const Loading = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: blue;
-  font-size: 2rem;
-`;
-
-export const Error = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  color: red;
-  font-size: 2rem;
+export const Logo = styled.div`
+  padding: 25px;
+  img {
+    max-width: 90px;
+  }
 `;
 
 export const Navigation = styled.nav`
@@ -55,27 +43,7 @@ export const NavigationLinks = styled.div`
   flex: 1;
 `;
 
-export const Content = styled.main`
-  max-width: 1700px;
-  margin: auto;
-`;
-
-export const Logo = styled.div`
-  padding: 25px;
-  img {
-    max-width: 90px;
-  }
-`;
-
-export const Media = styled.div`
-  display: inherit;
-`;
-
-export const User = styled.div`
-  display: inherit;
-`;
-
-export const Link = styled.a`
+export const NavigationLink = styled.a`
   font-size: 1rem;
   color: #ced4da;
   padding: 25px;
@@ -85,14 +53,46 @@ export const Link = styled.a`
   }
 `;
 
-export const Something = styled.div`
+export const NavigationOptions = styled.div`
+  display: inherit;
+`;
+
+export const NavigationUser = styled.div`
+  display: inherit;
+`;
+
+export const Loading = styled.div`
+  text-align: center;
+  margin: 50px;
+  color: blue;
+  font-size: 1.5rem;
+`;
+
+export const Error = styled.div`
+  text-align: center;
+  margin: 50px;
+  color: red;
+  font-size: 1.5rem;
+`;
+
+export const Main = styled.main`
+  max-width: 1700px;
+  margin: auto;
+`;
+
+export const FeaturedMovies = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const FeaturedContent = styled.div`
   display: flex;
   margin: auto;
   padding: 50px;
   border-radius: 40px;
 `;
 
-export const Poster = styled.div`
+export const FeaturedPoster = styled.div`
   flex: 1;
   img {
     width: 100%;
@@ -100,7 +100,7 @@ export const Poster = styled.div`
   }
 `;
 
-export const Overview = styled.div`
+export const FeaturedOverview = styled.div`
   flex: 4;
   margin: 0px 30px;
   display: flex;
@@ -108,20 +108,20 @@ export const Overview = styled.div`
   gap: 30px;
 `;
 
-export const Information = styled.div`
+export const FeaturedInformation = styled.div`
   display: flex;
   justify-content: space-between;
 `;
 
-export const Title = styled.div`
+export const FeaturedTitle = styled.div`
   font-size: 2rem;
   font-weight: bold;
   color: #0077b6;
 `;
 
-export const Synopsis = styled.div``;
+export const FeaturedSynopsis = styled.div``;
 
-export const ReleaseDate = styled.div``;
+export const FeaturedReleaseDate = styled.div``;
 
 export const Score = styled.div`
   font-weight: bold;
@@ -136,4 +136,42 @@ export const Score = styled.div`
   border-radius: 10px;
 `;
 
-export const Footer = styled.footer``;
+export const Title = styled.div``;
+export const Poster = styled.div`
+  width: 15vh;
+  img {
+    border-radius: 7px;
+    width: 100%;
+  }
+`;
+
+export const SectionTitle = styled.div`
+  margin: 10px 30px;
+  h1 {
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+`;
+
+export const Popular = styled.div``;
+
+export const UpcomingContainer = styled.div`
+  display: flex;
+  margin: 0px 30px;
+  flex-direction: row;
+  gap: 20px;
+  overflow: scroll;
+`;
+
+export const Upcoming = styled.div`
+  padding: 15px 0px;
+`;
+
+export const Airing = styled.div``;
+
+export const Footer = styled.footer`
+  background-color: black;
+  height: 300px;
+  padding: 30px;
+  color: white;
+`;
