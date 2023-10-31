@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import * as Styled from "../Styled";
 
 const logo = require("../assets/logo.png");
+const previous = require("../assets/previous.png");
+const next = require("../assets/next.png");
 
 type Movies = {
   poster_path: string;
@@ -51,14 +53,6 @@ const Home: React.FC = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_GET_OPTIONS = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${process.env.REACT_APP_MOVIES_API_KEY}`,
-    },
-  };
-
   useEffect(() => {
     setLoading(true);
     setError(null);
@@ -90,6 +84,29 @@ const Home: React.FC = () => {
     setLoading(false);
   }, []);
 
+  const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
+
+  const handleNextMovie = () => {
+    setCurrentMovieIndex(
+      (prevIndex) => (prevIndex + 1) % MOVIES_AIRING_DATA.length
+    );
+  };
+
+  const handlePreviousMovie = () => {
+    setCurrentMovieIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + MOVIES_AIRING_DATA.length) % MOVIES_AIRING_DATA.length
+    );
+  };
+
+  const API_GET_OPTIONS = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.REACT_APP_MOVIES_API_KEY}`,
+    },
+  };
+
   return (
     <div>
       <NavigationComponent></NavigationComponent>
@@ -98,30 +115,44 @@ const Home: React.FC = () => {
         {error && <Styled.Error>ERROR: {error}</Styled.Error>}
         {MOVIES_AIRING_DATA.length > 0 && (
           <Styled.FeaturedMovies>
-            {MOVIES_AIRING_DATA.map((movie) => (
-              <Styled.FeaturedContent key={movie.id}>
-                <Styled.FeaturedPoster>
-                  <img
-                    src={`https://www.themoviedb.org/t/p/original${movie.poster_path}`}
-                    alt={movie.title}
-                  ></img>
-                </Styled.FeaturedPoster>
-                <Styled.FeaturedOverview>
-                  <Styled.FeaturedInformation>
-                    <Styled.FeaturedTitle>{movie.title}</Styled.FeaturedTitle>
-                    <Styled.Score>{movie.vote_average.toFixed(1)}</Styled.Score>
-                  </Styled.FeaturedInformation>
-                  <Styled.FeaturedReleaseDate>
-                    <h3>Release Date:</h3>
-                    {movie.release_date}
-                  </Styled.FeaturedReleaseDate>
-                  <Styled.FeaturedSynopsis>
-                    <h3>Synopsis:</h3>
-                    {movie.overview}
-                  </Styled.FeaturedSynopsis>
-                </Styled.FeaturedOverview>
-              </Styled.FeaturedContent>
-            ))}
+            {currentMovieIndex > 0 && (
+              <Styled.NextPrevious onClick={handlePreviousMovie}>
+                <img src={previous} alt="previous" />
+              </Styled.NextPrevious>
+            )}
+            <Styled.FeaturedContent
+              key={MOVIES_AIRING_DATA[currentMovieIndex].id}
+            >
+              <Styled.FeaturedPoster>
+                <img
+                  src={`https://www.themoviedb.org/t/p/original${MOVIES_AIRING_DATA[currentMovieIndex].poster_path}`}
+                  alt={MOVIES_AIRING_DATA[currentMovieIndex].title}
+                ></img>
+              </Styled.FeaturedPoster>
+              <Styled.FeaturedOverview>
+                <Styled.FeaturedInformation>
+                  <Styled.FeaturedTitle>
+                    {MOVIES_AIRING_DATA[currentMovieIndex].title}
+                  </Styled.FeaturedTitle>
+                  <Styled.Score>
+                    {MOVIES_AIRING_DATA[currentMovieIndex].vote_average.toFixed(
+                      1
+                    )}
+                  </Styled.Score>
+                </Styled.FeaturedInformation>
+                <Styled.FeaturedReleaseDate>
+                  <h3>Release Date:</h3>
+                  {MOVIES_AIRING_DATA[currentMovieIndex].release_date}
+                </Styled.FeaturedReleaseDate>
+                <Styled.FeaturedSynopsis>
+                  <h3>Synopsis:</h3>
+                  {MOVIES_AIRING_DATA[currentMovieIndex].overview}
+                </Styled.FeaturedSynopsis>
+              </Styled.FeaturedOverview>
+            </Styled.FeaturedContent>
+            <Styled.NextPrevious onClick={handleNextMovie}>
+              <img src={next} alt="next" />
+            </Styled.NextPrevious>
           </Styled.FeaturedMovies>
         )}
         {MOVIES_UPCOMING_DATA.length > 0 && (

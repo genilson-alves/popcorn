@@ -76,33 +76,43 @@ export const Error = styled.div`
 `;
 
 export const Main = styled.main`
-  max-width: 1700px;
+  max-width: 1800px;
   margin: auto;
 `;
 
 export const FeaturedMovies = styled.div`
   display: flex;
-  flex-direction: row;
 `;
 
 export const FeaturedContent = styled.div`
   display: flex;
-  margin: auto;
   padding: 50px;
-  border-radius: 40px;
+  width: 100%;
+`;
+
+export const NextPrevious = styled.button`
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  position: relative;
+  img {
+    width: 50px;
+  }
+  & :hover {
+    background-color: purple;
+  }
 `;
 
 export const FeaturedPoster = styled.div`
-  flex: 1;
   img {
-    width: 100%;
+    width: 30vh;
     border-radius: 10px;
   }
 `;
 
 export const FeaturedOverview = styled.div`
-  flex: 4;
   margin: 0px 30px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -115,11 +125,14 @@ export const FeaturedInformation = styled.div`
 
 export const FeaturedTitle = styled.div`
   font-size: 2rem;
+  margin-top: 10px;
   font-weight: bold;
   color: #0077b6;
 `;
 
-export const FeaturedSynopsis = styled.div``;
+export const FeaturedSynopsis = styled.div`
+  width: 100%;
+`;
 
 export const FeaturedReleaseDate = styled.div``;
 
@@ -137,6 +150,7 @@ export const Score = styled.div`
 `;
 
 export const Title = styled.div``;
+
 export const Poster = styled.div`
   width: 15vh;
   img {
