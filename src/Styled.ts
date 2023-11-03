@@ -82,6 +82,7 @@ export const Main = styled.main`
 
 export const FeaturedMovies = styled.div`
   display: flex;
+  min-height: 700px;
 `;
 
 export const FeaturedContent = styled.div`
@@ -97,9 +98,6 @@ export const NextPrevious = styled.button`
   position: relative;
   img {
     width: 50px;
-  }
-  & :hover {
-    background-color: purple;
   }
 `;
 
@@ -149,21 +147,38 @@ export const Score = styled.div`
   border-radius: 10px;
 `;
 
-export const Title = styled.div``;
+export const Title = styled.div`
+  margin-top: 5px;
+`;
 
 export const Poster = styled.div`
-  width: 15vh;
+  width: 200px;
+  height: 300px;
   img {
     border-radius: 7px;
     width: 100%;
+    height: 100%;
   }
 `;
 
 export const SectionTitle = styled.div`
-  margin: 10px 30px;
+  margin: 10px 40px 0px 35px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
   h1 {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
     font-weight: bold;
+    color: #6c757d;
+  }
+`;
+
+export const ViewMore = styled.a`
+  text-decoration: none;
+  font-weight: 0.8rem;
+  color: #0077b6;
+  & :hover {
+    text-decoration: underline;
   }
 `;
 
@@ -184,8 +199,48 @@ export const Upcoming = styled.div`
 export const Airing = styled.div``;
 
 export const Footer = styled.footer`
-  background-color: black;
-  height: 300px;
-  padding: 30px;
-  color: white;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #0077b6;
+  margin-top: 50px;
+  color: #ced4da;
+  height: 200px;
+  div {
+    margin-top: 40px;
+    text-align: center;
+  }
+  h3 {
+    padding: 10px;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    li {
+    }
+    a {
+      text-decoration: none;
+      color: #ced4da;
+    }
+    & :hover {
+      text-decoration: underline;
+    }
+  }
 `;
+
+export const TopRated = styled.div``;
+
+export const TopRatedSeries = styled.div``;
+
+export const TopRatedMovies = styled.div``;
+
+export const TopRatedPoster = styled.div``;
+
+export const TopRatedRank = styled.div``;
+
+export const TopRatedScore = styled.div``;
+
+export const TopRatedCountry = styled.div``;
