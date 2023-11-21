@@ -14,13 +14,15 @@ type Movies = {
   release_date: string;
   vote_average: number;
   vote_count: number;
+  original_language: string;
 };
 
 type Series = {
   name: string;
-} & Omit<Movies, "title">;
+  origin_country: string[];
+} & Omit<Movies, "title" | "original_language">;
 
-const NavigationComponent = () => {
+export const NavigationComponent = () => {
   return (
     <Styled.NavigationWrapper>
       <Styled.Navigation>
@@ -50,9 +52,18 @@ const Home: React.FC = () => {
   const [ON_AIR_SERIES_DATA, setSeriesOnAir] = useState<Series[]>([]);
   const [POPULAR_SERIES_DATA, setSeriesPopular] = useState<Series[]>([]);
   const [TOP_SERIES_DATA, setSeriesTop] = useState<Series[]>([]);
+  const [topSelected, setTopSelected] = useState(true);
 
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const API_GET_OPTIONS = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.REACT_APP_MOVIES_API_KEY}`,
+    },
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -69,6 +80,7 @@ const Home: React.FC = () => {
       .then((response) => response.json())
       .then((response) => setMoviesTop(response.results))
       .catch((err) => setError(`ERROR 3 FETCHING : ${err}`));
+    console.log(TOP_MOVIES_DATA);
     fetch("https://api.themoviedb.org/3/tv/popular", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setSeriesPopular(response.results))
@@ -85,14 +97,6 @@ const Home: React.FC = () => {
     console.log(TOP_SERIES_DATA);
     setLoading(false);
   }, []);
-
-  const API_GET_OPTIONS = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${process.env.REACT_APP_MOVIES_API_KEY}`,
-    },
-  };
 
   const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
 
@@ -114,7 +118,7 @@ const Home: React.FC = () => {
     <div>
       <NavigationComponent></NavigationComponent>
       <Styled.Main>
-        {isLoading ?? <Styled.Loading>Loading...</Styled.Loading>}
+        {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
         {error && <Styled.Error>ERROR: {error}</Styled.Error>}
         {POPULAR_MOVIES_DATA.length > 0 && (
           <Styled.FeaturedMovies>
@@ -173,7 +177,6 @@ const Home: React.FC = () => {
                       alt={movie.title}
                     ></img>
                   </Styled.Poster>
-                  <Styled.Title>{movie.title}</Styled.Title>
                 </Styled.Upcoming>
               ))}
             </Styled.UpcomingContainer>
@@ -222,38 +225,78 @@ const Home: React.FC = () => {
           </div>
         )}
         {TOP_SERIES_DATA.length > 0 && TOP_MOVIES_DATA.length > 0 && (
-          <div>
-            <Styled.SectionTitle>
-              <h1>TOP</h1>
-              <Styled.ViewMore href="#">View More</Styled.ViewMore>
-            </Styled.SectionTitle>
-            <Styled.UpcomingContainer>
-              {TOP_SERIES_DATA.map((series) => (
-                <Styled.Upcoming key={series.id}>
-                  <Styled.Poster>
-                    <img
-                      src={`https://www.themoviedb.org/t/p/original${series.poster_path}`}
-                      alt={series.name}
-                    ></img>
-                  </Styled.Poster>
-                  <Styled.Title>{series.name}</Styled.Title>
-                </Styled.Upcoming>
-              ))}
-            </Styled.UpcomingContainer>
-            <Styled.UpcomingContainer>
-              {TOP_MOVIES_DATA.map((movies) => (
-                <Styled.Upcoming key={movies.id}>
-                  <Styled.Poster>
-                    <img
-                      src={`https://www.themoviedb.org/t/p/original${movies.poster_path}`}
-                      alt={movies.title}
-                    ></img>
-                  </Styled.Poster>
-                  <Styled.Title>{movies.title}</Styled.Title>
-                </Styled.Upcoming>
-              ))}
-            </Styled.UpcomingContainer>
-          </div>
+          <Styled.TopRatedWrapper>
+            <Styled.TopRatedInformation>
+              <span>Our top rated ranking</span>
+              <div>
+                <div>
+                  <h3>
+                    Want to see top rated
+                    {topSelected === true ? " series" : " movies"}?
+                  </h3>
+                  <button
+                    onClick={() => {
+                      setTopSelected(!topSelected);
+                    }}
+                  >
+                    {topSelected === true ? "Series" : "Movies"}
+                  </button>
+                </div>
+                <Styled.ViewMore href="#">View More</Styled.ViewMore>
+              </div>
+            </Styled.TopRatedInformation>
+            {topSelected === true ? (
+              <div>
+                {TOP_MOVIES_DATA.slice(0, 10).map((movies, index) => (
+                  <Styled.TopRated key={movies.id}>
+                    <Styled.TopRatedRank>#{index + 1}</Styled.TopRatedRank>
+                    <Styled.TopRatedOverviewWrapper>
+                      <Styled.TopRatedPoster>
+                        <img
+                          src={`https://www.themoviedb.org/t/p/original${movies.poster_path}`}
+                          alt={movies.title}
+                        ></img>
+                      </Styled.TopRatedPoster>
+                      <Styled.TopRatedTitle>
+                        {movies.title}
+                      </Styled.TopRatedTitle>
+                      <Styled.TopRatedCountry>
+                        {movies.original_language.toUpperCase()}
+                      </Styled.TopRatedCountry>
+                      <Styled.TopRatedScore>
+                        &#11088;
+                        {movies.vote_average.toFixed(1)}
+                      </Styled.TopRatedScore>
+                    </Styled.TopRatedOverviewWrapper>
+                  </Styled.TopRated>
+                ))}
+              </div>
+            ) : (
+              <div>
+                {TOP_SERIES_DATA.slice(0, 10).map((series, index) => (
+                  <Styled.TopRated key={series.id}>
+                    <Styled.TopRatedRank>#{index + 1}</Styled.TopRatedRank>
+                    <Styled.TopRatedOverviewWrapper>
+                      <Styled.TopRatedPoster>
+                        <img
+                          src={`https://www.themoviedb.org/t/p/original${series.poster_path}`}
+                          alt={series.name}
+                        ></img>
+                      </Styled.TopRatedPoster>
+                      <Styled.TopRatedTitle>{series.name}</Styled.TopRatedTitle>
+                      <Styled.TopRatedCountry>
+                        {series.origin_country[0]}
+                      </Styled.TopRatedCountry>
+                      <Styled.TopRatedScore>
+                        &#11088;
+                        {series.vote_average.toFixed(1)}
+                      </Styled.TopRatedScore>
+                    </Styled.TopRatedOverviewWrapper>
+                  </Styled.TopRated>
+                ))}
+              </div>
+            )}
+          </Styled.TopRatedWrapper>
         )}
       </Styled.Main>
       <Styled.Footer>

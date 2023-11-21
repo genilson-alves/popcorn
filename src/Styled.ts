@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { createGlobalStyle } from "styled-components";
 
@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: #edede9;    
+    background-color: #dee2e6;    
   }
 `;
 
@@ -50,6 +50,7 @@ export const NavigationLink = styled.a`
   text-decoration: none;
   &:hover {
     text-decoration: underline;
+    opacity: 0.8;
   }
 `;
 
@@ -177,8 +178,9 @@ export const ViewMore = styled.a`
   text-decoration: none;
   font-weight: 0.8rem;
   color: #0077b6;
-  & :hover {
+  &:hover {
     text-decoration: underline;
+    opacity: 0.8;
   }
 `;
 
@@ -189,7 +191,7 @@ export const UpcomingContainer = styled.div`
   margin: 0px 30px;
   flex-direction: row;
   gap: 20px;
-  overflow: scroll;
+  overflow: hidden;
 `;
 
 export const Upcoming = styled.div`
@@ -225,22 +227,294 @@ export const Footer = styled.footer`
       text-decoration: none;
       color: #ced4da;
     }
-    & :hover {
+    &:hover {
       text-decoration: underline;
     }
   }
 `;
 
-export const TopRated = styled.div``;
+export const TopRatedWrapper = styled.div`
+  width: 100%;
+`;
 
-export const TopRatedSeries = styled.div``;
+export const TopRatedInformation = styled.div`
+  text-align: center;
+  h2 {
+    flex: 1;
+  }
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 40px 0px 35px;
+    button {
+      margin: 0px 20px;
+      background-color: #0077b6;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 10px;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+  span {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6c757d;
+  }
+`;
 
-export const TopRatedMovies = styled.div``;
+export const TopRated = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px 40px;
+`;
 
-export const TopRatedPoster = styled.div``;
+export const TopRatedOverviewWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  border-radius: 5px;
+  padding: 0px 20px;
+  align-items: center;
+  background-color: #f8f9fa;
+  height: 100px;
+`;
 
-export const TopRatedRank = styled.div``;
+export const TopRatedRank = styled.div`
+  width: 50px;
+`;
 
-export const TopRatedScore = styled.div``;
+export const TopRatedPoster = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-right: 30px;
+  img {
+    height: 90px;
+    border-radius: 3px;
+  }
+`;
 
-export const TopRatedCountry = styled.div``;
+export const TopRatedTitle = styled.div`
+  flex: 3;
+  overflow: hidden;
+`;
+
+export const TopRatedCountry = styled.div`
+  flex: 1;
+`;
+
+export const TopRatedScore = styled.div`
+  flex: 1;
+`;
+
+/////////////////////// PAGE CSS ////////////////////////
+
+const CastTitle = css`
+  p {
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+`;
+
+export const WorkWrapper = styled.div`
+  margin-bottom: 20px;
+`;
+
+export const WorkContent = styled.div`
+  background-color: #f8f9fa;
+  padding-bottom: 20px;
+`;
+
+export const WorkBackground = styled.div`
+  height: 400px;
+  overflow: hidden;
+  img {
+    width: 100%;
+    filter: blur(3px);
+    transform: scale(1.1);
+  }
+`;
+
+export const WorkOverviewContent = styled.div`
+  display: flex;
+  max-width: 1500px;
+  margin: auto;
+`;
+
+export const WorkPoster = styled.div`
+  img {
+    height: 400px;
+    border-radius: 7px;
+    margin-top: -170px;
+    position: relative;
+  }
+`;
+
+export const WorkStatus = styled.div`
+  text-align: center;
+  background-color: #000;
+  padding: 10px;
+  color: white;
+  border-radius: 7px;
+`;
+
+export const WorkTitle = styled.div`
+  font-size: 2rem;
+`;
+
+export const WorkOriginalTitle = styled.div``;
+
+export const WorkOverview = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+`;
+
+export const WorkSynopsis = styled.div``;
+
+export const WorkGenres = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const WorkGenreTitle = styled.div`
+  background-color: #dee2e6;
+  padding: 8px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+`;
+
+export const WorkInformationWrapper = styled.div``;
+
+export const AllWorkInformationWrapper = styled.div`
+  max-width: 1500px;
+  margin: auto;
+  display: flex;
+`;
+
+export const AllWorkContentWrapper = styled.div`
+  flex: 5;
+`;
+
+export const WorkInformationLeftContentWrapper = styled.div`
+  margin-top: 20px;
+  background-color: black;
+`;
+
+export const WorkInformationLeftContentInformation = styled.div``;
+
+export const WorkInformationRightContentWrapper = styled.div``;
+
+export const WorkInformationRightContentInformationWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 50px;
+`;
+
+export const WorkInformationRightContentInformation = styled.div``;
+
+export const WorkInformationCast = styled.div`
+  display: flex;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  width: 350px;
+  height: 170px;
+  text-align: center;
+`;
+
+export const CastInformation = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 5px;
+`;
+
+export const CastName = styled.div`
+  ${CastTitle}
+`;
+
+export const CastCastCharacter = styled.div`
+  font-weight: bold;
+`;
+
+export const CastProfile = styled.div`
+  overflow: hidden;
+  width: 100px;
+  img {
+    border-radius: 5px;
+    height: 100%;
+  }
+`;
+
+export const CastCharacter = styled.div`
+  ${CastTitle}
+`;
+
+export const CastRole = styled.div`
+  ${CastTitle}
+`;
+
+export const PartTitle = styled.p`
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 15px;
+  font-style: italic;
+  color: #415a77;
+`;
+
+export const RightBarContentWrapper = styled.div`
+  flex: 1;
+  margin-top: 50px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
+
+export const RightBarContent = styled.div`
+  font-size: 0.9rem;
+  color: #415a77;
+  display: flex;
+  flex-direction: column;
+  p {
+    margin-bottom: 3px;
+  }
+  span {
+    margin-bottom: 3px;
+    color: black;
+  }
+  a {
+    text-decoration: none;
+    color: black;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+export const WorkInformationRightContentProductionWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0px 30px;
+  img {
+    width: 100px;
+  }
+  gap: 30px;
+`;
+
+export const ProductionCompanies = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  gap: 5px;
+`;
