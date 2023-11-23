@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
@@ -504,17 +503,31 @@ export const WorkInformationRightContentProductionWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 0px 30px;
+  gap: 30px;
   img {
     width: 100px;
   }
-  gap: 30px;
 `;
 
 export const ProductionCompanies = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-size: 0.8rem;
+  align-items: center;
   font-weight: bold;
-  gap: 5px;
+  gap: 15px;
+`;
+
+export const ShowAllCast = styled.div`
+  width: 100%;
+  text-align: center;
+  button {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+  }
 `;
