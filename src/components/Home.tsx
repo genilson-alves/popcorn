@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as Styled from "../Styled";
-
-const logo = require("../assets/logo.png");
+import { HomeNavigationBar } from "./NavigationBar";
+import { Link } from "react-router-dom";
 const previous = require("../assets/previous.png");
 const next = require("../assets/next.png");
 
@@ -21,29 +21,6 @@ type Series = {
   name: string;
   origin_country: string[];
 } & Omit<Movies, "title" | "original_language">;
-
-export const NavigationComponent = () => {
-  return (
-    <Styled.NavigationWrapper>
-      <Styled.Navigation>
-        <Styled.Logo>
-          <img src={logo} alt="logo" />
-        </Styled.Logo>
-        <Styled.NavigationLinks>
-          <Styled.NavigationOptions>
-            <Styled.NavigationLink href="#">Search</Styled.NavigationLink>
-            <Styled.NavigationLink href="#">Movies</Styled.NavigationLink>
-            <Styled.NavigationLink href="#">TV Series</Styled.NavigationLink>
-          </Styled.NavigationOptions>
-          <Styled.NavigationUser>
-            <Styled.NavigationLink href="#">Sign In</Styled.NavigationLink>
-            <Styled.NavigationLink href="#">Sign Up</Styled.NavigationLink>
-          </Styled.NavigationUser>
-        </Styled.NavigationLinks>
-      </Styled.Navigation>
-    </Styled.NavigationWrapper>
-  );
-};
 
 const Home: React.FC = () => {
   const [POPULAR_MOVIES_DATA, setMoviesPopular] = useState<Movies[]>([]);
@@ -80,7 +57,6 @@ const Home: React.FC = () => {
       .then((response) => response.json())
       .then((response) => setMoviesTop(response.results))
       .catch((err) => setError(`ERROR 3 FETCHING : ${err}`));
-    console.log(TOP_MOVIES_DATA);
     fetch("https://api.themoviedb.org/3/tv/popular", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setSeriesPopular(response.results))
@@ -89,12 +65,13 @@ const Home: React.FC = () => {
       .then((response) => response.json())
       .then((response) => setSeriesOnAir(response.results))
       .catch((err) => setError(`ERROR 5 FETCHING : ${err}`));
-
     fetch("https://api.themoviedb.org/3/tv/top_rated", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setSeriesTop(response.results))
       .catch((err) => setError(`ERROR 6 FETCHING : ${err}`));
+    console.log(UPCOMING_MOVIES_DATA);
     console.log(TOP_SERIES_DATA);
+
     setLoading(false);
   }, []);
 
@@ -116,7 +93,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <NavigationComponent></NavigationComponent>
+      <HomeNavigationBar></HomeNavigationBar>
       <Styled.Main>
         {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
         {error && <Styled.Error>ERROR: {error}</Styled.Error>}
@@ -139,7 +116,11 @@ const Home: React.FC = () => {
               <Styled.FeaturedOverview>
                 <Styled.FeaturedInformation>
                   <Styled.FeaturedTitle>
-                    {POPULAR_MOVIES_DATA[currentMovieIndex].title}
+                    <Styled.RouterLink
+                      to={`/movie/${POPULAR_MOVIES_DATA[currentMovieIndex].id}`}
+                    >
+                      {POPULAR_MOVIES_DATA[currentMovieIndex].title}
+                    </Styled.RouterLink>
                   </Styled.FeaturedTitle>
                   <Styled.Score>
                     {POPULAR_MOVIES_DATA[
@@ -177,6 +158,11 @@ const Home: React.FC = () => {
                       alt={movie.title}
                     ></img>
                   </Styled.Poster>
+                  <Styled.Title>
+                    <Styled.RouterLink to={`/movie/${movie.id}`}>
+                      {movie.title}
+                    </Styled.RouterLink>
+                  </Styled.Title>
                 </Styled.Upcoming>
               ))}
             </Styled.UpcomingContainer>
@@ -197,7 +183,11 @@ const Home: React.FC = () => {
                       alt={series.name}
                     ></img>
                   </Styled.Poster>
-                  <Styled.Title>{series.name}</Styled.Title>
+                  <Styled.Title>
+                    <Styled.RouterLink to={`/tv/${series.id}`}>
+                      {series.name}
+                    </Styled.RouterLink>
+                  </Styled.Title>
                 </Styled.Upcoming>
               ))}
             </Styled.UpcomingContainer>
@@ -218,7 +208,11 @@ const Home: React.FC = () => {
                       alt={series.name}
                     ></img>
                   </Styled.Poster>
-                  <Styled.Title>{series.name}</Styled.Title>
+                  <Styled.Title>
+                    <Styled.RouterLink to={`/tv/${series.id}`}>
+                      {series.name}
+                    </Styled.RouterLink>
+                  </Styled.Title>{" "}
                 </Styled.Upcoming>
               ))}
             </Styled.UpcomingContainer>
@@ -258,13 +252,14 @@ const Home: React.FC = () => {
                         ></img>
                       </Styled.TopRatedPoster>
                       <Styled.TopRatedTitle>
-                        {movies.title}
+                        <Styled.RouterLink to={`/movie/${movies.id}`}>
+                          {movies.title}
+                        </Styled.RouterLink>
                       </Styled.TopRatedTitle>
                       <Styled.TopRatedCountry>
                         {movies.original_language.toUpperCase()}
                       </Styled.TopRatedCountry>
                       <Styled.TopRatedScore>
-                        &#11088;
                         {movies.vote_average.toFixed(1)}
                       </Styled.TopRatedScore>
                     </Styled.TopRatedOverviewWrapper>
@@ -283,12 +278,15 @@ const Home: React.FC = () => {
                           alt={series.name}
                         ></img>
                       </Styled.TopRatedPoster>
-                      <Styled.TopRatedTitle>{series.name}</Styled.TopRatedTitle>
+                      <Styled.TopRatedTitle>
+                        <Styled.RouterLink to={`/tv/${series.id}`}>
+                          {series.name}
+                        </Styled.RouterLink>
+                      </Styled.TopRatedTitle>
                       <Styled.TopRatedCountry>
                         {series.origin_country[0]}
                       </Styled.TopRatedCountry>
                       <Styled.TopRatedScore>
-                        &#11088;
                         {series.vote_average.toFixed(1)}
                       </Styled.TopRatedScore>
                     </Styled.TopRatedOverviewWrapper>

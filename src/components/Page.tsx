@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import * as Styled from "../Styled";
-import NumberFormat from "react-number-format";
-const no_image = require("../assets/no_image.png");
+import { PageNavigationBar } from "./NavigationBar";
+import { useParams } from "react-router-dom";
+const no_image = require("../assets/no_image.jpg");
+const no_cast_image = require("../assets/no_cast_image.jpg");
 
 type WorkSeries = {
   backdrop_path: string;
@@ -93,12 +95,14 @@ type Cast = {
   };
 };
 
-const Page = () => {
+const Page = (props: any) => {
   const [workInformation, setWorkInformation] = useState<WorkSeries>();
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [workCast, setCast] = useState<Cast>();
   const [showAllCast, setShowAllCast] = useState<boolean>(false);
+  const workType = props.type;
+  const movieId = useParams();
 
   const API_GET_OPTIONS = {
     method: "GET",
@@ -111,11 +115,17 @@ const Page = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(`https://api.themoviedb.org/3/movie/496243`, API_GET_OPTIONS)
+    fetch(
+      `https://api.themoviedb.org/3/${workType}/${movieId.workId}`,
+      API_GET_OPTIONS
+    )
       .then((response) => response.json())
       .then((response) => setWorkInformation(response))
       .catch((err) => setError(`ERROR WHILE FETCHING: ${err}`));
-    fetch(`https://api.themoviedb.org/3/movie/496243/credits`, API_GET_OPTIONS)
+    fetch(
+      `https://api.themoviedb.org/3/${workType}/${movieId.workId}/credits`,
+      API_GET_OPTIONS
+    )
       .then((response) => response.json())
       .then((response) => setCast(response))
       .catch((err) => setError(`ERROR WHILE FETCHING: ${err}`));
@@ -127,6 +137,7 @@ const Page = () => {
 
   return (
     <div>
+      <PageNavigationBar></PageNavigationBar>
       {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
       {error && <Styled.Error>ERROR: {error}</Styled.Error>}
       {workInformation && workCast && (
@@ -195,7 +206,11 @@ const Page = () => {
                             <Styled.WorkInformationCast>
                               <Styled.CastProfile>
                                 <img
-                                  src={`https://www.themoviedb.org/t/p/original${season.poster_path}`}
+                                  src={
+                                    season.poster_path
+                                      ? `https://www.themoviedb.org/t/p/original${season.poster_path}`
+                                      : no_image
+                                  }
                                   alt={season.name}
                                 ></img>
                               </Styled.CastProfile>
@@ -228,7 +243,11 @@ const Page = () => {
                         <Styled.WorkInformationCast>
                           <Styled.CastProfile>
                             <img
-                              src={`https://www.themoviedb.org/t/p/original${cast.profile_path}`}
+                              src={
+                                cast.profile_path
+                                  ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                  : no_cast_image
+                              }
                               alt={cast.name}
                             ></img>
                           </Styled.CastProfile>
@@ -251,11 +270,17 @@ const Page = () => {
                     </Styled.WorkInformationRightContentInformation>
                   ))}
                 </Styled.WorkInformationRightContentInformationWrapper>
-                <Styled.ShowAllCast>
-                  <button onClick={() => setShowAllCast(!showAllCast)}>
-                    {showAllCast ? "Show Less" : "Show More"}
-                  </button>
-                </Styled.ShowAllCast>
+                {showAllCast && (
+                  <Styled.ShowAllCast>
+                    <button
+                      onClick={() => {
+                        setShowAllCast(!showAllCast);
+                      }}
+                    >
+                      {showAllCast ? "Show Less" : "Show More"}
+                    </button>
+                  </Styled.ShowAllCast>
+                )}
                 <Styled.PartTitle>Production Companies</Styled.PartTitle>
                 <Styled.WorkInformationRightContentProductionWrapper>
                   {Object.entries(workInformation.production_companies).map(

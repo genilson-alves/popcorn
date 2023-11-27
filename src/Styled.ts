@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { createGlobalStyle } from "styled-components";
+import { Link } from "react-router-dom";
 
 export const GlobalStyle = createGlobalStyle`
   * { 
@@ -12,53 +13,6 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background-color: #dee2e6;    
   }
-`;
-
-export const Logo = styled.div`
-  padding: 25px;
-  img {
-    max-width: 90px;
-  }
-`;
-
-export const Navigation = styled.nav`
-  display: flex;
-  align-items: center;
-  max-width: 1200px;
-  height: 100%;
-  margin: auto;
-`;
-
-export const NavigationWrapper = styled.div`
-  text-align: center;
-  background-color: #0077b6;
-  height: 7vh;
-`;
-
-export const NavigationLinks = styled.div`
-  display: inherit;
-  justify-content: space-around;
-  align-items: center;
-  flex: 1;
-`;
-
-export const NavigationLink = styled.a`
-  font-size: 1rem;
-  color: #ced4da;
-  padding: 25px;
-  text-decoration: none;
-  &:hover {
-    text-decoration: underline;
-    opacity: 0.8;
-  }
-`;
-
-export const NavigationOptions = styled.div`
-  display: inherit;
-`;
-
-export const NavigationUser = styled.div`
-  display: inherit;
 `;
 
 export const Loading = styled.div`
@@ -149,6 +103,7 @@ export const Score = styled.div`
 
 export const Title = styled.div`
   margin-top: 5px;
+  text-align: center;
 `;
 
 export const Poster = styled.div`
@@ -444,6 +399,8 @@ export const CastCastCharacter = styled.div`
 
 export const CastProfile = styled.div`
   overflow: hidden;
+  display: flex;
+  justify-content: center;
   width: 100px;
   img {
     border-radius: 5px;
@@ -523,11 +480,19 @@ export const ShowAllCast = styled.div`
   text-align: center;
   button {
     cursor: pointer;
-    background-color: black;
+    background-color: #415a77;
     color: white;
     font-size: 1rem;
     border: none;
     padding: 10px;
     border-radius: 10px;
+  }
+`;
+
+export const RouterLink = styled(Link)`
+  text-decoration: none;
+  color: #0077b6;
+  &:hover {
+    text-decoration: underline;
   }
 `;
