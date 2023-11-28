@@ -117,22 +117,21 @@ const PageNavigationWrapper = styled.div<{
 
 export const PageNavigationBar: React.FC = () => {
   const [visible, setVisible] = useState(true);
-  const [transparent, setTransparent] = useState(false);
+  const [transparent, setTransparent] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const handleScroll = () => {
     const currentScrollPos = window.scrollY;
-    const threshold = 400;
+    const threshold = 500;
     if (currentScrollPos > threshold) {
-      setTransparent(transparent);
-    } else {
       setTransparent(!transparent);
+    } else {
+      setTransparent(transparent);
     }
     if (prevScrollPos > currentScrollPos) {
       setVisible(true);
     } else {
       setVisible(false);
     }
-
     setPrevScrollPos(currentScrollPos);
   };
 
@@ -154,7 +153,7 @@ export const PageNavigationBar: React.FC = () => {
         <NavigationOptions>
           <NavigationLink href="#">Search</NavigationLink>
           <NavigationLink href="#">Movies</NavigationLink>
-          <NavigationLink href="#">TV Series</NavigationLink>
+          <NavigationLink href="#">TV</NavigationLink>
         </NavigationOptions>
         <NavigationUser>
           <NavigationLink href="#">Sign In</NavigationLink>

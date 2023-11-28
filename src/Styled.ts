@@ -496,3 +496,54 @@ export const RouterLink = styled(Link)`
     text-decoration: underline;
   }
 `;
+
+export const TypeModelWrapper = styled.div`
+  max-width: 1500px;
+  margin: auto;
+`;
+
+export const TypeModel = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px 50px;
+  padding: 30px 0px;
+`;
+
+export const TypeModelContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 250px;
+`;
+
+export const TypeModelPoster = styled.div`
+  img {
+    border-radius: 10px;
+    width: 100%;
+  }
+`;
+
+export const TypeModelRating = styled.div`
+  position: absolute;
+  margin: 5px 195px;
+  font-weight: bold;
+  background-color: #06d6a0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  border-radius: 8px;
+`;
+
+export const TypeModelTitle = styled.div`
+  text-align: center;
+  padding: 3px 10px;
+  a {
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as Styled from "../Styled";
 import { HomeNavigationBar } from "./NavigationBar";
-import { Link } from "react-router-dom";
 const previous = require("../assets/previous.png");
 const next = require("../assets/next.png");
 
@@ -123,9 +122,9 @@ const Home: React.FC = () => {
                     </Styled.RouterLink>
                   </Styled.FeaturedTitle>
                   <Styled.Score>
-                    {POPULAR_MOVIES_DATA[
-                      currentMovieIndex
-                    ].vote_average.toFixed(1)}
+                    {POPULAR_MOVIES_DATA[currentMovieIndex].vote_average
+                      .toFixed(1)
+                      .replace(".", "")}
                   </Styled.Score>
                 </Styled.FeaturedInformation>
                 <Styled.FeaturedReleaseDate>

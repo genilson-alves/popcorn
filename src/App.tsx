@@ -3,10 +3,12 @@ import { GlobalStyle } from "./Styled";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Page from "./components/Page";
 import Home from "./components/Home";
+import TypeModel from "./components/TypeModel";
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home></Home>,
+    element: <TypeModel></TypeModel>,
   },
   { path: "/tv/:workId", element: <Page type="tv"></Page> },
   { path: "/movie/:workId", element: <Page type="movie"></Page> },
