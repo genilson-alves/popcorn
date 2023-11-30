@@ -547,3 +547,59 @@ export const TypeModelTitle = styled.div`
     }
   }
 `;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0px 20px;
+`;
+
+export const PreviousButton = styled.button`
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  margin: 0px 5px;
+  border-radius: 5px;
+  padding: 10px;
+  &:hover {
+    background-color: #0077b6;
+    color: white;
+    transition: 0.5s;
+  }
+`;
+
+export const PaginationButtons = styled.button`
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: white;
+  margin: 0px 5px;
+  border-radius: 5px;
+  padding: 10px;
+  &:hover {
+    background-color: #0077b6;
+    color: white;
+    transition: 0.5s;
+  }
+`;
+
+export const CurrentPage = styled.button`
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #0077b6;
+  color: white;
+  margin: 0px 5px;
+  border-radius: 5px;
+  padding: 10px;
+`;
+
+export const PageTitle = styled.div`
+  text-align: center;
+  color: #0077b6;
+  margin: 30px 0px 0px;
+  font-size: 2rem;
+  font-weight: bold;
+`;

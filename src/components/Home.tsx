@@ -146,7 +146,9 @@ const Home: React.FC = () => {
           <div>
             <Styled.SectionTitle>
               <h1>UPCOMING MOVIES</h1>
-              <Styled.ViewMore href="#">View More</Styled.ViewMore>
+              <Styled.RouterLink to={`/movie/upcoming`}>
+                View More
+              </Styled.RouterLink>
             </Styled.SectionTitle>
             <Styled.UpcomingContainer>
               {UPCOMING_MOVIES_DATA.map((movie) => (
@@ -171,7 +173,9 @@ const Home: React.FC = () => {
           <div>
             <Styled.SectionTitle>
               <h1>POPULAR SERIES</h1>
-              <Styled.ViewMore href="#">View More</Styled.ViewMore>
+              <Styled.RouterLink to={`/tv/popular`}>
+                View More
+              </Styled.RouterLink>
             </Styled.SectionTitle>
             <Styled.UpcomingContainer>
               {POPULAR_SERIES_DATA.map((series) => (
@@ -196,7 +200,9 @@ const Home: React.FC = () => {
           <div>
             <Styled.SectionTitle>
               <h1>AIRING SERIES</h1>
-              <Styled.ViewMore href="#">View More</Styled.ViewMore>
+              <Styled.RouterLink to={`/tv/on_the_air`}>
+                View More
+              </Styled.RouterLink>
             </Styled.SectionTitle>
             <Styled.UpcomingContainer>
               {ON_AIR_SERIES_DATA.map((series) => (
@@ -211,7 +217,7 @@ const Home: React.FC = () => {
                     <Styled.RouterLink to={`/tv/${series.id}`}>
                       {series.name}
                     </Styled.RouterLink>
-                  </Styled.Title>{" "}
+                  </Styled.Title>
                 </Styled.Upcoming>
               ))}
             </Styled.UpcomingContainer>

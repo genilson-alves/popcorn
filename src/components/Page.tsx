@@ -235,7 +235,7 @@ const Page = (props: any) => {
                     </Styled.WorkInformationRightContentInformationWrapper>
                   </div>
                 )}
-                <Styled.PartTitle>Cast</Styled.PartTitle>
+                {workCast.cast[0] && <Styled.PartTitle>Cast</Styled.PartTitle>}
                 <Styled.WorkInformationRightContentInformationWrapper>
                   {Object.entries(workCast.cast).map(([key, cast], index) => (
                     <Styled.WorkInformationRightContentInformation key={key}>
@@ -368,20 +368,18 @@ const Page = (props: any) => {
                   </a>
                 </Styled.RightBarContent>
               )}
-              {workInformation.revenue && (
+              {workInformation.revenue > 0 && (
                 <Styled.RightBarContent>
                   <p>Budget</p>
                   <span>
-                    {workInformation.budget === 0
-                      ? "No Information"
-                      : workInformation.budget.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })}
+                    {workInformation.budget.toLocaleString("en-US", {
+                      style: "currency",
+                      currency: "USD",
+                    })}
                   </span>
                 </Styled.RightBarContent>
               )}
-              {workInformation.revenue && (
+              {workInformation.revenue > 0 && (
                 <Styled.RightBarContent>
                   <p>Revenue</p>
                   <span>
