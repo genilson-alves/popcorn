@@ -241,7 +241,11 @@ const Home: React.FC = () => {
                     {topSelected === true ? "Series" : "Movies"}
                   </button>
                 </div>
-                <Styled.ViewMore href="#">View More</Styled.ViewMore>
+                <Styled.RouterLink
+                  to={topSelected ? `/movie/top_rated` : `/tv/top_rated`}
+                >
+                  View More
+                </Styled.RouterLink>{" "}
               </div>
             </Styled.TopRatedInformation>
             {topSelected === true ? (

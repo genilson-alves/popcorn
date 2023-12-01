@@ -517,6 +517,7 @@ export const TypeModelContent = styled.div`
 `;
 
 export const TypeModelPoster = styled.div`
+  z-index: -1;
   img {
     border-radius: 10px;
     width: 100%;
@@ -528,6 +529,7 @@ export const TypeModelRating = styled.div`
   margin: 5px 195px;
   font-weight: bold;
   background-color: #06d6a0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -599,7 +601,7 @@ export const CurrentPage = styled.button`
 export const PageTitle = styled.div`
   text-align: center;
   color: #0077b6;
-  margin: 30px 0px 0px;
+  padding: 30px 0px 0px;
   font-size: 2rem;
   font-weight: bold;
 `;

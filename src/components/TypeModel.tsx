@@ -39,7 +39,7 @@ const TypeModel = (props: any) => {
       .catch((err) => setError(`ERROR FETCHING : ${err}`));
     setLoading(false);
     console.log(POPULAR_MOVIES_DATA);
-  }, [currentPage]);
+  }, [currentPage, workType, pageType]);
 
   return (
     <div>

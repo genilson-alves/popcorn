@@ -281,7 +281,10 @@ const Page = (props: any) => {
                     </button>
                   </Styled.ShowAllCast>
                 )}
-                <Styled.PartTitle>Production Companies</Styled.PartTitle>
+
+                {workInformation.production_companies[0] && (
+                  <Styled.PartTitle>Production Companies</Styled.PartTitle>
+                )}
                 <Styled.WorkInformationRightContentProductionWrapper>
                   {Object.entries(workInformation.production_companies).map(
                     ([key, companies]) => (
@@ -444,7 +447,9 @@ const Page = (props: any) => {
               )}
               <Styled.RightBarContent>
                 <p>Rate Average</p>
-                <span>{workInformation.vote_average.toFixed(1)}</span>
+                <span>
+                  {workInformation.vote_average.toFixed(1).replace(".", "")}
+                </span>
               </Styled.RightBarContent>
               <Styled.RightBarContent>
                 <p>Rated by</p>
@@ -464,14 +469,16 @@ const Page = (props: any) => {
                   )
                 )}
               </Styled.RightBarContent>
-              <Styled.RightBarContent>
-                <p>Production Companies</p>
-                {Object.entries(workInformation.production_companies).map(
-                  ([key, companies]) => (
-                    <span key={key}>{companies.name}</span>
-                  )
-                )}
-              </Styled.RightBarContent>
+              {workInformation.production_companies[0] && (
+                <Styled.RightBarContent>
+                  <p>Production Companies</p>
+                  {Object.entries(workInformation.production_companies).map(
+                    ([key, companies]) => (
+                      <span key={key}>{companies.name}</span>
+                    )
+                  )}
+                </Styled.RightBarContent>
+              )}
               {workInformation.networks && (
                 <Styled.RightBarContent>
                   <p>Networks</p>
