@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import * as Styled from "../Styled";
 import { PageNavigationBar } from "./NavigationBar";
 import { useParams } from "react-router-dom";
-const no_image = require("../assets/no_image.jpg");
+const no_image = require("../assets/no_image.png");
 const no_cast_image = require("../assets/no_cast_image.jpg");
+const no_background = require("../assets/no_background.jpg");
+const no_poster = require("../assets/no_poster.jpg");
 
 type WorkSeries = {
   backdrop_path: string;
@@ -145,7 +147,11 @@ const Page = (props: any) => {
           <Styled.WorkContent>
             <Styled.WorkBackground>
               <img
-                src={`https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`}
+                src={
+                  workInformation.backdrop_path
+                    ? `https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`
+                    : no_background
+                }
                 alt={
                   workInformation.name
                     ? workInformation.name
@@ -156,7 +162,11 @@ const Page = (props: any) => {
             <Styled.WorkOverviewContent>
               <Styled.WorkPoster>
                 <img
-                  src={`https://www.themoviedb.org/t/p/original${workInformation.poster_path}`}
+                  src={
+                    workInformation.poster_path
+                      ? `https://www.themoviedb.org/t/p/original${workInformation.poster_path}`
+                      : no_poster
+                  }
                   alt={
                     workInformation.name
                       ? workInformation.name
@@ -209,7 +219,7 @@ const Page = (props: any) => {
                                   src={
                                     season.poster_path
                                       ? `https://www.themoviedb.org/t/p/original${season.poster_path}`
-                                      : no_image
+                                      : no_poster
                                   }
                                   alt={season.name}
                                 ></img>
@@ -270,7 +280,7 @@ const Page = (props: any) => {
                     </Styled.WorkInformationRightContentInformation>
                   ))}
                 </Styled.WorkInformationRightContentInformationWrapper>
-                {showAllCast && (
+                {workCast.cast[11] && (
                   <Styled.ShowAllCast>
                     <button
                       onClick={() => {
@@ -349,16 +359,19 @@ const Page = (props: any) => {
                   <span>{workInformation.original_title}</span>
                 </Styled.RightBarContent>
               )}
-              <Styled.RightBarContent>
-                <p>Homepage</p>
-                <a
-                  href={workInformation.homepage}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {workInformation.homepage}
-                </a>
-              </Styled.RightBarContent>
+              {workInformation.homepage && (
+                <Styled.RightBarContent>
+                  <p>Homepage</p>
+                  <a
+                    href={workInformation.homepage}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {workInformation.homepage}
+                  </a>
+                </Styled.RightBarContent>
+              )}
+
               {workInformation.imdb_id && (
                 <Styled.RightBarContent>
                   <p>IMDB</p>
@@ -371,7 +384,7 @@ const Page = (props: any) => {
                   </a>
                 </Styled.RightBarContent>
               )}
-              {workInformation.revenue > 0 && (
+              {workInformation.budget > 0 && (
                 <Styled.RightBarContent>
                   <p>Budget</p>
                   <span>
@@ -405,24 +418,29 @@ const Page = (props: any) => {
                   <span>{workInformation.number_of_seasons}</span>
                 </Styled.RightBarContent>
               )}
-              {workInformation.episode_run_time && (
+              {workInformation.episode_run_time &&
+                workInformation.episode_run_time[0] > 0 && (
+                  <Styled.RightBarContent>
+                    <p>Episodes Duration</p>
+                    <span>{workInformation.episode_run_time[0]} min</span>
+                  </Styled.RightBarContent>
+                )}
+              {workInformation.runtime > 0 && (
                 <Styled.RightBarContent>
-                  <p>Episodes Duration</p>
-                  <span>{workInformation.episode_run_time[0]} min</span>
-                </Styled.RightBarContent>
-              )}
-              {workInformation.runtime && (
-                <Styled.RightBarContent>
-                  <p>Episodes Duration</p>
+                  <p>Duration</p>
                   <span>{workInformation.runtime} min</span>
                 </Styled.RightBarContent>
               )}
-              <Styled.RightBarContent>
-                <p>Genres</p>
-                {Object.entries(workInformation.genres).map(([key, genre]) => (
-                  <span key={key}>{genre.name}</span>
-                ))}
-              </Styled.RightBarContent>
+              {workInformation.genres[0] && (
+                <Styled.RightBarContent>
+                  <p>Genres</p>
+                  {Object.entries(workInformation.genres).map(
+                    ([key, genre]) => (
+                      <span key={key}>{genre.name}</span>
+                    )
+                  )}
+                </Styled.RightBarContent>
+              )}
               <Styled.RightBarContent>
                 <p>Status</p>
                 <span>{workInformation.status}</span>
@@ -445,30 +463,36 @@ const Page = (props: any) => {
                   <span>{workInformation.release_date}</span>
                 </Styled.RightBarContent>
               )}
-              <Styled.RightBarContent>
-                <p>Rate Average</p>
-                <span>
-                  {workInformation.vote_average.toFixed(1).replace(".", "")}
-                </span>
-              </Styled.RightBarContent>
-              <Styled.RightBarContent>
-                <p>Rated by</p>
-                <span>
-                  {workInformation.vote_count.toLocaleString("en-US")} users
-                </span>
-              </Styled.RightBarContent>
+              {workInformation.vote_average > 0 && (
+                <Styled.RightBarContent>
+                  <p>Rate Average</p>
+                  <span>
+                    {workInformation.vote_average.toFixed(1).replace(".", "")}
+                  </span>
+                </Styled.RightBarContent>
+              )}
+              {workInformation.vote_count > 0 && (
+                <Styled.RightBarContent>
+                  <p>Rated by</p>
+                  <span>
+                    {workInformation.vote_count.toLocaleString("en-US")} users
+                  </span>
+                </Styled.RightBarContent>
+              )}
               <Styled.RightBarContent>
                 <p>Original Language</p>
                 <span>{workInformation.original_language.toUpperCase()}</span>
               </Styled.RightBarContent>
-              <Styled.RightBarContent>
-                <p>Spoken Languages</p>
-                {Object.entries(workInformation.spoken_languages).map(
-                  ([key, spoken_languages]) => (
-                    <span key={key}>{spoken_languages.english_name}</span>
-                  )
-                )}
-              </Styled.RightBarContent>
+              {workInformation.spoken_languages[0] && (
+                <Styled.RightBarContent>
+                  <p>Spoken Languages</p>
+                  {Object.entries(workInformation.spoken_languages).map(
+                    ([key, spoken_languages]) => (
+                      <span key={key}>{spoken_languages.english_name}</span>
+                    )
+                  )}
+                </Styled.RightBarContent>
+              )}
               {workInformation.production_companies[0] && (
                 <Styled.RightBarContent>
                   <p>Production Companies</p>

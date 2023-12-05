@@ -306,10 +306,16 @@ const Home: React.FC = () => {
           </Styled.TopRatedWrapper>
         )}
       </Styled.Main>
-      <Styled.Footer>
-        <div>
-          <h3>CONTACT</h3>
+      <Styled.FooterWrapper>
+        <Styled.Footer>
           <ul>
+            <h3>Contact Me</h3>
+            <li>
+              <a href="#">GitHub</a>
+            </li>
+            <li>
+              <a href="#">LinkedIn</a>
+            </li>
             <li>
               <a href="#">GitHub</a>
             </li>
@@ -317,10 +323,8 @@ const Home: React.FC = () => {
               <a href="#">LinkedIn</a>
             </li>
           </ul>
-        </div>
-        <div>
-          <h3>API</h3>
           <ul>
+            <h3>TheMovieDatabase</h3>
             <li>
               <a href="#">Website</a>
             </li>
@@ -328,8 +332,38 @@ const Home: React.FC = () => {
               <a href="#">Documentation</a>
             </li>
           </ul>
-        </div>
-      </Styled.Footer>
+          <ul>
+            <h3>TV Shows</h3>
+            <li>
+              <a href="#">Top Rated</a>
+            </li>
+            <li>
+              <a href="#">Popular</a>
+            </li>
+            <li>
+              <a href="#">Website</a>
+            </li>
+            <li>
+              <a href="#">Documentation</a>
+            </li>
+          </ul>
+          <ul>
+            <h3>Movies</h3>
+            <li>
+              <a href="#">Top Rated</a>
+            </li>
+            <li>
+              <a href="#">Popular</a>
+            </li>
+            <li>
+              <a href="#">Documentation</a>
+            </li>
+            <li>
+              <a href="#">Documentation</a>
+            </li>
+          </ul>
+        </Styled.Footer>
+      </Styled.FooterWrapper>
     </div>
   );
 };

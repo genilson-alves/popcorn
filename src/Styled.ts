@@ -154,35 +154,31 @@ export const Upcoming = styled.div`
 
 export const Airing = styled.div``;
 
+export const FooterWrapper = styled.footer`
+  width: 100%;
+  background-color: #415a77;
+  margin-top: 50px;
+`;
+
 export const Footer = styled.footer`
+  max-width: 1800px;
+  margin: auto;
+  color: #ced4da;
   display: flex;
   justify-content: space-evenly;
-  background-color: #0077b6;
-  margin-top: 50px;
-  color: #ced4da;
-  height: 200px;
-  div {
-    margin-top: 40px;
-    text-align: center;
-  }
-  h3 {
-    padding: 10px;
-  }
+  padding: 30px;
   ul {
+    gap: 10px;
     display: flex;
+    align-items: center;
     flex-direction: column;
     list-style: none;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    li {
-    }
     a {
       text-decoration: none;
       color: #ced4da;
-    }
-    &:hover {
-      text-decoration: underline;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 `;
@@ -366,7 +362,7 @@ export const WorkInformationRightContentWrapper = styled.div``;
 export const WorkInformationRightContentInformationWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  gap: 20px 50px;
+  gap: 10px 50px;
 `;
 
 export const WorkInformationRightContentInformation = styled.div``;
@@ -379,6 +375,7 @@ export const WorkInformationCast = styled.div`
   width: 350px;
   height: 170px;
   text-align: center;
+  margin-bottom: 20px;
 `;
 
 export const CastInformation = styled.div`
@@ -521,6 +518,8 @@ export const TypeModelPoster = styled.div`
   img {
     border-radius: 10px;
     width: 100%;
+    min-width: 250px;
+    min-height: 400px;
   }
 `;
 

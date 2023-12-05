@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { TopRatedCountry } from "./../Styled";
 const logo = require("../assets/logo.png");
 
 const Logo = styled.div`
@@ -17,7 +18,7 @@ const Navigation = styled.nav`
   margin: auto;
 `;
 
-const NavigationLink = styled.a`
+const NavigationLink = styled(Link)`
   font-size: 1rem;
   color: #ced4da;
   padding: 10px;
@@ -74,11 +75,21 @@ const DropdownMenu = styled.div`
   }
 `;
 
-const DropdownSearch = styled.input`
-  padding: 5px;
-  border-radius: 10px;
-  border: 1px solid #f1f1f1;
+const SearchButton = styled.div`
+  button {
+    background-color: rgba(65, 90, 119, 0.6);
+    font-size: 1rem;
+    color: #ced4da;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
+
+const DropdownSearch = styled.div``;
 
 const PageNavigationWrapper = styled.div`
   background-color: rgba(65, 90, 119, 0.6);
@@ -112,14 +123,9 @@ const NavigationComponent = () => {
         </Link>
       </Logo>
       <NavigationOptions>
+        <NavigationLink to="/search">Search</NavigationLink>
         <DropdownMenu>
-          <NavigationLink href="#">Search</NavigationLink>
-          <DropdownContent>
-            <DropdownSearch type="text" />
-          </DropdownContent>
-        </DropdownMenu>
-        <DropdownMenu>
-          <NavigationLink href="#">Movies</NavigationLink>
+          <NavigationLink to="#">Movies</NavigationLink>
           <DropdownContent>
             <DropdownLink to="/movie/top_rated">Top Rated</DropdownLink>
             <DropdownLink to="/movie/popular">Popular</DropdownLink>
@@ -128,7 +134,7 @@ const NavigationComponent = () => {
           </DropdownContent>
         </DropdownMenu>
         <DropdownMenu>
-          <NavigationLink href="#">TV Shows</NavigationLink>
+          <NavigationLink to="#">TV Shows</NavigationLink>
           <DropdownContent>
             <DropdownLink to="/tv/top_rated">Top Rated</DropdownLink>
             <DropdownLink to="/tv/popular">Popular</DropdownLink>
@@ -138,8 +144,8 @@ const NavigationComponent = () => {
         </DropdownMenu>
       </NavigationOptions>
       <NavigationUser>
-        <NavigationLink href="#">Sign In</NavigationLink>
-        <NavigationLink href="#">Sign Up</NavigationLink>
+        <NavigationLink to="#">Sign In</NavigationLink>
+        <NavigationLink to="#">Sign Up</NavigationLink>
       </NavigationUser>
     </Navigation>
   );

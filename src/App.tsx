@@ -3,6 +3,7 @@ import { GlobalStyle } from "./Styled";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Page from "./components/Page";
 import Home from "./components/Home";
+import SearchPage from "./components/SearchPage";
 import TypeModel from "./components/TypeModel";
 
 const router = createBrowserRouter([
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
         title="TV Shows On The Air"
       ></TypeModel>
     ),
+  },
+  {
+    path: "/search",
+    element: <SearchPage></SearchPage>,
   },
 ]);
 
