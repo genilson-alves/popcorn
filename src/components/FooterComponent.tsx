@@ -161,7 +161,7 @@ export const FooterComponent = () => {
           </Link>
         </div>
         <div>Brazil</div>
-        <div>2023</div>
+        <div>Worked just fine!</div>
       </FooterEnd>
     </FooterWrapper>
   );
