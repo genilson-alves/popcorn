@@ -2,6 +2,19 @@ import styled, { css } from "styled-components";
 import { createGlobalStyle } from "styled-components";
 import { Link } from "react-router-dom";
 
+export const COLORS = {
+  BODY_BACKGROUND_COLOR: "#dee2e6",
+  NAVIGATION_FOOTER_BACKGROUND_COLOR: "#0077b6",
+  TRANSPARENT_NAVIGATION_BACKGROUND_COLOR: "rgba(0, 119, 182, 0.6)",
+  PAGE_TITLE_COLOR: "#0077b6",
+  LINK_COLOR: "#0077b6",
+  FOOTER_COLOR: "#ced4da",
+  RATING_BACKGROUND_COLOR: "#06d6a0",
+  SECTION_COLOR: "#6c757d",
+  PAGE_WHITE: "#f8f9fa",
+  PAGE_BLACK: "#000000",
+};
+
 export const GlobalStyle = createGlobalStyle`
   * { 
   margin: 0;
@@ -11,7 +24,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background-color: #dee2e6;    
+    background-color: ${COLORS.BODY_BACKGROUND_COLOR};    
   }
 `;
 
@@ -79,7 +92,7 @@ export const FeaturedTitle = styled.div`
   font-size: 2rem;
   margin-top: 10px;
   font-weight: bold;
-  color: #0077b6;
+  color: ${COLORS.LINK_COLOR};
 `;
 
 export const FeaturedSynopsis = styled.div`
@@ -90,7 +103,7 @@ export const FeaturedReleaseDate = styled.div``;
 
 export const Score = styled.div`
   font-weight: bold;
-  background-color: #06d6a0;
+  background-color: ${COLORS.RATING_BACKGROUND_COLOR};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -124,14 +137,14 @@ export const SectionTitle = styled.div`
   h1 {
     font-size: 1.3rem;
     font-weight: bold;
-    color: #6c757d;
+    color: ${COLORS.SECTION_COLOR};
   }
 `;
 
 export const ViewMore = styled.a`
   text-decoration: none;
   font-weight: 0.8rem;
-  color: #0077b6;
+  color: ${COLORS.LINK_COLOR};
   &:hover {
     text-decoration: underline;
     opacity: 0.8;
@@ -154,41 +167,13 @@ export const Upcoming = styled.div`
 
 export const Airing = styled.div``;
 
-export const FooterWrapper = styled.footer`
-  width: 100%;
-  background-color: #415a77;
-  margin-top: 50px;
-`;
-
-export const Footer = styled.footer`
-  max-width: 1800px;
-  margin: auto;
-  color: #ced4da;
-  display: flex;
-  justify-content: space-evenly;
-  padding: 30px;
-  ul {
-    gap: 10px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    list-style: none;
-    a {
-      text-decoration: none;
-      color: #ced4da;
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-  }
-`;
-
 export const TopRatedWrapper = styled.div`
   width: 100%;
 `;
 
 export const TopRatedInformation = styled.div`
   text-align: center;
+  margin-top: 30px;
   h2 {
     flex: 1;
   }
@@ -199,8 +184,8 @@ export const TopRatedInformation = styled.div`
     margin: 10px 40px 0px 35px;
     button {
       margin: 0px 20px;
-      background-color: #0077b6;
-      color: white;
+      background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+      color: ${COLORS.PAGE_WHITE};
       border: none;
       border-radius: 5px;
       padding: 10px;
@@ -213,7 +198,7 @@ export const TopRatedInformation = styled.div`
   span {
     font-size: 2rem;
     font-weight: bold;
-    color: #6c757d;
+    color: ${COLORS.SECTION_COLOR};
   }
 `;
 
@@ -229,7 +214,7 @@ export const TopRatedOverviewWrapper = styled.div`
   border-radius: 5px;
   padding: 0px 20px;
   align-items: center;
-  background-color: #f8f9fa;
+  background-color: ${COLORS.PAGE_WHITE};
   height: 100px;
 `;
 
@@ -274,7 +259,7 @@ export const WorkWrapper = styled.div`
 `;
 
 export const WorkContent = styled.div`
-  background-color: #f8f9fa;
+  background-color: ${COLORS.PAGE_WHITE};
   padding-bottom: 20px;
 `;
 
@@ -305,9 +290,9 @@ export const WorkPoster = styled.div`
 
 export const WorkStatus = styled.div`
   text-align: center;
-  background-color: #000;
+  background-color: ${COLORS.PAGE_BLACK};
   padding: 10px;
-  color: white;
+  color: ${COLORS.PAGE_WHITE};
   border-radius: 7px;
 `;
 
@@ -332,7 +317,8 @@ export const WorkGenres = styled.div`
 `;
 
 export const WorkGenreTitle = styled.div`
-  background-color: #dee2e6;
+  background-color: ${COLORS.PAGE_TITLE_COLOR};
+  color: ${COLORS.PAGE_WHITE};
   padding: 8px;
   border-radius: 5px;
   font-size: 0.9rem;
@@ -352,7 +338,7 @@ export const AllWorkContentWrapper = styled.div`
 
 export const WorkInformationLeftContentWrapper = styled.div`
   margin-top: 20px;
-  background-color: black;
+  background-color: ${COLORS.PAGE_BLACK};
 `;
 
 export const WorkInformationLeftContentInformation = styled.div``;
@@ -369,7 +355,7 @@ export const WorkInformationRightContentInformation = styled.div``;
 
 export const WorkInformationCast = styled.div`
   display: flex;
-  background-color: white;
+  background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
   padding: 10px;
   width: 350px;
@@ -418,13 +404,13 @@ export const PartTitle = styled.p`
   font-weight: bold;
   padding: 15px;
   font-style: italic;
-  color: #415a77;
+  color: ${COLORS.SECTION_COLOR};
 `;
 
 export const RightBarContentWrapper = styled.div`
   flex: 1;
   margin-top: 50px;
-  background-color: white;
+  background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
   padding: 10px;
   display: flex;
@@ -434,7 +420,7 @@ export const RightBarContentWrapper = styled.div`
 
 export const RightBarContent = styled.div`
   font-size: 0.9rem;
-  color: #415a77;
+  color: ${COLORS.SECTION_COLOR};
   display: flex;
   flex-direction: column;
   p {
@@ -442,11 +428,11 @@ export const RightBarContent = styled.div`
   }
   span {
     margin-bottom: 3px;
-    color: black;
+    color: ${COLORS.PAGE_BLACK};
   }
   a {
     text-decoration: none;
-    color: black;
+    color: ${COLORS.PAGE_BLACK};
     &:hover {
       text-decoration: underline;
     }
@@ -477,8 +463,8 @@ export const ShowAllCast = styled.div`
   text-align: center;
   button {
     cursor: pointer;
-    background-color: #415a77;
-    color: white;
+    background-color: ${COLORS.PAGE_TITLE_COLOR};
+    color: ${COLORS.PAGE_WHITE};
     font-size: 1rem;
     border: none;
     padding: 10px;
@@ -488,7 +474,7 @@ export const ShowAllCast = styled.div`
 
 export const RouterLink = styled(Link)`
   text-decoration: none;
-  color: #0077b6;
+  color: ${COLORS.LINK_COLOR};
   &:hover {
     text-decoration: underline;
   }
@@ -527,7 +513,7 @@ export const TypeModelRating = styled.div`
   position: absolute;
   margin: 5px 195px;
   font-weight: bold;
-  background-color: #06d6a0;
+  background-color: ${COLORS.RATING_BACKGROUND_COLOR};
   z-index: 1;
   display: flex;
   align-items: center;
@@ -560,13 +546,13 @@ export const PreviousButton = styled.button`
   border: none;
   font-weight: bold;
   cursor: pointer;
-  background-color: white;
+  background-color: ${COLORS.PAGE_WHITE};
   margin: 0px 5px;
   border-radius: 5px;
   padding: 10px;
   &:hover {
-    background-color: #0077b6;
-    color: white;
+    background-color: ${COLORS.LINK_COLOR};
+    color: ${COLORS.PAGE_WHITE};
     transition: 0.5s;
   }
 `;
@@ -575,13 +561,13 @@ export const PaginationButtons = styled.button`
   border: none;
   font-weight: bold;
   cursor: pointer;
-  background-color: white;
+  background-color: ${COLORS.PAGE_WHITE};
   margin: 0px 5px;
   border-radius: 5px;
   padding: 10px;
   &:hover {
-    background-color: #0077b6;
-    color: white;
+    background-color: ${COLORS.LINK_COLOR};
+    color: ${COLORS.PAGE_WHITE};
     transition: 0.5s;
   }
 `;
@@ -590,8 +576,8 @@ export const CurrentPage = styled.button`
   border: none;
   font-weight: bold;
   cursor: pointer;
-  background-color: #0077b6;
-  color: white;
+  background-color: ${COLORS.LINK_COLOR};
+  color: ${COLORS.PAGE_WHITE};
   margin: 0px 5px;
   border-radius: 5px;
   padding: 10px;
@@ -599,7 +585,7 @@ export const CurrentPage = styled.button`
 
 export const PageTitle = styled.div`
   text-align: center;
-  color: #0077b6;
+  color: ${COLORS.PAGE_TITLE_COLOR};
   padding: 30px 0px 0px;
   font-size: 2rem;
   font-weight: bold;

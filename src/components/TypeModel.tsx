@@ -1,6 +1,8 @@
 import * as Styled from "../Styled";
 import React, { useState, useEffect } from "react";
 import { HomeNavigationBar } from "./NavigationBar";
+import { Helmet } from "react-helmet";
+import { FooterComponent } from "./FooterComponent";
 
 type Movies = {
   poster_path: string;
@@ -45,6 +47,9 @@ const TypeModel = (props: any) => {
     <div>
       <HomeNavigationBar></HomeNavigationBar>
       <Styled.TypeModelWrapper>
+        <Helmet>
+          <title>{pageTitle}</title>
+        </Helmet>
         <Styled.PageTitle>{pageTitle}</Styled.PageTitle>
         {POPULAR_MOVIES_DATA.length > 0 && (
           <Styled.TypeModel>
@@ -122,6 +127,7 @@ const TypeModel = (props: any) => {
           </Styled.PaginationButtons>
         </Styled.Pagination>
       </Styled.TypeModelWrapper>
+      <FooterComponent></FooterComponent>
     </div>
   );
 };

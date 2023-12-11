@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { HomeNavigationBar } from "./NavigationBar";
 import styled from "styled-components";
 import * as Styled from "../Styled";
+import { Helmet } from "react-helmet";
+import { FooterComponent } from "./FooterComponent";
 const no_image = require("../assets/no_image.png");
 const no_poster = require("../assets/no_poster.jpg");
 
@@ -53,6 +55,9 @@ const SearchButton = styled.button`
   padding: 15px;
   border: none;
   border-radius: 10px;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const SearchWrapper = styled.div`
@@ -152,6 +157,9 @@ const SearchPage = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Search</title>
+      </Helmet>
       <HomeNavigationBar></HomeNavigationBar>
       <SearchWrapper>
         <SearchSectionWrapper>
@@ -166,7 +174,6 @@ const SearchPage = () => {
             <SearchButton onClick={fetchData}>Search</SearchButton>
           </SearchSection>
         </SearchSectionWrapper>
-
         <div>
           {SEARCH_DATA ? (
             <Search>
@@ -229,6 +236,7 @@ const SearchPage = () => {
           )}
         </div>
       </SearchWrapper>
+      <FooterComponent></FooterComponent>
     </div>
   );
 };

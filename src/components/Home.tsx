@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import * as Styled from "../Styled";
 import { HomeNavigationBar } from "./NavigationBar";
+import { FooterComponent } from "./FooterComponent";
+import { Helmet } from "react-helmet";
 const previous = require("../assets/previous.png");
 const next = require("../assets/next.png");
 
@@ -92,6 +94,9 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Home</title>
+      </Helmet>
       <HomeNavigationBar></HomeNavigationBar>
       <Styled.Main>
         {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
@@ -306,64 +311,7 @@ const Home: React.FC = () => {
           </Styled.TopRatedWrapper>
         )}
       </Styled.Main>
-      <Styled.FooterWrapper>
-        <Styled.Footer>
-          <ul>
-            <h3>Contact Me</h3>
-            <li>
-              <a href="#">GitHub</a>
-            </li>
-            <li>
-              <a href="#">LinkedIn</a>
-            </li>
-            <li>
-              <a href="#">GitHub</a>
-            </li>
-            <li>
-              <a href="#">LinkedIn</a>
-            </li>
-          </ul>
-          <ul>
-            <h3>TheMovieDatabase</h3>
-            <li>
-              <a href="#">Website</a>
-            </li>
-            <li>
-              <a href="#">Documentation</a>
-            </li>
-          </ul>
-          <ul>
-            <h3>TV Shows</h3>
-            <li>
-              <a href="#">Top Rated</a>
-            </li>
-            <li>
-              <a href="#">Popular</a>
-            </li>
-            <li>
-              <a href="#">Website</a>
-            </li>
-            <li>
-              <a href="#">Documentation</a>
-            </li>
-          </ul>
-          <ul>
-            <h3>Movies</h3>
-            <li>
-              <a href="#">Top Rated</a>
-            </li>
-            <li>
-              <a href="#">Popular</a>
-            </li>
-            <li>
-              <a href="#">Documentation</a>
-            </li>
-            <li>
-              <a href="#">Documentation</a>
-            </li>
-          </ul>
-        </Styled.Footer>
-      </Styled.FooterWrapper>
+      <FooterComponent></FooterComponent>
     </div>
   );
 };

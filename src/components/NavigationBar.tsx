@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { COLORS } from "../Styled";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { TopRatedCountry } from "./../Styled";
 const logo = require("../assets/logo.png");
 
 const Logo = styled.div`
@@ -20,7 +20,7 @@ const Navigation = styled.nav`
 
 const NavigationLink = styled(Link)`
   font-size: 1rem;
-  color: #ced4da;
+  color: ${COLORS.FOOTER_COLOR};
   padding: 10px;
   text-decoration: none;
   &:hover {
@@ -48,19 +48,20 @@ const DropdownContent = styled.div`
   border-radius: 10px;
   top: 100%;
   left: 0;
-  background-color: white;
+  background-color: ${COLORS.PAGE_WHITE};
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 `;
 
 const DropdownLink = styled(Link)`
-  color: #415a77;
+  color: ${COLORS.LINK_COLOR};
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   text-align: left;
   &:hover {
-    background-color: #f1f1f1;
+    opacity: 0.8;
+    background-color: ${COLORS.FOOTER_COLOR};
     border-radius: 10px;
   }
 `;
@@ -75,24 +76,8 @@ const DropdownMenu = styled.div`
   }
 `;
 
-const SearchButton = styled.div`
-  button {
-    background-color: rgba(65, 90, 119, 0.6);
-    font-size: 1rem;
-    color: #ced4da;
-    padding: 10px;
-    cursor: pointer;
-    border: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
-
-const DropdownSearch = styled.div``;
-
 const PageNavigationWrapper = styled.div`
-  background-color: rgba(65, 90, 119, 0.6);
+  background-color: ${COLORS.TRANSPARENT_NAVIGATION_BACKGROUND_COLOR};
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -104,7 +89,7 @@ const HomeNavigationWrapper = styled.div<{
   visible: boolean;
   position: boolean;
 }>`
-  background-color: #415a77;
+  background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
   position: ${(props) => (props.position ? "static" : "fixed")};
   z-index: 1;
   height: 80px;

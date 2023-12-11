@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import * as Styled from "../Styled";
 import { PageNavigationBar } from "./NavigationBar";
 import { useParams } from "react-router-dom";
+import { Helmet } from "react-helmet";
+import { FooterComponent } from "./FooterComponent";
 const no_image = require("../assets/no_image.png");
 const no_cast_image = require("../assets/no_cast_image.jpg");
 const no_background = require("../assets/no_background.jpg");
@@ -144,6 +146,13 @@ const Page = (props: any) => {
       {error && <Styled.Error>ERROR: {error}</Styled.Error>}
       {workInformation && workCast && (
         <Styled.WorkWrapper>
+          <Helmet>
+            <title>
+              {workInformation.name
+                ? workInformation.name
+                : workInformation.title}
+            </title>
+          </Helmet>
           <Styled.WorkContent>
             <Styled.WorkBackground>
               <img
@@ -517,6 +526,7 @@ const Page = (props: any) => {
           </Styled.AllWorkInformationWrapper>
         </Styled.WorkWrapper>
       )}
+      <FooterComponent></FooterComponent>
     </div>
   );
 };
