@@ -1,41 +1,195 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
 import * as Styled from "../Styled";
-import { HomeNavigationBar } from "./NavigationBar";
-import { FooterComponent } from "./FooterComponent";
+import { COLORS } from "../Styled";
 import { Helmet } from "react-helmet";
+
+const no_poster = require("../assets/no_poster.jpg");
 const previous = require("../assets/previous.png");
 const next = require("../assets/next.png");
 
-type Movies = {
-  poster_path: string;
-  backdrop_path: string;
-  id: number;
+type Work = {
   title: string;
+  name: string;
   overview: string;
   release_date: string;
+  poster_path: string;
+  id: number;
   vote_average: number;
-  vote_count: number;
-  original_language: string;
 };
 
-type Series = {
-  name: string;
-  origin_country: string[];
-} & Omit<Movies, "title" | "original_language">;
+const LinkDefault = css`
+  text-decoration: none;
+  color: ${COLORS.LINK_COLOR};
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+`;
+
+const OtherWorksWrapper = styled.div`
+  margin: 50px 0px;
+`;
+
+const SectionTitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0px 15px;
+`;
+
+const SectionTitle = styled.div`
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: ${COLORS.SECTION_COLOR};
+`;
+
+const ViewMore = styled(Link)`
+  ${LinkDefault}
+  font-size: 0.8rem;
+`;
+
+const WorkInformationWrapper = styled.div`
+  display: flex;
+  gap: 0px 10px;
+  margin: 10px;
+  overflow: scroll;
+`;
+
+const WorkInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 10px;
+`;
+
+const WorkPosterWrapper = styled.div`
+  img {
+    border-radius: 5px;
+    width: 160px;
+    height: 250px;
+  }
+`;
+
+const WorkTitleWrapper = styled.div`
+  text-align: center;
+`;
+
+const WorkTitle = styled(Link)`
+  ${LinkDefault}
+  font-size: 0.9rem;
+`;
+
+const OtherWorks = (props: any) => {
+  return (
+    <div>
+      <SectionTitleWrapper>
+        <SectionTitle>{props.title}</SectionTitle>
+        <ViewMore to={props.to}>View More</ViewMore>
+      </SectionTitleWrapper>
+      <WorkInformationWrapper>
+        {props.content.map((work: Work) => (
+          <WorkInformation key={work.id}>
+            <WorkPosterWrapper>
+              <img
+                src={
+                  work.poster_path
+                    ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
+                    : no_poster
+                }
+                alt={work.name ? work.name : work.title}
+              ></img>
+            </WorkPosterWrapper>
+            <WorkTitleWrapper>
+              <WorkTitle to={`/${props.type}/${work.id}`}>
+                {work.name ? work.name : work.title}
+              </WorkTitle>
+            </WorkTitleWrapper>
+          </WorkInformation>
+        ))}
+      </WorkInformationWrapper>
+    </div>
+  );
+};
+
+const HomeContentWrapper = styled.main``;
+
+const FeaturedContentWrapper = styled.div`
+  margin: 50px 10px;
+`;
+
+const FeaturedWorkWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FeaturedWorkPosterWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  img {
+    border-radius: 10px;
+    width: 250px;
+    height: 400px;
+  }
+`;
+
+const FeaturedWorkRating = styled.div`
+  position: absolute;
+  padding: 5px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  background-color: ${COLORS.RATING_BACKGROUND_COLOR};
+  border-radius: 6px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  top: 1%;
+  left: 78%;
+`;
+
+const FeaturedWorkInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: justify;
+`;
+
+const WorkInformationSection = styled.span`
+  font-weight: bold;
+  font-style: italic;
+`;
+
+const FeaturedWorkTitleWrapper = styled.div``;
+
+const FeaturedWorkTitle = styled(Link)`
+  ${LinkDefault}
+  font-size: 1.5rem;
+  font-weight: bold;
+`;
+
+const FeaturedWorkReleaseDate = styled.div``;
+
+const FeaturedWorkOverview = styled.div``;
 
 const Home: React.FC = () => {
-  const [POPULAR_MOVIES_DATA, setMoviesPopular] = useState<Movies[]>([]);
-  const [UPCOMING_MOVIES_DATA, setMoviesUpcoming] = useState<Movies[]>([]);
-  const [TOP_MOVIES_DATA, setMoviesTop] = useState<Movies[]>([]);
-  const [ON_AIR_SERIES_DATA, setSeriesOnAir] = useState<Series[]>([]);
-  const [POPULAR_SERIES_DATA, setSeriesPopular] = useState<Series[]>([]);
-  const [TOP_SERIES_DATA, setSeriesTop] = useState<Series[]>([]);
-  const [topSelected, setTopSelected] = useState(true);
-
+  const [POPULAR_MOVIES, setPopularMovies] = useState<Work[]>([]);
+  const [UPCOMING_MOVIES, setUpcomingMovies] = useState<Work[]>([]);
+  const [TOP_RATED_MOVIES, setTopRatedMovies] = useState<Work[]>([]);
+  const [ON_THE_AIR_TV_SHOWS, setOnTheAirTvShows] = useState<Work[]>([]);
+  const [POPULAR_TV_SHOWS, setPopularTvShows] = useState<Work[]>([]);
+  const [TOP_RATED_TV_SHOWS, setTopRatedTvShows] = useState<Work[]>([]);
+  const [TOP_RATED_WORKS, setTopRatedWorks] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
 
-  const API_GET_OPTIONS = {
+  const API_GET = {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -46,49 +200,43 @@ const Home: React.FC = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch("https://api.themoviedb.org/3/movie/popular", API_GET_OPTIONS)
+    fetch("https://api.themoviedb.org/3/movie/popular", API_GET)
       .then((response) => response.json())
-      .then((response) => setMoviesPopular(response.results))
-      .catch((err) => setError(`ERROR 2 FETCHING : ${err}`));
-    fetch("https://api.themoviedb.org/3/movie/upcoming", API_GET_OPTIONS)
+      .then((response) => setPopularMovies(response.results))
+      .catch((err) => setError(`ERROR FETCHING POPULAR MOVIES: ${err}`));
+    fetch("https://api.themoviedb.org/3/movie/upcoming", API_GET)
       .then((response) => response.json())
-      .then((response) => setMoviesUpcoming(response.results))
-      .catch((err) => setError(`ERROR 2 FETCHING : ${err}`));
-    fetch("https://api.themoviedb.org/3/movie/top_rated", API_GET_OPTIONS)
+      .then((response) => setUpcomingMovies(response.results))
+      .catch((err) => setError(`ERROR FETCHING UPCOMING MOVIES: ${err}`));
+    fetch("https://api.themoviedb.org/3/movie/top_rated", API_GET)
       .then((response) => response.json())
-      .then((response) => setMoviesTop(response.results))
-      .catch((err) => setError(`ERROR 3 FETCHING : ${err}`));
-    fetch("https://api.themoviedb.org/3/tv/popular", API_GET_OPTIONS)
+      .then((response) => setTopRatedMovies(response.results))
+      .catch((err) => setError(`ERROR FETCHING TOP RATED MOVIES: ${err}`));
+    fetch("https://api.themoviedb.org/3/tv/popular", API_GET)
       .then((response) => response.json())
-      .then((response) => setSeriesPopular(response.results))
-      .catch((err) => setError(`ERROR 4 FETCHING : ${err}`));
-    fetch("https://api.themoviedb.org/3/tv/on_the_air", API_GET_OPTIONS)
+      .then((response) => setPopularTvShows(response.results))
+      .catch((err) => setError(`ERROR FETCHING POPULAR TV SHOWS: ${err}`));
+    fetch("https://api.themoviedb.org/3/tv/on_the_air", API_GET)
       .then((response) => response.json())
-      .then((response) => setSeriesOnAir(response.results))
-      .catch((err) => setError(`ERROR 5 FETCHING : ${err}`));
-    fetch("https://api.themoviedb.org/3/tv/top_rated", API_GET_OPTIONS)
+      .then((response) => setOnTheAirTvShows(response.results))
+      .catch((err) => setError(`ERROR FETCHING ON THE AIR TV SHOWS: ${err}`));
+    fetch("https://api.themoviedb.org/3/tv/top_rated", API_GET)
       .then((response) => response.json())
-      .then((response) => setSeriesTop(response.results))
-      .catch((err) => setError(`ERROR 6 FETCHING : ${err}`));
-    console.log(UPCOMING_MOVIES_DATA);
-    console.log(TOP_SERIES_DATA);
-
+      .then((response) => setTopRatedTvShows(response.results))
+      .catch((err) => setError(`ERROR FETCHING TOP RATED TV SHOWS: ${err}`));
     setLoading(false);
   }, []);
 
-  const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
-
   const handleNextMovie = () => {
     setCurrentMovieIndex(
-      (prevIndex) => (prevIndex + 1) % POPULAR_MOVIES_DATA.length
+      (prevIndex) => (prevIndex + 1) % POPULAR_MOVIES.length
     );
   };
 
   const handlePreviousMovie = () => {
     setCurrentMovieIndex(
       (prevIndex) =>
-        (prevIndex - 1 + POPULAR_MOVIES_DATA.length) %
-        POPULAR_MOVIES_DATA.length
+        (prevIndex - 1 + POPULAR_MOVIES.length) % POPULAR_MOVIES.length
     );
   };
 
@@ -97,221 +245,86 @@ const Home: React.FC = () => {
       <Helmet>
         <title>Home</title>
       </Helmet>
-      <HomeNavigationBar></HomeNavigationBar>
-      <Styled.Main>
-        {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
-        {error && <Styled.Error>ERROR: {error}</Styled.Error>}
-        {POPULAR_MOVIES_DATA.length > 0 && (
-          <Styled.FeaturedMovies>
-            {currentMovieIndex > 0 && (
-              <Styled.NextPrevious onClick={handlePreviousMovie}>
-                <img src={previous} alt="previous" />
-              </Styled.NextPrevious>
-            )}
-            <Styled.FeaturedContent
-              key={POPULAR_MOVIES_DATA[currentMovieIndex].id}
-            >
-              <Styled.FeaturedPoster>
-                <img
-                  src={`https://www.themoviedb.org/t/p/original${POPULAR_MOVIES_DATA[currentMovieIndex].poster_path}`}
-                  alt={POPULAR_MOVIES_DATA[currentMovieIndex].title}
-                ></img>
-              </Styled.FeaturedPoster>
-              <Styled.FeaturedOverview>
-                <Styled.FeaturedInformation>
-                  <Styled.FeaturedTitle>
-                    <Styled.RouterLink
-                      to={`/movie/${POPULAR_MOVIES_DATA[currentMovieIndex].id}`}
-                    >
-                      {POPULAR_MOVIES_DATA[currentMovieIndex].title}
-                    </Styled.RouterLink>
-                  </Styled.FeaturedTitle>
-                  <Styled.Score>
-                    {POPULAR_MOVIES_DATA[currentMovieIndex].vote_average
+      {isLoading ? (
+        <Styled.Loading>Loading...</Styled.Loading>
+      ) : error ? (
+        <Styled.Error>ERROR: {error}</Styled.Error>
+      ) : (
+        <HomeContentWrapper>
+          <FeaturedContentWrapper>
+            {POPULAR_MOVIES.length > 0 && (
+              <FeaturedWorkWrapper key={POPULAR_MOVIES[currentMovieIndex].id}>
+                <FeaturedWorkPosterWrapper>
+                  <img
+                    src={
+                      POPULAR_MOVIES[currentMovieIndex].poster_path
+                        ? `https://www.themoviedb.org/t/p/original${POPULAR_MOVIES[currentMovieIndex].poster_path}`
+                        : no_poster
+                    }
+                    alt={POPULAR_MOVIES[0].title}
+                  ></img>
+                  <FeaturedWorkRating>
+                    {POPULAR_MOVIES[currentMovieIndex].vote_average
                       .toFixed(1)
                       .replace(".", "")}
-                  </Styled.Score>
-                </Styled.FeaturedInformation>
-                <Styled.FeaturedReleaseDate>
-                  <h3>Release Date:</h3>
-                  {POPULAR_MOVIES_DATA[currentMovieIndex].release_date}
-                </Styled.FeaturedReleaseDate>
-                <Styled.FeaturedSynopsis>
-                  <h3>Synopsis:</h3>
-                  {POPULAR_MOVIES_DATA[currentMovieIndex].overview}
-                </Styled.FeaturedSynopsis>
-              </Styled.FeaturedOverview>
-            </Styled.FeaturedContent>
-            <Styled.NextPrevious onClick={handleNextMovie}>
-              <img src={next} alt="next" />
-            </Styled.NextPrevious>
-          </Styled.FeaturedMovies>
-        )}
-        {UPCOMING_MOVIES_DATA.length > 0 && (
-          <div>
-            <Styled.SectionTitle>
-              <h1>UPCOMING MOVIES</h1>
-              <Styled.RouterLink to={`/movie/upcoming`}>
-                View More
-              </Styled.RouterLink>
-            </Styled.SectionTitle>
-            <Styled.UpcomingContainer>
-              {UPCOMING_MOVIES_DATA.map((movie) => (
-                <Styled.Upcoming key={movie.id}>
-                  <Styled.Poster>
-                    <img
-                      src={`https://www.themoviedb.org/t/p/original${movie.poster_path}`}
-                      alt={movie.title}
-                    ></img>
-                  </Styled.Poster>
-                  <Styled.Title>
-                    <Styled.RouterLink to={`/movie/${movie.id}`}>
-                      {movie.title}
-                    </Styled.RouterLink>
-                  </Styled.Title>
-                </Styled.Upcoming>
-              ))}
-            </Styled.UpcomingContainer>
-          </div>
-        )}
-        {POPULAR_SERIES_DATA.length > 0 && (
-          <div>
-            <Styled.SectionTitle>
-              <h1>POPULAR SERIES</h1>
-              <Styled.RouterLink to={`/tv/popular`}>
-                View More
-              </Styled.RouterLink>
-            </Styled.SectionTitle>
-            <Styled.UpcomingContainer>
-              {POPULAR_SERIES_DATA.map((series) => (
-                <Styled.Upcoming key={series.id}>
-                  <Styled.Poster>
-                    <img
-                      src={`https://www.themoviedb.org/t/p/original${series.poster_path}`}
-                      alt={series.name}
-                    ></img>
-                  </Styled.Poster>
-                  <Styled.Title>
-                    <Styled.RouterLink to={`/tv/${series.id}`}>
-                      {series.name}
-                    </Styled.RouterLink>
-                  </Styled.Title>
-                </Styled.Upcoming>
-              ))}
-            </Styled.UpcomingContainer>
-          </div>
-        )}
-        {ON_AIR_SERIES_DATA.length > 0 && (
-          <div>
-            <Styled.SectionTitle>
-              <h1>AIRING SERIES</h1>
-              <Styled.RouterLink to={`/tv/on_the_air`}>
-                View More
-              </Styled.RouterLink>
-            </Styled.SectionTitle>
-            <Styled.UpcomingContainer>
-              {ON_AIR_SERIES_DATA.map((series) => (
-                <Styled.Upcoming key={series.id}>
-                  <Styled.Poster>
-                    <img
-                      src={`https://www.themoviedb.org/t/p/original${series.poster_path}`}
-                      alt={series.name}
-                    ></img>
-                  </Styled.Poster>
-                  <Styled.Title>
-                    <Styled.RouterLink to={`/tv/${series.id}`}>
-                      {series.name}
-                    </Styled.RouterLink>
-                  </Styled.Title>
-                </Styled.Upcoming>
-              ))}
-            </Styled.UpcomingContainer>
-          </div>
-        )}
-        {TOP_SERIES_DATA.length > 0 && TOP_MOVIES_DATA.length > 0 && (
-          <Styled.TopRatedWrapper>
-            <Styled.TopRatedInformation>
-              <span>Our top rated ranking</span>
-              <div>
-                <div>
-                  <h3>
-                    Want to see top rated
-                    {topSelected === true ? " series" : " movies"}?
-                  </h3>
-                  <button
-                    onClick={() => {
-                      setTopSelected(!topSelected);
-                    }}
-                  >
-                    {topSelected === true ? "Series" : "Movies"}
-                  </button>
-                </div>
-                <Styled.RouterLink
-                  to={topSelected ? `/movie/top_rated` : `/tv/top_rated`}
-                >
-                  View More
-                </Styled.RouterLink>{" "}
-              </div>
-            </Styled.TopRatedInformation>
-            {topSelected === true ? (
-              <div>
-                {TOP_MOVIES_DATA.slice(0, 10).map((movies, index) => (
-                  <Styled.TopRated key={movies.id}>
-                    <Styled.TopRatedRank>#{index + 1}</Styled.TopRatedRank>
-                    <Styled.TopRatedOverviewWrapper>
-                      <Styled.TopRatedPoster>
-                        <img
-                          src={`https://www.themoviedb.org/t/p/original${movies.poster_path}`}
-                          alt={movies.title}
-                        ></img>
-                      </Styled.TopRatedPoster>
-                      <Styled.TopRatedTitle>
-                        <Styled.RouterLink to={`/movie/${movies.id}`}>
-                          {movies.title}
-                        </Styled.RouterLink>
-                      </Styled.TopRatedTitle>
-                      <Styled.TopRatedCountry>
-                        {movies.original_language.toUpperCase()}
-                      </Styled.TopRatedCountry>
-                      <Styled.TopRatedScore>
-                        {movies.vote_average.toFixed(1)}
-                      </Styled.TopRatedScore>
-                    </Styled.TopRatedOverviewWrapper>
-                  </Styled.TopRated>
-                ))}
-              </div>
-            ) : (
-              <div>
-                {TOP_SERIES_DATA.slice(0, 10).map((series, index) => (
-                  <Styled.TopRated key={series.id}>
-                    <Styled.TopRatedRank>#{index + 1}</Styled.TopRatedRank>
-                    <Styled.TopRatedOverviewWrapper>
-                      <Styled.TopRatedPoster>
-                        <img
-                          src={`https://www.themoviedb.org/t/p/original${series.poster_path}`}
-                          alt={series.name}
-                        ></img>
-                      </Styled.TopRatedPoster>
-                      <Styled.TopRatedTitle>
-                        <Styled.RouterLink to={`/tv/${series.id}`}>
-                          {series.name}
-                        </Styled.RouterLink>
-                      </Styled.TopRatedTitle>
-                      <Styled.TopRatedCountry>
-                        {series.origin_country[0]}
-                      </Styled.TopRatedCountry>
-                      <Styled.TopRatedScore>
-                        {series.vote_average.toFixed(1)}
-                      </Styled.TopRatedScore>
-                    </Styled.TopRatedOverviewWrapper>
-                  </Styled.TopRated>
-                ))}
-              </div>
+                  </FeaturedWorkRating>
+                </FeaturedWorkPosterWrapper>
+                <FeaturedWorkInformation>
+                  <FeaturedWorkTitleWrapper>
+                    <FeaturedWorkTitle
+                      to={`/movie/${POPULAR_MOVIES[currentMovieIndex].id}`}
+                    >
+                      {POPULAR_MOVIES[currentMovieIndex].title}
+                    </FeaturedWorkTitle>
+                  </FeaturedWorkTitleWrapper>
+                  <FeaturedWorkReleaseDate>
+                    <WorkInformationSection>
+                      Release Date:
+                    </WorkInformationSection>
+                    <p>{POPULAR_MOVIES[currentMovieIndex].release_date}</p>
+                  </FeaturedWorkReleaseDate>
+                  <FeaturedWorkOverview>
+                    <WorkInformationSection>Synopsis:</WorkInformationSection>
+                    <p>{POPULAR_MOVIES[currentMovieIndex].overview}</p>
+                  </FeaturedWorkOverview>
+                </FeaturedWorkInformation>
+              </FeaturedWorkWrapper>
             )}
-          </Styled.TopRatedWrapper>
-        )}
-      </Styled.Main>
-      <FooterComponent></FooterComponent>
+          </FeaturedContentWrapper>
+          <OtherWorksWrapper>
+            <OtherWorks
+              content={TOP_RATED_MOVIES}
+              title="Top Rated Movies"
+              to="/movie/top_rated"
+              type="movie"
+            ></OtherWorks>
+            <OtherWorks
+              content={UPCOMING_MOVIES}
+              title="Upcoming Movies"
+              to="/movie/upcoming"
+              type="movie"
+            ></OtherWorks>
+            <OtherWorks
+              content={TOP_RATED_TV_SHOWS}
+              title="Top Rated TV Shows"
+              to="/tv/top_rated"
+              type="tv"
+            ></OtherWorks>
+            <OtherWorks
+              content={POPULAR_TV_SHOWS}
+              title="Popular TV Shows"
+              to="/tv/popular"
+              type="tv"
+            ></OtherWorks>
+            <OtherWorks
+              content={ON_THE_AIR_TV_SHOWS}
+              title="On The Air TV Shows"
+              to="/tv/on_the_air"
+              type="tv"
+            ></OtherWorks>
+          </OtherWorksWrapper>
+        </HomeContentWrapper>
+      )}
     </div>
   );
 };
