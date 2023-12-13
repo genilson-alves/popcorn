@@ -115,6 +115,13 @@ const OtherWorks = (props: any) => {
 
 const HomeContentWrapper = styled.main``;
 
+const FeaturedWorksTitle = styled.div`
+  color: ${COLORS.SECTION_COLOR};
+  font-size: 1.4rem;
+  padding: 10px 0px;
+  font-weight: bold;
+`;
+
 const FeaturedContentWrapper = styled.div`
   margin: 50px 10px;
 `;
@@ -127,12 +134,18 @@ const FeaturedWorkWrapper = styled.div`
 `;
 
 const FeaturedWorkPosterWrapper = styled.div`
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const FeaturedPosterRatingWrapper = styled.div`
   display: inline-block;
+  position: relative;
   img {
     border-radius: 10px;
-    width: 250px;
-    height: 400px;
+    width: 200px;
+    height: 300px;
   }
 `;
 
@@ -149,7 +162,7 @@ const FeaturedWorkRating = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
   top: 1%;
-  left: 78%;
+  left: 74%;
 `;
 
 const FeaturedWorkInformation = styled.div`
@@ -157,7 +170,7 @@ const FeaturedWorkInformation = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: justify;
+  gap: 10px;
 `;
 
 const WorkInformationSection = styled.span`
@@ -165,17 +178,50 @@ const WorkInformationSection = styled.span`
   font-style: italic;
 `;
 
-const FeaturedWorkTitleWrapper = styled.div``;
+const FeaturedWorkTitleWrapper = styled.div`
+  padding: 5px;
+  text-align: center;
+`;
 
 const FeaturedWorkTitle = styled(Link)`
   ${LinkDefault}
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
 `;
 
 const FeaturedWorkReleaseDate = styled.div``;
 
-const FeaturedWorkOverview = styled.div``;
+const FeaturedWorkOverview = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ButtonSettings = css`
+  height: 50px;
+  width: 50px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  border-radius: 15px;
+  margin: 5px;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+const MobilePreviousButton = styled.button`
+  ${ButtonSettings}
+`;
+
+const MobileNextButton = styled.button`
+  ${ButtonSettings}
+`;
 
 const Home: React.FC = () => {
   const [POPULAR_MOVIES, setPopularMovies] = useState<Work[]>([]);
@@ -254,21 +300,33 @@ const Home: React.FC = () => {
           <FeaturedContentWrapper>
             {POPULAR_MOVIES.length > 0 && (
               <FeaturedWorkWrapper key={POPULAR_MOVIES[currentMovieIndex].id}>
+                <FeaturedWorksTitle>
+                  <p>Popular Movies</p>
+                </FeaturedWorksTitle>
                 <FeaturedWorkPosterWrapper>
-                  <img
-                    src={
-                      POPULAR_MOVIES[currentMovieIndex].poster_path
-                        ? `https://www.themoviedb.org/t/p/original${POPULAR_MOVIES[currentMovieIndex].poster_path}`
-                        : no_poster
-                    }
-                    alt={POPULAR_MOVIES[0].title}
-                  ></img>
-                  <FeaturedWorkRating>
-                    {POPULAR_MOVIES[currentMovieIndex].vote_average
-                      .toFixed(1)
-                      .replace(".", "")}
-                  </FeaturedWorkRating>
+                  <MobilePreviousButton onClick={handlePreviousMovie}>
+                    <img src={previous} alt="Previous" />
+                  </MobilePreviousButton>
+                  <FeaturedPosterRatingWrapper>
+                    <img
+                      src={
+                        POPULAR_MOVIES[currentMovieIndex].poster_path
+                          ? `https://www.themoviedb.org/t/p/original${POPULAR_MOVIES[currentMovieIndex].poster_path}`
+                          : no_poster
+                      }
+                      alt={POPULAR_MOVIES[0].title}
+                    ></img>
+                    <FeaturedWorkRating>
+                      {POPULAR_MOVIES[currentMovieIndex].vote_average
+                        .toFixed(1)
+                        .replace(".", "")}
+                    </FeaturedWorkRating>
+                  </FeaturedPosterRatingWrapper>
+                  <MobileNextButton onClick={handleNextMovie}>
+                    <img src={next} alt="Next" />
+                  </MobileNextButton>
                 </FeaturedWorkPosterWrapper>
+
                 <FeaturedWorkInformation>
                   <FeaturedWorkTitleWrapper>
                     <FeaturedWorkTitle
