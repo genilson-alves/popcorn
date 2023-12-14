@@ -223,6 +223,31 @@ const MobileNextButton = styled.button`
   ${ButtonSettings}
 `;
 
+const TopRatedWrapper = styled.div``;
+
+const TopRatedSectionTitle = styled.div``;
+
+const TopRatedPoster = styled.div``;
+
+const TopRatedContentWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+const TopRated = styled.div``;
+
+const TopRatedPosterWrapper = styled.div`
+  img {
+    width: 150px;
+  }
+`;
+
+const TopRatedPosition = styled.div``;
+
+const TopRatedInformation = styled.div``;
+
+const TopRatedTitle = styled.div``;
+
 const Home: React.FC = () => {
   const [POPULAR_MOVIES, setPopularMovies] = useState<Work[]>([]);
   const [UPCOMING_MOVIES, setUpcomingMovies] = useState<Work[]>([]);
@@ -326,7 +351,6 @@ const Home: React.FC = () => {
                     <img src={next} alt="Next" />
                   </MobileNextButton>
                 </FeaturedWorkPosterWrapper>
-
                 <FeaturedWorkInformation>
                   <FeaturedWorkTitleWrapper>
                     <FeaturedWorkTitle
@@ -381,6 +405,55 @@ const Home: React.FC = () => {
               type="tv"
             ></OtherWorks>
           </OtherWorksWrapper>
+          <TopRatedWrapper>
+            <TopRatedSectionTitle>Our top rated works</TopRatedSectionTitle>
+            <TopRatedContentWrapper>
+              <TopRated>
+                <TopRatedPoster>
+                  <TopRatedPosterWrapper>
+                    <TopRatedPosition>#1</TopRatedPosition>
+                    <img src={no_poster} alt="Poster" />
+                  </TopRatedPosterWrapper>
+                </TopRatedPoster>
+                <TopRatedInformation>
+                  <TopRatedTitle>No Poster</TopRatedTitle>
+                </TopRatedInformation>
+              </TopRated>
+              <TopRated>
+                <TopRatedPoster>
+                  <TopRatedPosterWrapper>
+                    <TopRatedPosition>#1</TopRatedPosition>
+                    <img src={no_poster} alt="Poster" />
+                  </TopRatedPosterWrapper>
+                </TopRatedPoster>
+                <TopRatedInformation>
+                  <TopRatedTitle>No Poster</TopRatedTitle>
+                </TopRatedInformation>
+              </TopRated>
+              <TopRated>
+                <TopRatedPoster>
+                  <TopRatedPosterWrapper>
+                    <TopRatedPosition>#1</TopRatedPosition>
+                    <img src={no_poster} alt="Poster" />
+                  </TopRatedPosterWrapper>
+                </TopRatedPoster>
+                <TopRatedInformation>
+                  <TopRatedTitle>No Poster</TopRatedTitle>
+                </TopRatedInformation>
+              </TopRated>
+              <TopRated>
+                <TopRatedPoster>
+                  <TopRatedPosterWrapper>
+                    <TopRatedPosition>#1</TopRatedPosition>
+                    <img src={no_poster} alt="Poster" />
+                  </TopRatedPosterWrapper>
+                </TopRatedPoster>
+                <TopRatedInformation>
+                  <TopRatedTitle>No Poster</TopRatedTitle>
+                </TopRatedInformation>
+              </TopRated>
+            </TopRatedContentWrapper>
+          </TopRatedWrapper>
         </HomeContentWrapper>
       )}
     </div>
