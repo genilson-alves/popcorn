@@ -117,9 +117,10 @@ const HomeContentWrapper = styled.main``;
 
 const FeaturedWorksTitle = styled.div`
   color: ${COLORS.SECTION_COLOR};
-  font-size: 1.4rem;
-  padding: 10px 0px;
+  text-align: center;
+  margin-bottom: 20px;
   font-weight: bold;
+  font-size: 1.5rem;
 `;
 
 const FeaturedContentWrapper = styled.div`
@@ -225,28 +226,60 @@ const MobileNextButton = styled.button`
 
 const TopRatedWrapper = styled.div``;
 
-const TopRatedSectionTitle = styled.div``;
+const TopRated = styled.div``;
 
-const TopRatedPoster = styled.div``;
+const TopRatedSection = styled.div`
+  color: ${COLORS.SECTION_COLOR};
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-size: 1.5rem;
+`;
 
 const TopRatedContentWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 `;
 
-const TopRated = styled.div``;
+const TopRatedContent = styled.div``;
 
 const TopRatedPosterWrapper = styled.div`
+  display: inline-block;
+  position: relative;
   img {
     width: 150px;
+    height: 200px;
+    border-radius: 10px;
   }
 `;
 
-const TopRatedPosition = styled.div``;
+const TopRatedPosition = styled.div`
+  position: absolute;
+  background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 2%;
+  right: 2%;
+  width: 35px;
+  height: 35px;
+`;
 
-const TopRatedInformation = styled.div``;
+const TopRatedTitle = styled.div`
+  padding: 5px;
+  background-color: black;
+`;
 
-const TopRatedTitle = styled.div``;
+const TopRatedTitleLink = styled(Link)`
+  ${LinkDefault}
+  word-wrap: break-word;
+`;
 
 const Home: React.FC = () => {
   const [POPULAR_MOVIES, setPopularMovies] = useState<Work[]>([]);
@@ -406,53 +439,37 @@ const Home: React.FC = () => {
             ></OtherWorks>
           </OtherWorksWrapper>
           <TopRatedWrapper>
-            <TopRatedSectionTitle>Our top rated works</TopRatedSectionTitle>
-            <TopRatedContentWrapper>
-              <TopRated>
-                <TopRatedPoster>
-                  <TopRatedPosterWrapper>
-                    <TopRatedPosition>#1</TopRatedPosition>
-                    <img src={no_poster} alt="Poster" />
-                  </TopRatedPosterWrapper>
-                </TopRatedPoster>
-                <TopRatedInformation>
-                  <TopRatedTitle>No Poster</TopRatedTitle>
-                </TopRatedInformation>
-              </TopRated>
-              <TopRated>
-                <TopRatedPoster>
-                  <TopRatedPosterWrapper>
-                    <TopRatedPosition>#1</TopRatedPosition>
-                    <img src={no_poster} alt="Poster" />
-                  </TopRatedPosterWrapper>
-                </TopRatedPoster>
-                <TopRatedInformation>
-                  <TopRatedTitle>No Poster</TopRatedTitle>
-                </TopRatedInformation>
-              </TopRated>
-              <TopRated>
-                <TopRatedPoster>
-                  <TopRatedPosterWrapper>
-                    <TopRatedPosition>#1</TopRatedPosition>
-                    <img src={no_poster} alt="Poster" />
-                  </TopRatedPosterWrapper>
-                </TopRatedPoster>
-                <TopRatedInformation>
-                  <TopRatedTitle>No Poster</TopRatedTitle>
-                </TopRatedInformation>
-              </TopRated>
-              <TopRated>
-                <TopRatedPoster>
-                  <TopRatedPosterWrapper>
-                    <TopRatedPosition>#1</TopRatedPosition>
-                    <img src={no_poster} alt="Poster" />
-                  </TopRatedPosterWrapper>
-                </TopRatedPoster>
-                <TopRatedInformation>
-                  <TopRatedTitle>No Poster</TopRatedTitle>
-                </TopRatedInformation>
-              </TopRated>
-            </TopRatedContentWrapper>
+            <TopRated>
+              <TopRatedSection>
+                <p>Our top ranked work!</p>
+              </TopRatedSection>
+              {TOP_RATED_MOVIES.length > 0 && (
+                <TopRatedContentWrapper>
+                  {TOP_RATED_MOVIES.map((work, index) => (
+                    <TopRatedContent key={work.id}>
+                      <TopRatedPosterWrapper>
+                        <TopRatedPosition>
+                          <p>#{index + 1}</p>
+                        </TopRatedPosition>
+                        <img
+                          src={
+                            work.poster_path
+                              ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
+                              : no_poster
+                          }
+                          alt={work.title}
+                        ></img>
+                      </TopRatedPosterWrapper>
+                      <TopRatedTitle>
+                        <TopRatedTitleLink to={`/movie/${work.id}`}>
+                          {work.title}
+                        </TopRatedTitleLink>
+                      </TopRatedTitle>
+                    </TopRatedContent>
+                  ))}
+                </TopRatedContentWrapper>
+              )}
+            </TopRated>
           </TopRatedWrapper>
         </HomeContentWrapper>
       )}
