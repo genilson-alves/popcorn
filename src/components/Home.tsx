@@ -4,6 +4,7 @@ import styled, { css } from "styled-components";
 import * as Styled from "../Styled";
 import { COLORS } from "../Styled";
 import { Helmet } from "react-helmet";
+import { FooterComponent } from "./FooterComponent";
 
 const no_poster = require("../assets/no_poster.jpg");
 const previous = require("../assets/previous.png");
@@ -238,20 +239,24 @@ const TopRatedSection = styled.div`
 
 const TopRatedContentWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 10px;
 `;
 
-const TopRatedContent = styled.div``;
+const TopRatedContent = styled.div`
+  overflow: hidden;
+  width: 150px;
+  height: 300px;
+`;
 
 const TopRatedPosterWrapper = styled.div`
   display: inline-block;
   position: relative;
   img {
     width: 150px;
-    height: 200px;
+    height: 230px;
     border-radius: 10px;
   }
 `;
@@ -273,12 +278,11 @@ const TopRatedPosition = styled.div`
 
 const TopRatedTitle = styled.div`
   padding: 5px;
-  background-color: black;
+  text-align: center;
 `;
 
 const TopRatedTitleLink = styled(Link)`
   ${LinkDefault}
-  word-wrap: break-word;
 `;
 
 const Home: React.FC = () => {
@@ -473,6 +477,7 @@ const Home: React.FC = () => {
           </TopRatedWrapper>
         </HomeContentWrapper>
       )}
+      <FooterComponent></FooterComponent>
     </div>
   );
 };

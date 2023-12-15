@@ -2,76 +2,55 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { COLORS } from "../Styled";
 import styled from "styled-components";
-import { link } from "fs";
 const linkedin = require("../assets/linkedin.png");
 const github = require("../assets/github.png");
 const mobile = require("../assets/mobile.png");
 const email = require("../assets/email.png");
 
 const FooterWrapper = styled.footer`
-  width: 100%;
+  color: ${COLORS.FOOTER_COLOR};
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
-  margin-top: 50px;
 `;
 
 const Footer = styled.footer`
-  max-width: 1500px;
-  margin: auto;
-  color: ${COLORS.FOOTER_COLOR};
   display: flex;
-  justify-content: space-evenly;
-  padding: 30px;
+  flex-direction: column;
+  margin-bottom: 20px;
   ul {
-    gap: 10px;
     display: flex;
     flex-direction: column;
+    gap: 8px;
     list-style: none;
+    margin: 10px;
     li {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 5px;
       img {
-        width: 30px;
+        width: 20px;
       }
     }
-    span {
-    }
     p {
-      margin: 30px 0px 20px;
-      font-size: 1.5rem;
       font-weight: bold;
-      border-bottom: 0.5px solid ${COLORS.FOOTER_COLOR};
-      padding-bottom: 20px;
+      margin-bottom: 3px;
     }
   }
 `;
 
 const FooterLink = styled(Link)`
   text-decoration: none;
-  padding-left: 5px;
   color: ${COLORS.FOOTER_COLOR};
   &:hover {
     text-decoration: underline;
+    opacity: 0.8;
   }
 `;
 
 const FooterEnd = styled.div`
-  color: ${COLORS.PAGE_WHITE};
-  font-size: 1.2rem;
-  font-style: italic;
-  margin: auto;
-  padding: 50px;
-  max-width: 1500px;
   display: flex;
-  justify-content: space-between;
-  div {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    img {
-      width: 30px;
-    }
-  }
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
 `;
 
 export const FooterComponent = () => {
@@ -79,29 +58,33 @@ export const FooterComponent = () => {
     <FooterWrapper>
       <Footer>
         <ul>
-          <p>Contact Me</p>
+          <p>Movies</p>
           <li>
-            <img src={github} alt="GitHub"></img>
-            <FooterLink to="https://github.com/genilson-alves" target="_blank">
-              Genilson Alves Ferreira da Silva
-            </FooterLink>
+            <FooterLink to="/movie/top_rated">Top Rated</FooterLink>
           </li>
           <li>
-            <img src={linkedin} alt="LinkedIn"></img>
-            <FooterLink
-              to="https://linkedin.com/in/genilson-alves0"
-              target="_blank"
-            >
-              Genilson Alves Ferreira da Silva
-            </FooterLink>
+            <FooterLink to="/movie/popular">Popular</FooterLink>
           </li>
           <li>
-            <img src={email} alt="E-mail"></img>
-            <span>genilson.alves9555@gmail.com</span>
+            <FooterLink to="/movie/upcoming">Upcoming</FooterLink>
           </li>
           <li>
-            <img src={mobile} alt="Phone"></img>
-            <span>55 41 9 85319395</span>
+            <FooterLink to="/movie/now_playing">Now Playing</FooterLink>
+          </li>
+        </ul>
+        <ul>
+          <p>Tv Shows</p>
+          <li>
+            <FooterLink to="/tv/popular">Popular</FooterLink>
+          </li>
+          <li>
+            <FooterLink to="/tv/top_rated">Top Rated</FooterLink>
+          </li>
+          <li>
+            <FooterLink to="/tv/airing_today">Airing Today</FooterLink>
+          </li>
+          <li>
+            <FooterLink to="/tv/on_the_air">On The Air</FooterLink>
           </li>
         </ul>
         <ul>
@@ -121,47 +104,26 @@ export const FooterComponent = () => {
           </li>
         </ul>
         <ul>
-          <p>Movies</p>
+          <p>Contact</p>
           <li>
-            <FooterLink to="/movie/top_rated">Top Rated</FooterLink>
+            <img src={github} alt="GitHub"></img>
+            <FooterLink to="https://github.com/genilson-alves" target="_blank">
+              GitHub
+            </FooterLink>
           </li>
           <li>
-            <FooterLink to="/movie/popular">Popular</FooterLink>
-          </li>
-          <li>
-            <FooterLink to="/movie/upcoming">Upcoming</FooterLink>
-          </li>
-          <li>
-            <FooterLink to="/movie/now_playing">Now Playing</FooterLink>
-          </li>
-        </ul>
-        <ul>
-          <p>TV Shows</p>
-          <li>
-            <FooterLink to="/tv/popular">Popular</FooterLink>
-          </li>
-          <li>
-            <FooterLink to="/tv/top_rated">Top Rated</FooterLink>
-          </li>
-          <li>
-            <FooterLink to="/tv/airing_today">Airing Today</FooterLink>
-          </li>
-          <li>
-            <FooterLink to="/tv/on_the_air">On The Air</FooterLink>
+            <img src={linkedin} alt="LinkedIn"></img>
+            <FooterLink
+              to="https://linkedin.com/in/genilson-alves0"
+              target="_blank"
+            >
+              LinkedIn
+            </FooterLink>
           </li>
         </ul>
       </Footer>
       <FooterEnd>
-        <div>
-          <Link to="https://linkedin.com/in/genilson-alves0" target="_blank">
-            <img src={linkedin} alt="LinkedIn"></img>
-          </Link>
-          <Link to="https://github.com/genilson-alves" target="_blank">
-            <img src={github} alt="GitHub"></img>
-          </Link>
-        </div>
-        <div>Brazil</div>
-        <div>Worked just fine!</div>
+        <div>Brazil, 2023</div>
       </FooterEnd>
     </FooterWrapper>
   );
