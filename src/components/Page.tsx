@@ -25,23 +25,19 @@ const PageBackground = styled.div`
   img {
     width: 100%;
     height: 200px;
-    filter: blur(1px);
-    transform: scale(1.1);
   }
 `;
 
 const PagePoster = styled.div`
   position: absolute;
-  top: 9%;
+  top: 15%;
   img {
     width: 120px;
     border-radius: 10px;
   }
 `;
 
-const Content = styled.div`
-  margin-top: 100px;
-`;
+const Content = styled.div``;
 
 type Work = {
   backdrop_path: string;
@@ -153,10 +149,7 @@ const Page = (props: any) => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(
-      `https://api.themoviedb.org/3/${workType}/${workId.workId}`,
-      API_GET_OPTIONS
-    )
+    fetch(`https://api.themoviedb.org/3/tv/1399`, API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setWorkInformation(response))
       .catch((err) => setError(`ERROR WHILE FETCHING: ${err}`));
@@ -182,22 +175,21 @@ const Page = (props: any) => {
           <Helmet>
             <title>Temporary Page Title</title>
           </Helmet>
-          <div>
-            <PagePosterBackgroundWrapper>
-              <PageBackground>
-                <img src={no_background} alt="a"></img>
-              </PageBackground>
-              <PagePoster>
-                <img src={no_poster} alt="a"></img>
-              </PagePoster>
-            </PagePosterBackgroundWrapper>
-            <Content>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
-              explicabo dolore, eius in, quaerat facilis commodi aliquam aliquid
-              rem cum obcaecati eos porro inventore quis similique animi
-              quisquam saepe sit.
-            </Content>
-          </div>
+          <PagePosterBackgroundWrapper>
+            <PageBackground>
+              <img
+                src={`https://www.themoviedb.org/t/p/original/${workInformation.backdrop_path}`}
+                alt={workInformation.name}
+              ></img>
+            </PageBackground>
+            <PagePoster>
+              <img
+                src={`https://www.themoviedb.org/t/p/original/${workInformation.poster_path}`}
+                alt={workInformation.name}
+              ></img>
+            </PagePoster>
+          </PagePosterBackgroundWrapper>
+          <Content>{workInformation.overview}</Content>
         </div>
       )}
       <FooterComponent></FooterComponent>

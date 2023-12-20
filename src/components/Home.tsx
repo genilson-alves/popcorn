@@ -241,6 +241,7 @@ const TopRatedContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 5px;
   flex-wrap: wrap;
   gap: 10px;
 `;
@@ -277,7 +278,6 @@ const TopRatedPosition = styled.div`
 `;
 
 const TopRatedTitle = styled.div`
-  padding: 5px;
   text-align: center;
 `;
 
