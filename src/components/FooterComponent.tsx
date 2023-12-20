@@ -10,6 +10,7 @@ const email = require("../assets/email.png");
 const FooterWrapper = styled.footer`
   color: ${COLORS.FOOTER_COLOR};
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  padding: 30px 0px 0px;
 `;
 
 const Footer = styled.footer`
@@ -21,7 +22,7 @@ const Footer = styled.footer`
     flex-direction: column;
     gap: 8px;
     list-style: none;
-    margin: 10px;
+    margin: 20px;
     li {
       display: flex;
       align-items: center;
