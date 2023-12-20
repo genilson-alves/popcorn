@@ -11,25 +11,36 @@ const no_cast_image = require("../assets/no_cast_image.jpg");
 const no_background = require("../assets/no_background.jpg");
 const no_poster = require("../assets/no_poster.jpg");
 
-const PagePosterBackgroundWrapper = styled.div``;
-
-const PagePoster = styled.div`
-  position: absolute;
-  top: 20%;
-  left: 35%;
-  img {
-    width: 100px;
-    height: 150px;
-  }
+const PagePosterBackgroundWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 `;
 
 const PageBackground = styled.div`
   display: inline-block;
   position: relative;
+  width: 100%;
   img {
     width: 100%;
     height: 200px;
+    filter: blur(1px);
+    transform: scale(1.1);
   }
+`;
+
+const PagePoster = styled.div`
+  position: absolute;
+  top: 9%;
+  img {
+    width: 120px;
+    border-radius: 10px;
+  }
+`;
+
+const Content = styled.div`
+  margin-top: 100px;
 `;
 
 type Work = {
@@ -180,6 +191,12 @@ const Page = (props: any) => {
                 <img src={no_poster} alt="a"></img>
               </PagePoster>
             </PagePosterBackgroundWrapper>
+            <Content>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+              explicabo dolore, eius in, quaerat facilis commodi aliquam aliquid
+              rem cum obcaecati eos porro inventore quis similique animi
+              quisquam saepe sit.
+            </Content>
           </div>
         </div>
       )}
