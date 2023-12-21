@@ -11,8 +11,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home></Home>,
   },
-  { path: "/tv/:workId", element: <Page type="tv"></Page> },
-  { path: "/movie/:workId", element: <Page type="movie"></Page> },
+  { path: "/tv/:workId", element: <Page type="tv" background></Page> },
+  { path: "/movie/:workId", element: <Page type="movie" background></Page> },
   {
     path: "/movie/top_rated",
     element: (

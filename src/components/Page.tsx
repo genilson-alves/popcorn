@@ -11,34 +11,6 @@ const no_cast_image = require("../assets/no_cast_image.jpg");
 const no_background = require("../assets/no_background.jpg");
 const no_poster = require("../assets/no_poster.jpg");
 
-const PagePosterBackgroundWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-`;
-
-const PageBackground = styled.div`
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  img {
-    width: 100%;
-    height: 200px;
-  }
-`;
-
-const PagePoster = styled.div`
-  position: absolute;
-  top: 15%;
-  img {
-    width: 120px;
-    border-radius: 10px;
-  }
-`;
-
-const Content = styled.div``;
-
 type Work = {
   backdrop_path: string;
   poster_path: string;
@@ -129,15 +101,52 @@ type Cast = {
   };
 };
 
+const PageBackgroundWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const PageBackground = styled.div<{ background: string }>`
+  background-image: ${(props) => `url(${props.background})`};
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  height: 300px;
+  margin-top: -50px;
+`;
+
+const PageTitle = styled.div`
+  p {
+    margin: 10px;
+    font-size: 1.5rem;
+    padding: 5px;
+  }
+`;
+
+const PagePoster = styled.div`
+  img {
+    position: relative;
+    margin-top: -80%;
+    width: 130px;
+    height: 200px;
+    border-radius: 10px;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  margin: 0px 10px;
+  padding: 10px;
+`;
+
 const Page = (props: any) => {
   const [workInformation, setWorkInformation] = useState<Work>();
+  const [workCast, setCast] = useState<Cast>();
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [workCast, setCast] = useState<Cast>();
   const [showAllCast, setShowAllCast] = useState<boolean>(false);
   const workType = props.type;
   const workId = useParams();
-
   const API_GET_OPTIONS = {
     method: "GET",
     headers: {
@@ -163,9 +172,6 @@ const Page = (props: any) => {
     setLoading(false);
   }, []);
 
-  console.log(workInformation);
-  console.log(workCast);
-
   return (
     <div>
       {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
@@ -175,21 +181,25 @@ const Page = (props: any) => {
           <Helmet>
             <title>Temporary Page Title</title>
           </Helmet>
-          <PagePosterBackgroundWrapper>
-            <PageBackground>
-              <img
-                src={`https://www.themoviedb.org/t/p/original/${workInformation.backdrop_path}`}
-                alt={workInformation.name}
-              ></img>
-            </PageBackground>
-            <PagePoster>
-              <img
-                src={`https://www.themoviedb.org/t/p/original/${workInformation.poster_path}`}
-                alt={workInformation.name}
-              ></img>
-            </PagePoster>
-          </PagePosterBackgroundWrapper>
-          <Content>{workInformation.overview}</Content>
+          <PageBackgroundWrapper>
+            <PageBackground
+              background={`https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`}
+            ></PageBackground>
+            <div>
+              <PagePoster>
+                <img
+                  src={`https://www.themoviedb.org/t/p/original${workInformation.poster_path}`}
+                  alt="A"
+                />
+              </PagePoster>
+            </div>
+            <PageTitle>
+              <p>{workInformation.name}</p>
+            </PageTitle>
+            <ContentWrapper>
+              <p>{workInformation.overview}</p>
+            </ContentWrapper>
+          </PageBackgroundWrapper>
         </div>
       )}
       <FooterComponent></FooterComponent>
@@ -198,27 +208,3 @@ const Page = (props: any) => {
 };
 
 export default Page;
-
-/* {showAllCast || index < 12 ? (
-  <Styled.WorkInformationCast>
-    <Styled.CastProfile>
-      <img
-        src={
-          cast.profile_path
-            ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
-            : no_cast_image
-        }
-        alt={cast.name}
-      ></img>
-                      {workCast.cast[11] && (
-<Styled.ShowAllCast>
-<button
-onClick={() => {
-  setShowAllCast(!showAllCast);
-}}
->
-{showAllCast ? "Show Less" : "Show More"}
-</button>
-</Styled.ShowAllCast>
-)}
-</Styled.CastProfile>*/
