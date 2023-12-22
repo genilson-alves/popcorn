@@ -127,7 +127,11 @@ const PagePoster = styled.div`
   }
 `;
 
-const PageStatus = styled.div<{ status: string }>`
+const PageContentWrapper = styled.div`
+  max-width: 400px;
+`;
+
+const PageStatus = styled.div`
   padding: 5px;
   background-color: ${COLORS.STATUS};
   color: ${COLORS.PAGE_WHITE};
@@ -136,11 +140,53 @@ const PageStatus = styled.div<{ status: string }>`
   text-align: center;
 `;
 
-const PageTitle = styled.div``;
+const PageTitle = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 10px 10px 0px;
+  text-align: center;
+`;
 
-const PageTagline = styled.div``;
+const PageOriginalTitle = styled.div`
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-style: italic;
+  text-align: center;
+`;
 
-const ContentWrapper = styled.div``;
+const PageTagline = styled.div`
+  font-style: italic;
+  text-align: center;
+  padding: 10px;
+`;
+
+const Synopsis = styled.div`
+  padding: 10px;
+  background-color: ${COLORS.PAGE_WHITE};
+  border-radius: 10px;
+  margin-bottom: 10px;
+`;
+
+const PageInformation = styled.div`
+  padding: 10px;
+  background-color: ${COLORS.PAGE_WHITE};
+  border-radius: 10px;
+  margin-bottom: 10px;
+`;
+
+const InformationWrapper = styled.div``;
+
+const Information = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+  margin-bottom: 5px;
+  span {
+    font-style: italic;
+    color: ${COLORS.PAGE_TITLE_COLOR};
+  }
+`;
 
 const Page = (props: any) => {
   const [workInformation, setWorkInformation] = useState<Work>();
@@ -206,9 +252,9 @@ const Page = (props: any) => {
                 <PageTitle>
                   <p>{workInformation.name}</p>
                 </PageTitle>
-                <ContentWrapper>
+                <Synopsis>
                   <p>{workInformation.overview}</p>
-                </ContentWrapper>
+                </Synopsis>
               </PageBackgroundWrapper>
             </div>
           ) : (
@@ -228,19 +274,89 @@ const Page = (props: any) => {
                     />
                   </PagePoster>
                 </div>
-                <PageStatus status={workInformation.status}>
+                <PageStatus>
                   <p>{workInformation.status}</p>
                 </PageStatus>
-                <PageTitle>
-                  <p>{workInformation.title}</p>
-                </PageTitle>
-                <PageTagline>
-                  <p>{workInformation.tagline}</p>
-                </PageTagline>
-
-                <ContentWrapper>
-                  <p>{workInformation.overview}</p>
-                </ContentWrapper>
+                <PageContentWrapper>
+                  <PageTitle>
+                    <p>{workInformation.title}</p>
+                  </PageTitle>
+                  {workInformation.title !== workInformation.original_title && (
+                    <PageOriginalTitle>
+                      <p>{workInformation.original_title}</p>
+                    </PageOriginalTitle>
+                  )}
+                  {workInformation.tagline ? (
+                    <PageTagline>
+                      <p>{`"${workInformation.tagline}"`}</p>
+                    </PageTagline>
+                  ) : undefined}
+                  <Synopsis>
+                    <p>{workInformation.overview}</p>
+                  </Synopsis>
+                  <PageInformation>
+                    <InformationWrapper>
+                      <Information>
+                        <span>Homepage</span>
+                        <a
+                          href={workInformation.homepage}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {workInformation.homepage}
+                        </a>
+                      </Information>
+                      <Information>
+                        <span>IMDB</span>
+                        <a
+                          href={`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                        </a>
+                      </Information>
+                      <Information>
+                        <span>Genres</span>
+                        <p>A</p>
+                      </Information>
+                      <Information>
+                        <span>Original Language</span>
+                        <p>{workInformation.original_language.toUpperCase()}</p>
+                      </Information>
+                      <Information>
+                        <span>Original Language</span>
+                        <p>{workInformation.original_language.toUpperCase()}</p>
+                      </Information>
+                      <Information>
+                        <span>Release Date</span>
+                        <p>{workInformation.release_date}</p>
+                      </Information>
+                      <Information>
+                        <span>Budget</span>
+                        <p>
+                          {workInformation.budget > 0
+                            ? workInformation.budget.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              })
+                            : "No Information"}
+                        </p>
+                      </Information>
+                      <Information>
+                        <span>Revenue</span>
+                        <p>
+                          {workInformation.revenue > 0
+                            ? workInformation.revenue.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                              })
+                            : "No Information"}
+                        </p>
+                      </Information>
+                    </InformationWrapper>
+                  </PageInformation>
+                </PageContentWrapper>
               </PageBackgroundWrapper>
             </div>
           )}
