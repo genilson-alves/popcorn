@@ -13,6 +13,7 @@ export const COLORS = {
   SECTION_COLOR: "#6c757d",
   PAGE_WHITE: "#f8f9fa",
   PAGE_BLACK: "#000000",
+  STATUS: "#003566",
 };
 
 export const GlobalStyle = createGlobalStyle`
