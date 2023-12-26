@@ -99,6 +99,7 @@ type Cast = {
       name: string;
       profile_path: string;
       known_for_department: string;
+      id: number;
     };
   };
 };
@@ -164,14 +165,14 @@ const Synopsis = styled.div`
   padding: 10px;
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin: 0px 10px 10px;
 `;
 
 const PageInformation = styled.div`
   padding: 10px;
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin: 0px 10px 10px;
 `;
 
 const InformationWrapper = styled.div``;
@@ -185,6 +186,30 @@ const Information = styled.div`
   span {
     font-style: italic;
     color: ${COLORS.PAGE_TITLE_COLOR};
+  }
+`;
+
+const PageCastWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+`;
+
+const PageCast = styled.div`
+  background-color: ${COLORS.PAGE_WHITE};
+  width: 100%;
+  margin: 0px 10px;
+  padding: 10px;
+  border-radius: 10px;
+  display: flex;
+  gap: 15px;
+  img {
+    width: 80px;
+    height: 130px;
+    border-radius: 10px;
   }
 `;
 
@@ -225,6 +250,7 @@ const Page = (props: any) => {
   }, []);
 
   console.log(workInformation);
+  console.log(workCast);
 
   return (
     <div>
@@ -317,20 +343,28 @@ const Page = (props: any) => {
                         </a>
                       </Information>
                       <Information>
-                        <span>Genres</span>
-                        <p>A</p>
-                      </Information>
-                      <Information>
-                        <span>Original Language</span>
-                        <p>{workInformation.original_language.toUpperCase()}</p>
-                      </Information>
-                      <Information>
-                        <span>Original Language</span>
-                        <p>{workInformation.original_language.toUpperCase()}</p>
-                      </Information>
-                      <Information>
                         <span>Release Date</span>
                         <p>{workInformation.release_date}</p>
+                      </Information>
+                      <Information>
+                        <span>Score</span>
+                        <p>
+                          {workInformation.vote_average
+                            .toFixed(1)
+                            .replace(".", "")}
+                        </p>
+                      </Information>
+                      <Information>
+                        <span>Genres</span>
+                        {Object.values(workInformation.genres).map(
+                          (genre, index) => (
+                            <p key={index}>{genre.name}</p>
+                          )
+                        )}
+                      </Information>
+                      <Information>
+                        <span>Original Language</span>
+                        <p>{workInformation.original_language.toUpperCase()}</p>
                       </Information>
                       <Information>
                         <span>Budget</span>
@@ -356,6 +390,31 @@ const Page = (props: any) => {
                       </Information>
                     </InformationWrapper>
                   </PageInformation>
+                  {workCast.cast[0] && (
+                    <PageCastWrapper>
+                      {Object.values(workCast.cast).map((cast) => (
+                        <PageCast key={cast.id}>
+                          <img
+                            src={
+                              cast.profile_path
+                                ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                : no_cast_image
+                            }
+                            alt={cast.name}
+                          />
+                          <div>
+                            <div>
+                              <p>{cast.name}</p>
+                              <p>
+                                {cast.character.replace(/\s*\(voice\)\s*/, "")}
+                              </p>
+                            </div>
+                            <p>{cast.known_for_department}</p>
+                          </div>
+                        </PageCast>
+                      ))}
+                    </PageCastWrapper>
+                  )}
                 </PageContentWrapper>
               </PageBackgroundWrapper>
             </div>
