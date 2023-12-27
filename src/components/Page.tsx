@@ -213,6 +213,31 @@ const PageCast = styled.div`
   }
 `;
 
+const CastProfile = styled.div`
+  padding: 5px 5px 0px 0px;
+`;
+
+const CastWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  span {
+    font-style: italic;
+    color: ${COLORS.LINK_COLOR};
+  }
+  p {
+  }
+`;
+
+const ShowMore = styled.button`
+  border: none;
+  border-radius: 10px;
+  background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  padding: 10px;
+  color: ${COLORS.PAGE_WHITE};
+  cursor: pointer;
+`;
+
 const Page = (props: any) => {
   const [workInformation, setWorkInformation] = useState<Work>();
   const [workCast, setCast] = useState<Cast>();
@@ -392,7 +417,7 @@ const Page = (props: any) => {
                   </PageInformation>
                   {workCast.cast[0] && (
                     <PageCastWrapper>
-                      {Object.values(workCast.cast).map((cast) => (
+                      {Object.values(workCast.cast).map((cast, index) => (
                         <PageCast key={cast.id}>
                           <img
                             src={
@@ -402,17 +427,29 @@ const Page = (props: any) => {
                             }
                             alt={cast.name}
                           />
-                          <div>
-                            <div>
+                          <CastWrapper>
+                            <CastProfile>
+                              <span>Name</span>
                               <p>{cast.name}</p>
-                              <p>
-                                {cast.character.replace(/\s*\(voice\)\s*/, "")}
-                              </p>
-                            </div>
-                            <p>{cast.known_for_department}</p>
-                          </div>
+                            </CastProfile>
+                            <CastProfile>
+                              <span>Role</span>
+                              <p>{cast.known_for_department}</p>
+                            </CastProfile>
+                            <CastProfile>
+                              <span>Character</span>
+                              <p>{cast.character.replace(/\(.*?\)/g, "")}</p>
+                            </CastProfile>
+                          </CastWrapper>
                         </PageCast>
                       ))}
+                      <ShowMore
+                        onClick={() => {
+                          setShowAllCast(!showAllCast);
+                        }}
+                      >
+                        Show More
+                      </ShowMore>
                     </PageCastWrapper>
                   )}
                 </PageContentWrapper>
