@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import { HomeNavigationBar } from "./NavigationBar";
 import styled from "styled-components";
 import * as Styled from "../Styled";
+import { COLORS } from "../Styled";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
 import { FooterComponent } from "./FooterComponent";
 const no_image = require("../assets/no_image.png");
 const no_poster = require("../assets/no_poster.jpg");
@@ -16,43 +18,41 @@ type Movies = {
   media_type: string;
 };
 
+const SearchWrapper = styled.div``;
+
 const SearchSectionWrapper = styled.div`
-  width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  padding: 20px;
+  justify-content: center;
+  margin: 20px;
 `;
 
 const SearchSection = styled.div`
-  display: flex;
-  background-color: white;
+  background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
-  justify-content: space-between;
-  padding: 8px;
+  padding: 5px;
 `;
 
 const PageTitle = styled.p`
-  padding: 0px 0px 20px;
-  font-size: 2.5rem;
+  font-size: 1.4rem;
   font-weight: bold;
+  margin-top: 20px;
 `;
 
 const SearchBar = styled.input`
   outline: none;
-  padding: 0px 20px;
   border-radius: 10px;
+  padding: 0px 5px;
   border: none;
-  width: 500px;
-  font-size: 1rem;
+  background: ${COLORS.PAGE_WHITE};
 `;
 
 const SearchButton = styled.button`
   background-color: black;
   color: white;
+  padding: 10px;
   cursor: pointer;
-  padding: 15px;
   border: none;
   border-radius: 10px;
   &:hover {
@@ -60,59 +60,30 @@ const SearchButton = styled.button`
   }
 `;
 
-const SearchWrapper = styled.div`
-  max-width: 1500px;
-  margin: auto;
-`;
-
-const Search = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px 50px;
-  padding: 30px 0px;
-`;
+const Search = styled.div``;
 
 const SearchContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 250px;
+  justify-content: center;
+  max-width: 200px;
 `;
 
 const SearchPoster = styled.div`
-  z-index: -1;
   img {
+    width: 150px;
+    height: 250px;
     border-radius: 10px;
-    width: 100%;
-    min-width: 250px;
-    min-height: 400px;
   }
 `;
 
-const SearchRating = styled.div`
-  position: absolute;
-  margin: 5px 195px;
-  font-weight: bold;
-  background-color: #06d6a0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  width: 50px;
-  height: 50px;
-  border-radius: 8px;
-`;
+const SearchRating = styled.div``;
 
-const SearchTitle = styled.div`
-  text-align: center;
-  padding: 3px 10px;
-  a {
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
-  }
+const SearchTitle = styled.div``;
+
+const TitleLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const SearchPage = () => {
@@ -160,7 +131,6 @@ const SearchPage = () => {
       <Helmet>
         <title>Search</title>
       </Helmet>
-      <HomeNavigationBar></HomeNavigationBar>
       <SearchWrapper>
         <SearchSectionWrapper>
           <PageTitle>Search</PageTitle>
@@ -226,9 +196,9 @@ const SearchPage = () => {
                     ></img>
                   </SearchPoster>
                   <SearchTitle>
-                    <Styled.RouterLink to={`/movie/${work.id}`}>
+                    <TitleLink to={`/movie/${work.id}`}>
                       {work.title ? work.title : work.name}
-                    </Styled.RouterLink>
+                    </TitleLink>
                   </SearchTitle>
                 </SearchContent>
               ))}

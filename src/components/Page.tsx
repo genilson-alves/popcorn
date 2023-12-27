@@ -181,7 +181,7 @@ const Information = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
-  padding: 5px;
+  padding: 5px 0px;
   margin-bottom: 5px;
   span {
     font-style: italic;
@@ -231,11 +231,15 @@ const CastWrapper = styled.div`
 
 const ShowMore = styled.button`
   border: none;
+  text-align: center;
   border-radius: 10px;
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
   padding: 10px;
   color: ${COLORS.PAGE_WHITE};
   cursor: pointer;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Page = (props: any) => {
@@ -300,12 +304,114 @@ const Page = (props: any) => {
                     />
                   </PagePoster>
                 </div>
-                <PageTitle>
-                  <p>{workInformation.name}</p>
-                </PageTitle>
-                <Synopsis>
-                  <p>{workInformation.overview}</p>
-                </Synopsis>
+                <PageStatus>
+                  <p>{workInformation.status}</p>
+                </PageStatus>
+                <PageContentWrapper>
+                  <PageTitle>
+                    <p>{workInformation.name}</p>
+                  </PageTitle>
+                  {workInformation.name !== workInformation.original_name && (
+                    <PageOriginalTitle>
+                      <p>{workInformation.original_name}</p>
+                    </PageOriginalTitle>
+                  )}
+                  {workInformation.tagline ? (
+                    <PageTagline>
+                      <p>{`"${workInformation.tagline}"`}</p>
+                    </PageTagline>
+                  ) : undefined}
+                  <Synopsis>
+                    <p>{workInformation.overview}</p>
+                  </Synopsis>
+                  <PageInformation>
+                    <InformationWrapper>
+                      <Information>
+                        <span>Homepage</span>
+                        <a
+                          href={workInformation.homepage}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {workInformation.homepage}
+                        </a>
+                      </Information>
+                      <Information>
+                        <span>Score</span>
+                        <p>
+                          {workInformation.vote_average
+                            .toFixed(1)
+                            .replace(".", "")}
+                        </p>
+                      </Information>
+                      <Information>
+                        <span>Number of Episodes</span>
+                        <p>{workInformation.number_of_episodes}</p>
+                      </Information>
+                      <Information>
+                        <span>Number of Seasons</span>
+                        <p>{workInformation.number_of_seasons}</p>
+                      </Information>
+                      <Information>
+                        <span>First Air Date</span>
+                        <p>{workInformation.first_air_date}</p>
+                      </Information>
+                      <Information>
+                        <span>Genres</span>
+                        {Object.values(workInformation.genres).map(
+                          (genre, index) => (
+                            <p key={index}>{genre.name}</p>
+                          )
+                        )}
+                      </Information>
+                      <Information>
+                        <span>Original Language</span>
+                        <p>{workInformation.original_language.toUpperCase()}</p>
+                      </Information>
+                    </InformationWrapper>
+                  </PageInformation>
+                  {workCast.cast[0] && (
+                    <PageCastWrapper>
+                      {Object.values(workCast.cast).map((cast, index) =>
+                        showAllCast || index < 12 ? (
+                          <PageCast key={cast.id}>
+                            <img
+                              src={
+                                cast.profile_path
+                                  ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                  : no_cast_image
+                              }
+                              alt={cast.name}
+                            />
+                            <CastWrapper>
+                              <CastProfile>
+                                <span>Name</span>
+                                <p>{cast.name}</p>
+                              </CastProfile>
+                              <CastProfile>
+                                <span>Role</span>
+                                <p>{cast.known_for_department}</p>
+                              </CastProfile>
+                              <CastProfile>
+                                <span>Character</span>
+                                <p>{cast.character.replace(/\(.*?\)/g, "")}</p>
+                              </CastProfile>
+                            </CastWrapper>
+                          </PageCast>
+                        ) : undefined
+                      )}
+                      {workCast.cast[11] && (
+                        <ShowMore
+                          onClick={() => {
+                            setShowAllCast(!showAllCast);
+                          }}
+                        >
+                          {showAllCast ? "Show Less" : "Show More"}
+                        </ShowMore>
+                      )}
+                    </PageCastWrapper>
+                  )}
+                </PageContentWrapper>
               </PageBackgroundWrapper>
             </div>
           ) : (
@@ -417,38 +523,40 @@ const Page = (props: any) => {
                   </PageInformation>
                   {workCast.cast[0] && (
                     <PageCastWrapper>
-                      {Object.values(workCast.cast).map((cast, index) => (
-                        <PageCast key={cast.id}>
-                          <img
-                            src={
-                              cast.profile_path
-                                ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
-                                : no_cast_image
-                            }
-                            alt={cast.name}
-                          />
-                          <CastWrapper>
-                            <CastProfile>
-                              <span>Name</span>
-                              <p>{cast.name}</p>
-                            </CastProfile>
-                            <CastProfile>
-                              <span>Role</span>
-                              <p>{cast.known_for_department}</p>
-                            </CastProfile>
-                            <CastProfile>
-                              <span>Character</span>
-                              <p>{cast.character.replace(/\(.*?\)/g, "")}</p>
-                            </CastProfile>
-                          </CastWrapper>
-                        </PageCast>
-                      ))}
+                      {Object.values(workCast.cast).map((cast, index) =>
+                        showAllCast || index < 12 ? (
+                          <PageCast key={cast.id}>
+                            <img
+                              src={
+                                cast.profile_path
+                                  ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                  : no_cast_image
+                              }
+                              alt={cast.name}
+                            />
+                            <CastWrapper>
+                              <CastProfile>
+                                <span>Name</span>
+                                <p>{cast.name}</p>
+                              </CastProfile>
+                              <CastProfile>
+                                <span>Role</span>
+                                <p>{cast.known_for_department}</p>
+                              </CastProfile>
+                              <CastProfile>
+                                <span>Character</span>
+                                <p>{cast.character.replace(/\(.*?\)/g, "")}</p>
+                              </CastProfile>
+                            </CastWrapper>
+                          </PageCast>
+                        ) : undefined
+                      )}
                       <ShowMore
                         onClick={() => {
                           setShowAllCast(!showAllCast);
                         }}
                       >
-                        Show More
+                        {showAllCast ? "Show Less" : "Show More"}
                       </ShowMore>
                     </PageCastWrapper>
                   )}
