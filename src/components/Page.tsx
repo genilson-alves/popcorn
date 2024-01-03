@@ -4,9 +4,10 @@ import * as Styled from "../Styled";
 import styled from "styled-components";
 import { COLORS } from "../Styled";
 import { PageNavigationBar } from "./NavigationBar";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FooterComponent } from "./FooterComponent";
+import { WorkBackground } from "./../Styled";
 const no_image = require("../assets/no_image.png");
 const no_cast_image = require("../assets/no_cast_image.jpg");
 const no_background = require("../assets/no_background.jpg");
@@ -250,6 +251,7 @@ const Page = (props: any) => {
   const [showAllCast, setShowAllCast] = useState<boolean>(false);
   const workType = props.type;
   const workId = useParams();
+  const navigate = useNavigate();
   const API_GET_OPTIONS = {
     method: "GET",
     headers: {
@@ -274,7 +276,9 @@ const Page = (props: any) => {
     )
       .then((response) => response.json())
       .then((response) => setCast(response))
-      .catch((err) => setError(`ERROR WHILE FETCHING: ${err}`));
+      .catch((err) => {
+        setError(`ERROR WHILE FETCHING: ${err}`);
+      });
     setLoading(false);
   }, []);
 

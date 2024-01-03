@@ -37,7 +37,7 @@ const SearchSection = styled.div`
 const PageTitle = styled.p`
   font-size: 1.4rem;
   font-weight: bold;
-  margin-top: 20px;
+  margin: 20px 0px 10px;
 `;
 
 const SearchBar = styled.input`
@@ -60,19 +60,26 @@ const SearchButton = styled.button`
   }
 `;
 
-const Search = styled.div``;
-
-const SearchContent = styled.div`
+const Search = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 200px;
+  margin-bottom: 20px;
+  gap: 20px;
+`;
+
+const SearchContent = styled.div`
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const SearchPoster = styled.div`
   img {
-    width: 150px;
+    width: 100%;
     height: 250px;
     border-radius: 10px;
   }
@@ -80,10 +87,16 @@ const SearchPoster = styled.div`
 
 const SearchRating = styled.div``;
 
-const SearchTitle = styled.div``;
+const SearchTitle = styled.div`
+  padding: 5px;
+  text-align: center;
+`;
 
 const TitleLink = styled(Link)`
   text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const SearchPage = () => {
@@ -114,13 +127,17 @@ const SearchPage = () => {
   const fetchData = async () => {
     setLoading(true);
     setError(null);
-    fetch(
-      `https://api.themoviedb.org/3/search/multi?query=${searchValue}`,
-      API_GET_OPTIONS
-    )
-      .then((response) => response.json())
-      .then((response) => setSearchData(response.results))
-      .catch((err) => setError(`ERROR FETCHING: ${err}`));
+    if (searchValue.trim() !== "") {
+      fetch(
+        `https://api.themoviedb.org/3/search/multi?query=${searchValue}`,
+        API_GET_OPTIONS
+      )
+        .then((response) => response.json())
+        .then((response) => setSearchData(response.results))
+        .catch((err) => setError(`ERROR FETCHING: ${err}`));
+    } else {
+      alert("Please enter a valid value!");
+    }
   };
 
   console.log(POPULAR_DATA);
@@ -150,13 +167,6 @@ const SearchPage = () => {
               {SEARCH_DATA.map((work) => (
                 <SearchContent key={work.id}>
                   <SearchPoster>
-                    {work.vote_average > 0 && (
-                      <SearchRating>
-                        {work.vote_average === 0
-                          ? "NA"
-                          : work.vote_average.toFixed(1).replace(".", "")}
-                      </SearchRating>
-                    )}
                     <img
                       src={
                         work.poster_path
@@ -179,13 +189,6 @@ const SearchPage = () => {
               {POPULAR_DATA?.map((work) => (
                 <SearchContent key={work.id}>
                   <SearchPoster>
-                    {work.vote_average > 0 && (
-                      <SearchRating>
-                        {work.vote_average === 0
-                          ? "NA"
-                          : work.vote_average.toFixed(1).replace(".", "")}
-                      </SearchRating>
-                    )}
                     <img
                       src={
                         work.poster_path

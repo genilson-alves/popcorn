@@ -5,6 +5,7 @@ import Page from "./components/Page";
 import Home from "./components/Home";
 import SearchPage from "./components/SearchPage";
 import TypeModel from "./components/TypeModel";
+import NotFound from "./components/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,7 @@ const router = createBrowserRouter([
     path: "/search",
     element: <SearchPage></SearchPage>,
   },
+  { path: "*", element: <NotFound></NotFound> },
 ]);
 
 const App = () => {
