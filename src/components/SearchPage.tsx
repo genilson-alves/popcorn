@@ -35,7 +35,7 @@ const SearchSection = styled.div`
 `;
 
 const PageTitle = styled.p`
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin: 20px 0px 10px;
 `;

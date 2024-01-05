@@ -98,7 +98,14 @@ const router = createBrowserRouter([
     path: "/search",
     element: <SearchPage></SearchPage>,
   },
-  { path: "*", element: <NotFound></NotFound> },
+  {
+    path: "/error",
+    element: <NotFound></NotFound>,
+  },
+  {
+    path: "*",
+    element: <NotFound></NotFound>,
+  },
 ]);
 
 const App = () => {

@@ -4,10 +4,11 @@ import * as Styled from "../Styled";
 import styled from "styled-components";
 import { COLORS } from "../Styled";
 import { PageNavigationBar } from "./NavigationBar";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FooterComponent } from "./FooterComponent";
 import { WorkBackground } from "./../Styled";
+import NotFound from "./NotFound";
 const no_image = require("../assets/no_image.png");
 const no_cast_image = require("../assets/no_cast_image.jpg");
 const no_background = require("../assets/no_background.jpg");
@@ -105,6 +106,10 @@ type Cast = {
   };
 };
 
+type Params = {
+  workId: string;
+};
+
 const PageBackgroundWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -147,6 +152,7 @@ const PageTitle = styled.div`
   font-weight: bold;
   padding: 10px 10px 0px;
   text-align: center;
+  margin-bottom: 5px;
 `;
 
 const PageOriginalTitle = styled.div`
@@ -154,6 +160,7 @@ const PageOriginalTitle = styled.div`
   font-weight: bold;
   font-style: italic;
   text-align: center;
+  margin: 0px 0px 10px;
 `;
 
 const PageTagline = styled.div`
@@ -250,8 +257,10 @@ const Page = (props: any) => {
   const [error, setError] = useState<string | null>(null);
   const [showAllCast, setShowAllCast] = useState<boolean>(false);
   const workType = props.type;
-  const workId = useParams();
+  const { workId } = useParams() as Params;
+
   const navigate = useNavigate();
+
   const API_GET_OPTIONS = {
     method: "GET",
     headers: {
@@ -263,33 +272,36 @@ const Page = (props: any) => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch(
-      `https://api.themoviedb.org/3/${workType}/${workId.workId}`,
-      API_GET_OPTIONS
-    )
-      .then((response) => response.json())
-      .then((response) => setWorkInformation(response))
-      .catch((err) => setError(`ERROR WHILE FETCHING: ${err}`));
-    fetch(
-      `https://api.themoviedb.org/3/${workType}/${workId.workId}/credits`,
-      API_GET_OPTIONS
-    )
-      .then((response) => response.json())
-      .then((response) => setCast(response))
-      .catch((err) => {
-        setError(`ERROR WHILE FETCHING: ${err}`);
-      });
+    console.log(workId);
+    const numWorkId = Number(workId);
+    if (isNaN(numWorkId)) {
+      navigate("/error");
+    } else {
+      fetch(
+        `https://api.themoviedb.org/3/${workType}/${numWorkId}`,
+        API_GET_OPTIONS
+      )
+        .then((response) => response.json())
+        .then((response) => setWorkInformation(response))
+        .catch((err) => setError(`ERROR WHILE FETCHING: ${err}`));
+      fetch(
+        `https://api.themoviedb.org/3/${workType}/${numWorkId}/credits`,
+        API_GET_OPTIONS
+      )
+        .then((response) => response.json())
+        .then((response) => setCast(response))
+        .catch((err) => {
+          setError(`ERROR WHILE FETCHING: ${err}`);
+        });
+    }
     setLoading(false);
   }, []);
-
-  console.log(workInformation);
-  console.log(workCast);
 
   return (
     <div>
       {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
       {error && <Styled.Error>ERROR: {error}</Styled.Error>}
-      {workInformation && workCast && (
+      {workInformation?.id && workCast?.cast && (
         <div>
           {workInformation.name ? (
             <div>
@@ -568,9 +580,9 @@ const Page = (props: any) => {
               </PageBackgroundWrapper>
             </div>
           )}
+          <FooterComponent></FooterComponent>
         </div>
       )}
-      <FooterComponent></FooterComponent>
     </div>
   );
 };
