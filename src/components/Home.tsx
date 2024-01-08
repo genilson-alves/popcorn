@@ -5,7 +5,7 @@ import * as Styled from "../Styled";
 import { COLORS } from "../Styled";
 import { Helmet } from "react-helmet";
 import { FooterComponent } from "./FooterComponent";
-
+import Navigation from "./Navigation";
 const no_poster = require("../assets/no_poster.jpg");
 const previous = require("../assets/previous.png");
 const next = require("../assets/next.png");
@@ -350,6 +350,7 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      <Navigation></Navigation>
       <Helmet>
         <title>Home</title>
       </Helmet>

@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import * as Styled from "../Styled";
 import styled from "styled-components";
 import { COLORS } from "../Styled";
-import { PageNavigationBar } from "./NavigationBar";
+import Navigation from "./Navigation";
 import { useParams, useNavigate, redirect } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { FooterComponent } from "./FooterComponent";
@@ -299,6 +299,7 @@ const Page = (props: any) => {
 
   return (
     <div>
+      <Navigation></Navigation>
       {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
       {error && <Styled.Error>ERROR: {error}</Styled.Error>}
       {workInformation?.id && workCast?.cast && (

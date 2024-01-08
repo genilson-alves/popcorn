@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { HomeNavigationBar } from "./NavigationBar";
+import Navigation from "./Navigation";
 import styled from "styled-components";
 import * as Styled from "../Styled";
 import { COLORS } from "../Styled";
@@ -148,6 +148,7 @@ const SearchPage = () => {
       <Helmet>
         <title>Search</title>
       </Helmet>
+      <Navigation></Navigation>
       <SearchWrapper>
         <SearchSectionWrapper>
           <PageTitle>Search</PageTitle>
