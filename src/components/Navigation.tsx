@@ -1,63 +1,140 @@
-import React, { useState, useEffect } from "react";
-import { COLORS } from "../Styled";
+import React from "react";
 import styled from "styled-components";
+import { COLORS } from "../Styled";
 import { Link } from "react-router-dom";
 const logo = require("../assets/logo.png");
 
-const NavbarWrapper = styled.nav`
+const NavigationContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  padding: 1rem 3rem;
+  padding: 10px;
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  color: ${COLORS.FOOTER_COLOR};
+  @media (min-width: 320px) and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
-const Logo = styled.img`
-  height: 40px;
+const NavigationLink = styled(Link)`
+  font-size: 1rem;
+  color: ${COLORS.PAGE_WHITE};
+  text-decoration: none;
+  padding: 10px 0px;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
-const Links = styled.div`
+const Logo = styled.div`
+  img {
+    height: 50px;
+  }
+`;
+
+const NavigationLinks = styled.div`
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: 2rem;
-  a {
-    color: ${COLORS.PAGE_WHITE};
-    text-decoration: none;
-    &:hover {
-      text-decoration: underline;
+  gap: 20px;
+`;
+
+const DropdownContent = styled.div`
+  display: none;
+  padding: 5px;
+  position: absolute;
+  background-color: ${COLORS.PAGE_WHITE};
+  min-width: 160px;
+  z-index: 1;
+`;
+
+const Dropdown = styled.div`
+  position: relative;
+  &:hover {
+    ${DropdownContent} {
+      display: block;
+      border-radius: 10px;
     }
   }
 `;
 
-const SignUpSignInButtons = styled.div`
+const DropdownButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: ${COLORS.PAGE_WHITE};
+  font-size: 1rem;
+  padding: 10px 0px;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const DropdownOption = styled(Link)`
+  color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  background-color: ${COLORS.PAGE_WHITE};
+  border-radius: 10px;
+  padding: 12px;
+  text-decoration: none;
+  display: block;
+  &:hover {
+    background-color: #fff;
+    text-decoration: underline;
+  }
+`;
+
+const User = styled.div`
   display: flex;
-  gap: 1rem;
-  button {
-    color: ${COLORS.PAGE_WHITE};
-    background-color: ${COLORS.PAGE_BLACK};
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
+  align-items: center;
+`;
+
+const Sign = styled(Link)`
+  text-decoration: none;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 15px;
+  color: white;
+  background-color: black;
+  &:hover {
+    text-decoration: underline;
   }
 `;
 
 const Navigation: React.FC = () => {
   return (
-    <NavbarWrapper>
-      <a href="/">
-        <Logo src={logo} alt="Logo" />
-      </a>
-      <Links>
-        <a href="/search">Search</a>
-        <a href="/movies">Movies</a>
-        <a href="/tvshows">TV Shows</a>
-      </Links>
-      <SignUpSignInButtons>
-        <button>Sign Up</button>
-        <button>Sign In</button>
-      </SignUpSignInButtons>
-    </NavbarWrapper>
+    <NavigationContainer>
+      <Logo>
+        <Link to="/">
+          <img src={logo} alt="logo" />
+        </Link>
+      </Logo>
+      <NavigationLinks>
+        <NavigationLink to="/search">Search</NavigationLink>
+        <Dropdown>
+          <DropdownButton>Movies</DropdownButton>
+          <DropdownContent>
+            <DropdownOption to="/movie/top_rated">Top Rated</DropdownOption>
+            <DropdownOption to="/movie/popular">Popular</DropdownOption>
+            <DropdownOption to="/movie/upcoming">Upcoming</DropdownOption>
+            <DropdownOption to="/movie/now_playing">Now Playing</DropdownOption>
+          </DropdownContent>
+        </Dropdown>
+        <Dropdown>
+          <DropdownButton>TV Shows</DropdownButton>
+          <DropdownContent>
+            <DropdownOption to="/tv/top_rated">Top Rated</DropdownOption>
+            <DropdownOption to="/tv/popular">Popular</DropdownOption>
+            <DropdownOption to="/tv/airing_today">Airing Today</DropdownOption>
+            <DropdownOption to="/tv/on_the_air">On the Air</DropdownOption>
+          </DropdownContent>
+        </Dropdown>
+      </NavigationLinks>
+      <User>
+        <Sign to="/">Sign In</Sign>
+        <Sign to="/">Sign Up</Sign>
+      </User>
+    </NavigationContainer>
   );
 };
 
