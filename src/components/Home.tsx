@@ -114,7 +114,12 @@ const OtherWorks = (props: any) => {
   );
 };
 
-const HomeContentWrapper = styled.main``;
+const HomeContentWrapper = styled.main`
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+  }
+`;
 
 const FeaturedWorksTitle = styled.div`
   color: ${COLORS.SECTION_COLOR};

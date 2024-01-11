@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { COLORS } from "../Styled";
 import { Link } from "react-router-dom";
+import { click } from "@testing-library/user-event/dist/click";
 const logo = require("../assets/logo.png");
 const hamburger = require("../assets/hamburger.png");
 const close = require("../assets/close.png");
@@ -33,9 +34,10 @@ const NavigationLinks = styled.div<{ showMenu: boolean }>`
   gap: 20px;
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     display: ${(props) => (props.showMenu ? "flex" : "none")};
+    gap: 5px;
   }
 `;
 
@@ -55,6 +57,13 @@ const NavigationLink = styled(Link)`
   padding: 10px 0px;
   &:hover {
     text-decoration: underline;
+  }
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    color: ${COLORS.PAGE_WHITE};
+    text-decoration: none;
+    margin-top: 30px;
+    font-weight: bold;
   }
 `;
 
@@ -102,6 +111,10 @@ const DropdownButton = styled.button`
   &:hover {
     text-decoration: underline;
   }
+  @media (max-width: 768px) {
+    padding: 5px 0px;
+    font-weight: bold;
+  }
 `;
 
 const DropdownContent = styled.div`
@@ -116,11 +129,11 @@ const DropdownContent = styled.div`
     display: block;
     border-radius: 10px;
   }
-
   @media (max-width: 768px) {
     display: block;
     position: static;
     width: 100%;
+    background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
   }
 `;
 
@@ -131,10 +144,14 @@ const DropdownOption = styled(Link)`
   padding: 12px;
   text-decoration: none;
   display: block;
-
   &:hover {
     background-color: #fff;
     text-decoration: underline;
+  }
+  @media (max-width: 768px) {
+    background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+    color: ${COLORS.PAGE_WHITE};
+    padding: 7px;
   }
 `;
 
@@ -188,10 +205,18 @@ const Navigation: React.FC = () => {
         <Dropdown>
           <DropdownButton>Movies</DropdownButton>
           <DropdownContent>
-            <DropdownOption to="/movie/top_rated">Top Rated</DropdownOption>
-            <DropdownOption to="/movie/popular">Popular</DropdownOption>
-            <DropdownOption to="/movie/upcoming">Upcoming</DropdownOption>
-            <DropdownOption to="/movie/now_playing">Now Playing</DropdownOption>
+            <DropdownOption to="/movie/top_rated" onClick={toggleMenu}>
+              Top Rated
+            </DropdownOption>
+            <DropdownOption to="/movie/popular" onClick={toggleMenu}>
+              Popular
+            </DropdownOption>
+            <DropdownOption to="/movie/upcoming" onClick={toggleMenu}>
+              Upcoming
+            </DropdownOption>
+            <DropdownOption to="/movie/now_playing" onClick={toggleMenu}>
+              Now Playing
+            </DropdownOption>
           </DropdownContent>
         </Dropdown>
         <Dropdown>
