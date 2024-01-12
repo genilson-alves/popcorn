@@ -110,18 +110,31 @@ type Params = {
   workId: string;
 };
 
-const PageBackgroundWrapper = styled.div`
+const PageBackgroundWrapper = styled.div``;
+
+const PageBackgroundContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `;
-
 const PageBackground = styled.div<{ background: string }>`
   background-image: ${(props) => `url(${props.background})`};
   background-size: cover;
   background-position: center;
   width: 100%;
   height: 250px;
+`;
+
+const PageWorkContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+  }
 `;
 
 const PagePoster = styled.div`
@@ -132,21 +145,13 @@ const PagePoster = styled.div`
     height: 200px;
     border-radius: 5px;
   }
-  @media (min-width: 1200px) {
-    img {
-      position: relative;
-      margin-top: -80%;
-      width: 200px;
-      height: 300px;
-      border-radius: 5px;
-    }
-  }
 `;
 
 const PageContentWrapper = styled.div`
   max-width: 400px;
   @media (min-width: 1200px) {
-    max-width: 1200px;
+    max-width: 1400px;
+    margin: auto;
   }
 `;
 
@@ -162,9 +167,8 @@ const PageStatus = styled.div`
 const PageTitle = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
-  padding: 10px 10px 0px;
   text-align: center;
-  margin-bottom: 5px;
+  padding: 5px 10px;
 `;
 
 const PageOriginalTitle = styled.div`
@@ -172,30 +176,50 @@ const PageOriginalTitle = styled.div`
   font-weight: bold;
   font-style: italic;
   text-align: center;
-  margin: 0px 0px 10px;
+  padding-bottom: 5px;
 `;
 
 const PageTagline = styled.div`
   font-style: italic;
   text-align: center;
-  padding: 10px;
+`;
+
+const SynopsisWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Synopsis = styled.div`
   padding: 10px;
+  margin: 0px 10px;
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
-  margin: 0px 10px 10px;
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: 0px;
+  }
 `;
 
 const PageInformation = styled.div`
-  padding: 10px;
-  background-color: ${COLORS.PAGE_WHITE};
-  border-radius: 10px;
-  margin: 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 10px;
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+  }
 `;
 
-const InformationWrapper = styled.div``;
+const InformationWrapper = styled.div`
+  background-color: ${COLORS.PAGE_WHITE};
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+`;
 
 const Information = styled.div`
   display: flex;
@@ -206,6 +230,32 @@ const Information = styled.div`
   span {
     font-style: italic;
     color: ${COLORS.PAGE_TITLE_COLOR};
+  }
+`;
+
+const CastContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 10px;
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+  }
+`;
+
+const SectionTitle = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-style: italic;
+  padding: 10px;
+  color: ${COLORS.SECTION_COLOR};
+`;
+
+const CastContent = styled.div`
+  @media (min-width: 1200px) {
+    width: 100%;
   }
 `;
 
@@ -222,16 +272,9 @@ const PageCastWrapper = styled.div`
   }
 `;
 
-const PageCastPart = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const PageCast = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
   display: flex;
-  margin: 0px 10px;
   padding: 10px;
   border-radius: 10px;
   gap: 15px;
@@ -240,18 +283,6 @@ const PageCast = styled.div`
     width: 80px;
     height: 130px;
     border-radius: 10px;
-  }
-
-  @media (min-width: 1200px) {
-    background-color: ${COLORS.PAGE_WHITE};
-    border-radius: 10px;
-    gap: 15px;
-    align-items: center;
-    img {
-      width: 90px;
-      height: 130px;
-      border-radius: 10px;
-    }
   }
 `;
 
@@ -274,10 +305,9 @@ const ShowMore = styled.button`
   border-radius: 10px;
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
   padding: 10px;
+  margin-bottom: 10px;
   color: ${COLORS.PAGE_WHITE};
   cursor: pointer;
-  width: 100px;
-  margin: 10px;
   &:hover {
     opacity: 0.8;
   }
@@ -337,106 +367,113 @@ const PageMovie = (props: any) => {
             <title>{workInformation.title}</title>
           </Helmet>
           <PageBackgroundWrapper>
-            <PageBackground
-              background={`https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`}
-            ></PageBackground>
-            <div>
+            <PageBackgroundContent>
+              <PageBackground
+                background={`https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`}
+              ></PageBackground>
               <PagePoster>
                 <img
                   src={`https://www.themoviedb.org/t/p/original${workInformation.poster_path}`}
                   alt={workInformation.title}
                 />
               </PagePoster>
-            </div>
-            <PageStatus>
-              <p>{workInformation.status}</p>
-            </PageStatus>
-            <PageContentWrapper>
-              <PageTitle>
-                <p>{workInformation.title}</p>
-              </PageTitle>
-              {workInformation.title !== workInformation.original_title && (
-                <PageOriginalTitle>
-                  <p>{workInformation.original_title}</p>
-                </PageOriginalTitle>
-              )}
-              {workInformation.tagline ? (
-                <PageTagline>
-                  <p>{`"${workInformation.tagline}"`}</p>
-                </PageTagline>
-              ) : undefined}
-              <Synopsis>
-                <p>{workInformation.overview}</p>
-              </Synopsis>
-              <PageInformation>
-                <InformationWrapper>
-                  <Information>
-                    <span>Homepage</span>
-                    <a
-                      href={workInformation.homepage}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {workInformation.homepage}
-                    </a>
-                  </Information>
-                  <Information>
-                    <span>IMDB</span>
-                    <a
-                      href={`https://www.imdb.com/title/${workInformation.imdb_id}/`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      {`https://www.imdb.com/title/${workInformation.imdb_id}/`}
-                    </a>
-                  </Information>
-                  <Information>
-                    <span>Release Date</span>
-                    <p>{workInformation.release_date}</p>
-                  </Information>
-                  <Information>
-                    <span>Score</span>
-                    <p>
-                      {workInformation.vote_average.toFixed(1).replace(".", "")}
-                    </p>
-                  </Information>
-                  <Information>
-                    <span>Genres</span>
-                    {Object.values(workInformation.genres).map(
-                      (genre, index) => (
-                        <p key={index}>{genre.name}</p>
-                      )
-                    )}
-                  </Information>
-                  <Information>
-                    <span>Original Language</span>
-                    <p>{workInformation.original_language.toUpperCase()}</p>
-                  </Information>
-                  <Information>
-                    <span>Budget</span>
-                    <p>
-                      {workInformation.budget > 0
-                        ? workInformation.budget.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })
-                        : "No Information"}
-                    </p>
-                  </Information>
-                  <Information>
-                    <span>Revenue</span>
-                    <p>
-                      {workInformation.revenue > 0
-                        ? workInformation.revenue.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          })
-                        : "No Information"}
-                    </p>
-                  </Information>
-                </InformationWrapper>
-              </PageInformation>
-              <PageCastPart>
+            </PageBackgroundContent>
+            <PageWorkContentWrapper>
+              <PageStatus>
+                <p>{workInformation.status}</p>
+              </PageStatus>
+              <PageContentWrapper>
+                <PageTitle>
+                  <p>{workInformation.title}</p>
+                </PageTitle>
+                {workInformation.title !== workInformation.original_title && (
+                  <PageOriginalTitle>
+                    <p>{workInformation.original_title}</p>
+                  </PageOriginalTitle>
+                )}
+                {workInformation.tagline ? (
+                  <PageTagline>
+                    <p>{`"${workInformation.tagline}"`}</p>
+                  </PageTagline>
+                ) : undefined}
+                <SynopsisWrapper>
+                  <SectionTitle>Synopsis</SectionTitle>
+                  <Synopsis>{workInformation.overview}</Synopsis>
+                </SynopsisWrapper>
+              </PageContentWrapper>
+            </PageWorkContentWrapper>
+            <PageInformation>
+              <SectionTitle>Information</SectionTitle>
+              <InformationWrapper>
+                <Information>
+                  <span>Homepage</span>
+                  <a
+                    href={workInformation.homepage}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {workInformation.homepage}
+                  </a>
+                </Information>
+                <Information>
+                  <span>IMDB</span>
+                  <a
+                    href={`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                  </a>
+                </Information>
+                <Information>
+                  <span>Release Date</span>
+                  <p>{workInformation.release_date}</p>
+                </Information>
+                <Information>
+                  <span>Score</span>
+                  <p>
+                    {workInformation.vote_average.toFixed(1).replace(".", "")}
+                  </p>
+                </Information>
+                <Information>
+                  <span>Genres</span>
+                  {Object.values(workInformation.genres).map((genre, index) => (
+                    <p key={index}>{genre.name}</p>
+                  ))}
+                </Information>
+                <Information>
+                  <span>Original Language</span>
+                  <p>{workInformation.original_language.toUpperCase()}</p>
+                </Information>
+                <Information>
+                  <span>Budget</span>
+                  <p>
+                    {workInformation.budget > 0
+                      ? workInformation.budget.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        })
+                      : "No Information"}
+                  </p>
+                </Information>
+                <Information>
+                  <span>Revenue</span>
+                  <p>
+                    {workInformation.revenue > 0
+                      ? workInformation.revenue.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        })
+                      : "No Information"}
+                  </p>
+                </Information>
+              </InformationWrapper>
+            </PageInformation>
+            <CastContentWrapper>
+              <SectionTitle>
+                <p>Cast</p>
+              </SectionTitle>
+              <CastContent>
                 {workCast.cast[0] && (
                   <PageCastWrapper>
                     {Object.values(workCast.cast).map((cast, index) =>
@@ -473,17 +510,17 @@ const PageMovie = (props: any) => {
                     )}
                   </PageCastWrapper>
                 )}
-                {workCast.cast[11] && (
-                  <ShowMore
-                    onClick={() => {
-                      setShowAllCast(!showAllCast);
-                    }}
-                  >
-                    {showAllCast ? "Show Less" : "Show More"}
-                  </ShowMore>
-                )}
-              </PageCastPart>
-            </PageContentWrapper>
+              </CastContent>
+              {workCast.cast[11] && (
+                <ShowMore
+                  onClick={() => {
+                    setShowAllCast(!showAllCast);
+                  }}
+                >
+                  {showAllCast ? "Show Less" : "Show More"}
+                </ShowMore>
+              )}
+            </CastContentWrapper>
           </PageBackgroundWrapper>
         </div>
       )}
