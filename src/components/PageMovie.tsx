@@ -196,10 +196,6 @@ const Synopsis = styled.div`
   margin: 0px 10px;
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
-  @media (min-width: 1200px) {
-    max-width: 1400px;
-    margin: 0px;
-  }
 `;
 
 const PageInformation = styled.div`
@@ -208,10 +204,6 @@ const PageInformation = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0px 10px;
-  @media (min-width: 1200px) {
-    max-width: 1400px;
-    margin: auto;
-  }
 `;
 
 const InformationWrapper = styled.div`
@@ -239,10 +231,6 @@ const CastContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin: 0px 10px;
-  @media (min-width: 1200px) {
-    max-width: 1400px;
-    margin: auto;
-  }
 `;
 
 const SectionTitle = styled.div`
@@ -310,6 +298,23 @@ const ShowMore = styled.button`
   cursor: pointer;
   &:hover {
     opacity: 0.8;
+  }
+`;
+
+const FullContentWrapper = styled.div`
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 3fr;
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    align-items: baseline;
+    height: 100%;
+  }
+`;
+
+const SynopsisInformation = styled.div`
+  @media (min-width: 1200px) {
+    margin-bottom: 10px;
   }
 `;
 
@@ -396,131 +401,139 @@ const PageMovie = (props: any) => {
                     <p>{`"${workInformation.tagline}"`}</p>
                   </PageTagline>
                 ) : undefined}
+              </PageContentWrapper>
+            </PageWorkContentWrapper>
+            <FullContentWrapper>
+              <SynopsisInformation>
                 <SynopsisWrapper>
                   <SectionTitle>Synopsis</SectionTitle>
                   <Synopsis>{workInformation.overview}</Synopsis>
                 </SynopsisWrapper>
-              </PageContentWrapper>
-            </PageWorkContentWrapper>
-            <PageInformation>
-              <SectionTitle>Information</SectionTitle>
-              <InformationWrapper>
-                <Information>
-                  <span>Homepage</span>
-                  <a
-                    href={workInformation.homepage}
-                    target="_blank"
-                    rel="noreferrer"
+                <PageInformation>
+                  <SectionTitle>Information</SectionTitle>
+                  <InformationWrapper>
+                    <Information>
+                      <span>Homepage</span>
+                      <a
+                        href={workInformation.homepage}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {workInformation.homepage}
+                      </a>
+                    </Information>
+                    <Information>
+                      <span>IMDB</span>
+                      <a
+                        href={`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                      </a>
+                    </Information>
+                    <Information>
+                      <span>Release Date</span>
+                      <p>{workInformation.release_date}</p>
+                    </Information>
+                    <Information>
+                      <span>Score</span>
+                      <p>
+                        {workInformation.vote_average
+                          .toFixed(1)
+                          .replace(".", "")}
+                      </p>
+                    </Information>
+                    <Information>
+                      <span>Genres</span>
+                      {Object.values(workInformation.genres).map(
+                        (genre, index) => (
+                          <p key={index}>{genre.name}</p>
+                        )
+                      )}
+                    </Information>
+                    <Information>
+                      <span>Original Language</span>
+                      <p>{workInformation.original_language.toUpperCase()}</p>
+                    </Information>
+                    <Information>
+                      <span>Budget</span>
+                      <p>
+                        {workInformation.budget > 0
+                          ? workInformation.budget.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            })
+                          : "No Information"}
+                      </p>
+                    </Information>
+                    <Information>
+                      <span>Revenue</span>
+                      <p>
+                        {workInformation.revenue > 0
+                          ? workInformation.revenue.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                            })
+                          : "No Information"}
+                      </p>
+                    </Information>
+                  </InformationWrapper>
+                </PageInformation>
+              </SynopsisInformation>
+              <CastContentWrapper>
+                <SectionTitle>
+                  <p>Cast</p>
+                </SectionTitle>
+                <CastContent>
+                  {workCast.cast[0] && (
+                    <PageCastWrapper>
+                      {Object.values(workCast.cast).map((cast, index) =>
+                        showAllCast || index < 12 ? (
+                          <PageCast key={cast.id}>
+                            <img
+                              src={
+                                cast.profile_path
+                                  ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                  : no_cast_image
+                              }
+                              alt={cast.name}
+                            />
+                            <CastWrapper>
+                              <CastProfile>
+                                <span>Name</span>
+                                <p>{cast.name}</p>
+                              </CastProfile>
+                              <CastProfile>
+                                <span>Role</span>
+                                <p>{cast.known_for_department}</p>
+                              </CastProfile>
+                              <CastProfile>
+                                <span>Character</span>
+                                <p>
+                                  {cast.character.replace(/\(.*?\)/g, "")
+                                    ? cast.character.replace(/\(.*?\)/g, "")
+                                    : "No Information"}
+                                </p>
+                              </CastProfile>
+                            </CastWrapper>
+                          </PageCast>
+                        ) : undefined
+                      )}
+                    </PageCastWrapper>
+                  )}
+                </CastContent>
+                {workCast.cast[11] && (
+                  <ShowMore
+                    onClick={() => {
+                      setShowAllCast(!showAllCast);
+                    }}
                   >
-                    {workInformation.homepage}
-                  </a>
-                </Information>
-                <Information>
-                  <span>IMDB</span>
-                  <a
-                    href={`https://www.imdb.com/title/${workInformation.imdb_id}/`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {`https://www.imdb.com/title/${workInformation.imdb_id}/`}
-                  </a>
-                </Information>
-                <Information>
-                  <span>Release Date</span>
-                  <p>{workInformation.release_date}</p>
-                </Information>
-                <Information>
-                  <span>Score</span>
-                  <p>
-                    {workInformation.vote_average.toFixed(1).replace(".", "")}
-                  </p>
-                </Information>
-                <Information>
-                  <span>Genres</span>
-                  {Object.values(workInformation.genres).map((genre, index) => (
-                    <p key={index}>{genre.name}</p>
-                  ))}
-                </Information>
-                <Information>
-                  <span>Original Language</span>
-                  <p>{workInformation.original_language.toUpperCase()}</p>
-                </Information>
-                <Information>
-                  <span>Budget</span>
-                  <p>
-                    {workInformation.budget > 0
-                      ? workInformation.budget.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })
-                      : "No Information"}
-                  </p>
-                </Information>
-                <Information>
-                  <span>Revenue</span>
-                  <p>
-                    {workInformation.revenue > 0
-                      ? workInformation.revenue.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                        })
-                      : "No Information"}
-                  </p>
-                </Information>
-              </InformationWrapper>
-            </PageInformation>
-            <CastContentWrapper>
-              <SectionTitle>
-                <p>Cast</p>
-              </SectionTitle>
-              <CastContent>
-                {workCast.cast[0] && (
-                  <PageCastWrapper>
-                    {Object.values(workCast.cast).map((cast, index) =>
-                      showAllCast || index < 12 ? (
-                        <PageCast key={cast.id}>
-                          <img
-                            src={
-                              cast.profile_path
-                                ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
-                                : no_cast_image
-                            }
-                            alt={cast.name}
-                          />
-                          <CastWrapper>
-                            <CastProfile>
-                              <span>Name</span>
-                              <p>{cast.name}</p>
-                            </CastProfile>
-                            <CastProfile>
-                              <span>Role</span>
-                              <p>{cast.known_for_department}</p>
-                            </CastProfile>
-                            <CastProfile>
-                              <span>Character</span>
-                              <p>
-                                {cast.character.replace(/\(.*?\)/g, "")
-                                  ? cast.character.replace(/\(.*?\)/g, "")
-                                  : "No Information"}
-                              </p>
-                            </CastProfile>
-                          </CastWrapper>
-                        </PageCast>
-                      ) : undefined
-                    )}
-                  </PageCastWrapper>
+                    {showAllCast ? "Show Less" : "Show More"}
+                  </ShowMore>
                 )}
-              </CastContent>
-              {workCast.cast[11] && (
-                <ShowMore
-                  onClick={() => {
-                    setShowAllCast(!showAllCast);
-                  }}
-                >
-                  {showAllCast ? "Show Less" : "Show More"}
-                </ShowMore>
-              )}
-            </CastContentWrapper>
+              </CastContentWrapper>
+            </FullContentWrapper>
           </PageBackgroundWrapper>
         </div>
       )}
