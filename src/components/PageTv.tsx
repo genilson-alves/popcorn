@@ -110,12 +110,14 @@ type Params = {
   workId: string;
 };
 
-const PageBackgroundWrapper = styled.div`
+const PageBackgroundWrapper = styled.div``;
+
+const PageBackgroundContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 `;
-
 const PageBackground = styled.div<{ background: string }>`
   background-image: ${(props) => `url(${props.background})`};
   background-size: cover;
@@ -124,11 +126,22 @@ const PageBackground = styled.div<{ background: string }>`
   height: 250px;
 `;
 
+const PageWorkContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+  }
+`;
+
 const PagePoster = styled.div`
   img {
     position: relative;
     margin-top: -80%;
-    width: 130px;
+    width: 140px;
     height: 200px;
     border-radius: 5px;
   }
@@ -136,8 +149,8 @@ const PagePoster = styled.div`
     img {
       position: relative;
       margin-top: -80%;
-      width: 200px;
-      height: 300px;
+      width: 160px;
+      height: 250px;
       border-radius: 5px;
     }
   }
@@ -146,7 +159,8 @@ const PagePoster = styled.div`
 const PageContentWrapper = styled.div`
   max-width: 400px;
   @media (min-width: 1200px) {
-    max-width: 1200px;
+    max-width: 1400px;
+    margin: auto;
   }
 `;
 
@@ -155,16 +169,23 @@ const PageStatus = styled.div`
   background-color: ${COLORS.STATUS};
   color: ${COLORS.PAGE_WHITE};
   border-radius: 5px;
-  width: 130px;
+  width: 140px;
   text-align: center;
+  @media (min-width: 1200px) {
+    padding: 5px;
+    background-color: ${COLORS.STATUS};
+    color: ${COLORS.PAGE_WHITE};
+    border-radius: 5px;
+    width: 160px;
+    text-align: center;
+  }
 `;
 
 const PageTitle = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
-  padding: 10px 10px 0px;
   text-align: center;
-  margin-bottom: 5px;
+  padding: 5px 10px;
 `;
 
 const PageOriginalTitle = styled.div`
@@ -172,30 +193,42 @@ const PageOriginalTitle = styled.div`
   font-weight: bold;
   font-style: italic;
   text-align: center;
-  margin: 0px 0px 10px;
+  padding-bottom: 5px;
 `;
 
 const PageTagline = styled.div`
   font-style: italic;
   text-align: center;
-  padding: 10px;
+`;
+
+const SynopsisWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Synopsis = styled.div`
   padding: 10px;
+  margin: 0px 10px;
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
-  margin: 0px 10px 10px;
 `;
 
 const PageInformation = styled.div`
-  padding: 10px;
-  background-color: ${COLORS.PAGE_WHITE};
-  border-radius: 10px;
-  margin: 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 10px;
 `;
 
-const InformationWrapper = styled.div``;
+const InformationWrapper = styled.div`
+  background-color: ${COLORS.PAGE_WHITE};
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+`;
 
 const Information = styled.div`
   display: flex;
@@ -209,6 +242,28 @@ const Information = styled.div`
   }
 `;
 
+const CastContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px 10px;
+`;
+
+const SectionTitle = styled.div`
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-style: italic;
+  padding: 10px;
+  color: ${COLORS.SECTION_COLOR};
+`;
+
+const CastContent = styled.div`
+  @media (min-width: 1200px) {
+    width: 100%;
+  }
+`;
+
 const PageCastWrapper = styled.div`
   display: flex;
   gap: 10px;
@@ -217,41 +272,32 @@ const PageCastWrapper = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   @media (min-width: 1200px) {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
   }
 `;
 
 const PageCast = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
   display: flex;
-  margin: 0px 10px;
   padding: 10px;
   border-radius: 10px;
   gap: 15px;
+  width: 100%;
   img {
     width: 80px;
     height: 130px;
     border-radius: 10px;
   }
-
-  @media (min-width: 1200px) {
-    background-color: ${COLORS.PAGE_WHITE};
-    flex: 1;
-    border-radius: 10px;
-    gap: 15px;
-    align-items: center;
-    img {
-      width: 90px;
-      height: 130px;
-      border-radius: 10px;
-    }
-  }
 `;
 
 const CastProfile = styled.div`
   padding: 5px 5px 0px 0px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
 `;
 
 const CastWrapper = styled.div`
@@ -269,6 +315,7 @@ const ShowMore = styled.button`
   border-radius: 10px;
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
   padding: 10px;
+  margin-bottom: 10px;
   color: ${COLORS.PAGE_WHITE};
   cursor: pointer;
   &:hover {
@@ -276,7 +323,68 @@ const ShowMore = styled.button`
   }
 `;
 
-const PageTv = (props: any) => {
+const FullContentWrapper = styled.div`
+  @media (min-width: 1200px) {
+    grid-template-columns: 1fr 3fr;
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    align-items: baseline;
+    height: 100%;
+  }
+`;
+
+const SynopsisInformation = styled.div`
+  @media (min-width: 1200px) {
+    margin: 20px 0px 10px;
+  }
+`;
+
+const SeasonsWrapper = styled.div`
+  @media (min-width: 1200px) {
+    text-align: center;
+  }
+`;
+
+const SeasonsInformation = styled.div`
+  @media (min-width: 1200px) {
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+`;
+const Season = styled.div`
+  @media (min-width: 1200px) {
+    display: flex;
+    background-color: ${COLORS.PAGE_WHITE};
+    border-radius: 10px;
+    padding: 10px;
+  }
+`;
+
+const SeasonPoster = styled.div`
+  @media (min-width: 1200px) {
+    img {
+      width: 100px;
+      height: 150px;
+      border-radius: 10px;
+    }
+  }
+`;
+
+const SeasonContent = styled.div`
+  @media (min-width: 1200px) {
+    padding: 5px 10px;
+    text-align: left;
+    span {
+      color: ${COLORS.LINK_COLOR};
+    }
+  }
+`;
+
+const PageMovie = (props: any) => {
   const [workInformation, setWorkInformation] = useState<Work>();
   const [workCast, setCast] = useState<Cast>();
   const [isLoading, setLoading] = useState(false);
@@ -298,7 +406,6 @@ const PageTv = (props: any) => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    console.log(workId);
     const numWorkId = Number(workId);
     if (isNaN(numWorkId)) {
       navigate("/error");
@@ -320,28 +427,30 @@ const PageTv = (props: any) => {
     setLoading(false);
   }, []);
 
+  console.log(workInformation);
+
   return (
     <div>
       {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
       {error && <Styled.Error>ERROR: {error}</Styled.Error>}
       {workInformation && workCast && (
         <div>
-          <div>
-            <Helmet>
-              <title>{workInformation.name}</title>
-            </Helmet>
-            <PageBackgroundWrapper>
+          <Helmet>
+            <title>{workInformation.title}</title>
+          </Helmet>
+          <PageBackgroundWrapper>
+            <PageBackgroundContent>
               <PageBackground
                 background={`https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`}
               ></PageBackground>
-              <div>
-                <PagePoster>
-                  <img
-                    src={`https://www.themoviedb.org/t/p/original${workInformation.poster_path}`}
-                    alt={workInformation.name}
-                  />
-                </PagePoster>
-              </div>
+              <PagePoster>
+                <img
+                  src={`https://www.themoviedb.org/t/p/original${workInformation.poster_path}`}
+                  alt={workInformation.title}
+                />
+              </PagePoster>
+            </PageBackgroundContent>
+            <PageWorkContentWrapper>
               <PageStatus>
                 <p>{workInformation.status}</p>
               </PageStatus>
@@ -349,7 +458,7 @@ const PageTv = (props: any) => {
                 <PageTitle>
                   <p>{workInformation.name}</p>
                 </PageTitle>
-                {workInformation.name !== workInformation.original_name && (
+                {workInformation.title !== workInformation.original_name && (
                   <PageOriginalTitle>
                     <p>{workInformation.original_name}</p>
                   </PageOriginalTitle>
@@ -359,10 +468,16 @@ const PageTv = (props: any) => {
                     <p>{`"${workInformation.tagline}"`}</p>
                   </PageTagline>
                 ) : undefined}
-                <Synopsis>
-                  <p>{workInformation.overview}</p>
-                </Synopsis>
+              </PageContentWrapper>
+            </PageWorkContentWrapper>
+            <FullContentWrapper>
+              <SynopsisInformation>
+                <SynopsisWrapper>
+                  <SectionTitle>Synopsis</SectionTitle>
+                  <Synopsis>{workInformation.overview}</Synopsis>
+                </SynopsisWrapper>
                 <PageInformation>
+                  <SectionTitle>Information</SectionTitle>
                   <InformationWrapper>
                     <Information>
                       <span>Homepage</span>
@@ -375,24 +490,16 @@ const PageTv = (props: any) => {
                       </a>
                     </Information>
                     <Information>
+                      <span>First Air Date</span>
+                      <p>{workInformation.first_air_date}</p>
+                    </Information>
+                    <Information>
                       <span>Score</span>
                       <p>
                         {workInformation.vote_average
                           .toFixed(1)
                           .replace(".", "")}
                       </p>
-                    </Information>
-                    <Information>
-                      <span>Number of Episodes</span>
-                      <p>{workInformation.number_of_episodes}</p>
-                    </Information>
-                    <Information>
-                      <span>Number of Seasons</span>
-                      <p>{workInformation.number_of_seasons}</p>
-                    </Information>
-                    <Information>
-                      <span>First Air Date</span>
-                      <p>{workInformation.first_air_date}</p>
                     </Information>
                     <Information>
                       <span>Genres</span>
@@ -408,55 +515,109 @@ const PageTv = (props: any) => {
                     </Information>
                   </InformationWrapper>
                 </PageInformation>
-                {workCast.cast[0] && (
-                  <PageCastWrapper>
-                    {Object.values(workCast.cast).map((cast, index) =>
-                      showAllCast || index < 12 ? (
-                        <PageCast key={cast.id}>
-                          <img
-                            src={
-                              cast.profile_path
-                                ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
-                                : no_cast_image
-                            }
-                            alt={cast.name}
-                          />
-                          <CastWrapper>
-                            <CastProfile>
-                              <span>Name</span>
-                              <p>{cast.name}</p>
-                            </CastProfile>
-                            <CastProfile>
-                              <span>Role</span>
-                              <p>{cast.known_for_department}</p>
-                            </CastProfile>
-                            <CastProfile>
-                              <span>Character</span>
-                              <p>{cast.character.replace(/\(.*?\)/g, "")}</p>
-                            </CastProfile>
-                          </CastWrapper>
-                        </PageCast>
-                      ) : undefined
-                    )}
-                    {workCast.cast[11] && (
-                      <ShowMore
-                        onClick={() => {
-                          setShowAllCast(!showAllCast);
-                        }}
-                      >
-                        {showAllCast ? "Show Less" : "Show More"}
-                      </ShowMore>
-                    )}
-                  </PageCastWrapper>
+              </SynopsisInformation>
+              <SynopsisInformation>
+                {workInformation.seasons[0] && (
+                  <SeasonsWrapper>
+                    <SectionTitle>
+                      <p>Seasons</p>
+                    </SectionTitle>
+                    <SeasonsInformation>
+                      {Object.values(workInformation.seasons).map(
+                        (season, index) => (
+                          <Season key={index}>
+                            <SeasonPoster>
+                              <img
+                                src={`https://www.themoviedb.org/t/p/original${season.poster_path}`}
+                                alt={season.name}
+                              />
+                            </SeasonPoster>
+                            <SeasonContent>
+                              <CastProfile>
+                                <span>Name</span>
+                                <p>{season.name}</p>
+                              </CastProfile>
+                              <CastProfile>
+                                <span>Air Date</span>
+                                <p>{season.air_date}</p>
+                              </CastProfile>
+                              {season.vote_average && (
+                                <CastProfile>
+                                  <span>Rating</span>
+                                  <p>{season.vote_average}</p>
+                                </CastProfile>
+                              )}
+                              <CastProfile>
+                                <span>Episode Count</span>
+                                <p>{season.episode_count}</p>
+                              </CastProfile>
+                            </SeasonContent>
+                          </Season>
+                        )
+                      )}
+                    </SeasonsInformation>
+                  </SeasonsWrapper>
                 )}
-              </PageContentWrapper>
-            </PageBackgroundWrapper>
-          </div>
-          <FooterComponent></FooterComponent>
+                <CastContentWrapper>
+                  <SectionTitle>
+                    <p>Cast</p>
+                  </SectionTitle>
+                  <CastContent>
+                    {workCast.cast[0] && (
+                      <PageCastWrapper>
+                        {Object.values(workCast.cast).map((cast, index) =>
+                          showAllCast || index < 12 ? (
+                            <PageCast key={cast.id}>
+                              <img
+                                src={
+                                  cast.profile_path
+                                    ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                    : no_cast_image
+                                }
+                                alt={cast.name}
+                              />
+                              <CastWrapper>
+                                <CastProfile>
+                                  <span>Name</span>
+                                  <p>{cast.name}</p>
+                                </CastProfile>
+                                <CastProfile>
+                                  <span>Role</span>
+                                  <p>{cast.known_for_department}</p>
+                                </CastProfile>
+                                <CastProfile>
+                                  <span>Character</span>
+                                  <p>
+                                    {cast.character.replace(/\(.*?\)/g, "")
+                                      ? cast.character.replace(/\(.*?\)/g, "")
+                                      : "No Information"}
+                                  </p>
+                                </CastProfile>
+                              </CastWrapper>
+                            </PageCast>
+                          ) : undefined
+                        )}
+                      </PageCastWrapper>
+                    )}
+                  </CastContent>
+                  {workCast.cast[11] && (
+                    <ShowMore
+                      onClick={() => {
+                        setShowAllCast(!showAllCast);
+                      }}
+                    >
+                      {showAllCast ? "Show Less" : "Show More"}
+                    </ShowMore>
+                  )}
+                </CastContentWrapper>
+              </SynopsisInformation>
+            </FullContentWrapper>
+          </PageBackgroundWrapper>
         </div>
       )}
+      <FooterComponent></FooterComponent>
     </div>
   );
 };
 
-export default PageTv;
+export default PageMovie;

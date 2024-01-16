@@ -314,7 +314,7 @@ const FullContentWrapper = styled.div`
 
 const SynopsisInformation = styled.div`
   @media (min-width: 1200px) {
-    margin-bottom: 10px;
+    margin: 20px 0px 10px;
   }
 `;
 
