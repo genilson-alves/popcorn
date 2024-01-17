@@ -92,6 +92,11 @@ type Work = {
       origin_country: string;
     };
   };
+  production_countries: {
+    [key: number]: {
+      name: string;
+    };
+  };
 };
 
 type Cast = {
@@ -362,6 +367,8 @@ const PageMovie = (props: any) => {
     setLoading(false);
   }, []);
 
+  console.log(workInformation);
+
   return (
     <div>
       {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
@@ -374,11 +381,19 @@ const PageMovie = (props: any) => {
           <PageBackgroundWrapper>
             <PageBackgroundContent>
               <PageBackground
-                background={`https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`}
+                background={
+                  workInformation.backdrop_path
+                    ? `https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`
+                    : no_background
+                }
               ></PageBackground>
               <PagePoster>
                 <img
-                  src={`https://www.themoviedb.org/t/p/original${workInformation.poster_path}`}
+                  src={
+                    workInformation.poster_path
+                      ? `https://www.themoviedb.org/t/p/original${workInformation.poster_path}`
+                      : no_poster
+                  }
                   alt={workInformation.title}
                 />
               </PagePoster>
@@ -407,20 +422,28 @@ const PageMovie = (props: any) => {
               <SynopsisInformation>
                 <SynopsisWrapper>
                   <SectionTitle>Synopsis</SectionTitle>
-                  <Synopsis>{workInformation.overview}</Synopsis>
+                  <Synopsis>
+                    {workInformation.overview
+                      ? workInformation.overview
+                      : "No Information"}
+                  </Synopsis>
                 </SynopsisWrapper>
                 <PageInformation>
                   <SectionTitle>Information</SectionTitle>
                   <InformationWrapper>
                     <Information>
                       <span>Homepage</span>
-                      <a
-                        href={workInformation.homepage}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {workInformation.homepage}
-                      </a>
+                      {workInformation.homepage ? (
+                        <a
+                          href={workInformation.homepage}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {workInformation.homepage}
+                        </a>
+                      ) : (
+                        "No Information"
+                      )}
                     </Information>
                     <Information>
                       <span>IMDB</span>
@@ -435,6 +458,10 @@ const PageMovie = (props: any) => {
                     <Information>
                       <span>Release Date</span>
                       <p>{workInformation.release_date}</p>
+                    </Information>
+                    <Information>
+                      <span>Runtime</span>
+                      <p>{workInformation.runtime} min</p>
                     </Information>
                     <Information>
                       <span>Score</span>
@@ -477,6 +504,22 @@ const PageMovie = (props: any) => {
                             })
                           : "No Information"}
                       </p>
+                    </Information>
+                    <Information>
+                      <span>Production Countries</span>
+                      {Object.values(workInformation.production_countries).map(
+                        (country, index) => (
+                          <p key={index}>{country.name}</p>
+                        )
+                      )}
+                    </Information>
+                    <Information>
+                      <span>Production Companies</span>
+                      {Object.values(workInformation.production_companies).map(
+                        (companies, index) => (
+                          <p key={index}>{companies.name}</p>
+                        )
+                      )}
                     </Information>
                   </InformationWrapper>
                 </PageInformation>

@@ -92,6 +92,11 @@ type Work = {
       origin_country: string;
     };
   };
+  production_countries: {
+    [key: number]: {
+      name: string;
+    };
+  };
 };
 
 type Cast = {
@@ -225,9 +230,9 @@ const PageInformation = styled.div`
 
 const InformationWrapper = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
-  width: 100%;
   padding: 10px;
   border-radius: 10px;
+  width: 100%;
 `;
 
 const Information = styled.div`
@@ -236,9 +241,17 @@ const Information = styled.div`
   gap: 5px;
   padding: 5px 0px;
   margin-bottom: 5px;
+  max-width: 330px;
   span {
     font-style: italic;
     color: ${COLORS.PAGE_TITLE_COLOR};
+  }
+  a {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
   }
 `;
 
@@ -342,17 +355,19 @@ const SynopsisInformation = styled.div`
 
 const SeasonsWrapper = styled.div`
   @media (min-width: 1200px) {
-    text-align: center;
+    margin: 10px 10px 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 const SeasonsInformation = styled.div`
   @media (min-width: 1200px) {
-    padding: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    flex-wrap: wrap;
     gap: 10px;
+    width: 100%;
   }
 `;
 const Season = styled.div`
@@ -367,8 +382,8 @@ const Season = styled.div`
 const SeasonPoster = styled.div`
   @media (min-width: 1200px) {
     img {
-      width: 100px;
-      height: 150px;
+      width: 130px;
+      height: 100%;
       border-radius: 10px;
     }
   }
@@ -377,11 +392,21 @@ const SeasonPoster = styled.div`
 const SeasonContent = styled.div`
   @media (min-width: 1200px) {
     padding: 5px 10px;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     span {
       color: ${COLORS.LINK_COLOR};
     }
   }
+`;
+
+const SeasonProfile = styled.div`
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
 `;
 
 const PageMovie = (props: any) => {
@@ -436,17 +461,25 @@ const PageMovie = (props: any) => {
       {workInformation && workCast && (
         <div>
           <Helmet>
-            <title>{workInformation.title}</title>
+            <title>{workInformation.name}</title>
           </Helmet>
           <PageBackgroundWrapper>
             <PageBackgroundContent>
               <PageBackground
-                background={`https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`}
+                background={
+                  workInformation.backdrop_path
+                    ? `https://www.themoviedb.org/t/p/original${workInformation.backdrop_path}`
+                    : no_background
+                }
               ></PageBackground>
               <PagePoster>
                 <img
-                  src={`https://www.themoviedb.org/t/p/original${workInformation.poster_path}`}
-                  alt={workInformation.title}
+                  src={
+                    workInformation.poster_path
+                      ? `https://www.themoviedb.org/t/p/original${workInformation.poster_path}`
+                      : no_poster
+                  }
+                  alt={workInformation.name}
                 />
               </PagePoster>
             </PageBackgroundContent>
@@ -458,7 +491,7 @@ const PageMovie = (props: any) => {
                 <PageTitle>
                   <p>{workInformation.name}</p>
                 </PageTitle>
-                {workInformation.title !== workInformation.original_name && (
+                {workInformation.name !== workInformation.original_name && (
                   <PageOriginalTitle>
                     <p>{workInformation.original_name}</p>
                   </PageOriginalTitle>
@@ -480,6 +513,14 @@ const PageMovie = (props: any) => {
                   <SectionTitle>Information</SectionTitle>
                   <InformationWrapper>
                     <Information>
+                      <span>Name</span>
+                      <p>{workInformation.name}</p>
+                    </Information>
+                    <Information>
+                      <span>Original Name</span>
+                      <p>{workInformation.original_name}</p>
+                    </Information>
+                    <Information>
                       <span>Homepage</span>
                       <a
                         href={workInformation.homepage}
@@ -492,6 +533,18 @@ const PageMovie = (props: any) => {
                     <Information>
                       <span>First Air Date</span>
                       <p>{workInformation.first_air_date}</p>
+                    </Information>
+                    <Information>
+                      <span>Last Air Date</span>
+                      <p>{workInformation.last_air_date}</p>
+                    </Information>
+                    <Information>
+                      <span>Number of Episodes</span>
+                      <p>{workInformation.number_of_episodes}</p>
+                    </Information>
+                    <Information>
+                      <span>Number of Seasons</span>
+                      <p>{workInformation.number_of_seasons}</p>
                     </Information>
                     <Information>
                       <span>Score</span>
@@ -510,8 +563,40 @@ const PageMovie = (props: any) => {
                       )}
                     </Information>
                     <Information>
-                      <span>Original Language</span>
-                      <p>{workInformation.original_language.toUpperCase()}</p>
+                      <span>In Production?</span>
+                      <p>{workInformation.in_production ? "Yes" : "No"}</p>
+                    </Information>
+                    <Information>
+                      <span>Status</span>
+                      <p>{workInformation.status}</p>
+                    </Information>
+                    <Information>
+                      <span>Networks</span>
+                      {Object.values(workInformation.networks).map(
+                        (network, index) => (
+                          <p key={index}>{network.name}</p>
+                        )
+                      )}
+                    </Information>
+                    <Information>
+                      <span>Production Countries</span>
+                      {Object.values(workInformation.production_countries).map(
+                        (country, index) => (
+                          <p key={index}>
+                            {country.name ? country.name : "No Information"}
+                          </p>
+                        )
+                      )}
+                    </Information>
+                    <Information>
+                      <span>Production Companies</span>
+                      {Object.values(workInformation.production_companies).map(
+                        (company, index) => (
+                          <p key={index}>
+                            {company.name ? company.name : "No Information"}
+                          </p>
+                        )
+                      )}
                     </Information>
                   </InformationWrapper>
                 </PageInformation>
@@ -528,29 +613,39 @@ const PageMovie = (props: any) => {
                           <Season key={index}>
                             <SeasonPoster>
                               <img
-                                src={`https://www.themoviedb.org/t/p/original${season.poster_path}`}
+                                src={
+                                  season.poster_path
+                                    ? `https://www.themoviedb.org/t/p/original${season.poster_path}`
+                                    : no_poster
+                                }
                                 alt={season.name}
                               />
                             </SeasonPoster>
                             <SeasonContent>
-                              <CastProfile>
+                              <SeasonProfile>
                                 <span>Name</span>
                                 <p>{season.name}</p>
-                              </CastProfile>
-                              <CastProfile>
+                              </SeasonProfile>
+                              <SeasonProfile>
                                 <span>Air Date</span>
-                                <p>{season.air_date}</p>
-                              </CastProfile>
-                              {season.vote_average && (
-                                <CastProfile>
-                                  <span>Rating</span>
-                                  <p>{season.vote_average}</p>
-                                </CastProfile>
-                              )}
-                              <CastProfile>
+                                <p>
+                                  {season.air_date
+                                    ? season.air_date
+                                    : "No Information"}
+                                </p>
+                              </SeasonProfile>
+                              <SeasonProfile>
+                                <span>Score</span>
+                                <p>
+                                  {season.vote_average > 0
+                                    ? season.vote_average
+                                    : "No Information"}
+                                </p>
+                              </SeasonProfile>
+                              <SeasonProfile>
                                 <span>Episode Count</span>
                                 <p>{season.episode_count}</p>
-                              </CastProfile>
+                              </SeasonProfile>
                             </SeasonContent>
                           </Season>
                         )
@@ -558,58 +653,60 @@ const PageMovie = (props: any) => {
                     </SeasonsInformation>
                   </SeasonsWrapper>
                 )}
-                <CastContentWrapper>
-                  <SectionTitle>
-                    <p>Cast</p>
-                  </SectionTitle>
-                  <CastContent>
-                    {workCast.cast[0] && (
-                      <PageCastWrapper>
-                        {Object.values(workCast.cast).map((cast, index) =>
-                          showAllCast || index < 12 ? (
-                            <PageCast key={cast.id}>
-                              <img
-                                src={
-                                  cast.profile_path
-                                    ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
-                                    : no_cast_image
-                                }
-                                alt={cast.name}
-                              />
-                              <CastWrapper>
-                                <CastProfile>
-                                  <span>Name</span>
-                                  <p>{cast.name}</p>
-                                </CastProfile>
-                                <CastProfile>
-                                  <span>Role</span>
-                                  <p>{cast.known_for_department}</p>
-                                </CastProfile>
-                                <CastProfile>
-                                  <span>Character</span>
-                                  <p>
-                                    {cast.character.replace(/\(.*?\)/g, "")
-                                      ? cast.character.replace(/\(.*?\)/g, "")
-                                      : "No Information"}
-                                  </p>
-                                </CastProfile>
-                              </CastWrapper>
-                            </PageCast>
-                          ) : undefined
-                        )}
-                      </PageCastWrapper>
+                {workCast.cast[0] && (
+                  <CastContentWrapper>
+                    <SectionTitle>
+                      <p>Cast</p>
+                    </SectionTitle>
+                    <CastContent>
+                      {workCast.cast[0] && (
+                        <PageCastWrapper>
+                          {Object.values(workCast.cast).map((cast, index) =>
+                            showAllCast || index < 12 ? (
+                              <PageCast key={cast.id}>
+                                <img
+                                  src={
+                                    cast.profile_path
+                                      ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                      : no_cast_image
+                                  }
+                                  alt={cast.name}
+                                />
+                                <CastWrapper>
+                                  <CastProfile>
+                                    <span>Name</span>
+                                    <p>{cast.name}</p>
+                                  </CastProfile>
+                                  <CastProfile>
+                                    <span>Role</span>
+                                    <p>{cast.known_for_department}</p>
+                                  </CastProfile>
+                                  <CastProfile>
+                                    <span>Character</span>
+                                    <p>
+                                      {cast.character.replace(/\(.*?\)/g, "")
+                                        ? cast.character.replace(/\(.*?\)/g, "")
+                                        : "No Information"}
+                                    </p>
+                                  </CastProfile>
+                                </CastWrapper>
+                              </PageCast>
+                            ) : undefined
+                          )}
+                        </PageCastWrapper>
+                      )}
+                    </CastContent>
+                    {workCast.cast[11] && (
+                      <ShowMore
+                        onClick={() => {
+                          setShowAllCast(!showAllCast);
+                        }}
+                      >
+                        {showAllCast ? "Show Less" : "Show More"}
+                      </ShowMore>
                     )}
-                  </CastContent>
-                  {workCast.cast[11] && (
-                    <ShowMore
-                      onClick={() => {
-                        setShowAllCast(!showAllCast);
-                      }}
-                    >
-                      {showAllCast ? "Show Less" : "Show More"}
-                    </ShowMore>
-                  )}
-                </CastContentWrapper>
+                  </CastContentWrapper>
+                )}
               </SynopsisInformation>
             </FullContentWrapper>
           </PageBackgroundWrapper>
