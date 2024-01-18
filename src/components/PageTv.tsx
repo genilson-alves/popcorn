@@ -206,6 +206,15 @@ const PageTagline = styled.div`
   text-align: center;
 `;
 
+const SynopsisInformation = styled.div`
+  width: 100%;
+  padding: 0px 10px;
+  margin: 20px 0px 10px;
+  @media (min-width: 1200px) {
+    margin: 20px 0px 10px;
+  }
+`;
+
 const SynopsisWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -215,9 +224,9 @@ const SynopsisWrapper = styled.div`
 
 const Synopsis = styled.div`
   padding: 10px;
-  margin: 0px 10px;
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
+  width: 100%;
 `;
 
 const PageInformation = styled.div`
@@ -225,7 +234,7 @@ const PageInformation = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 10px;
+  width: 100%;
 `;
 
 const InformationWrapper = styled.div`
@@ -241,17 +250,9 @@ const Information = styled.div`
   gap: 5px;
   padding: 5px 0px;
   margin-bottom: 5px;
-  max-width: 330px;
   span {
     font-style: italic;
     color: ${COLORS.PAGE_TITLE_COLOR};
-  }
-  a {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    line-clamp: 2;
   }
 `;
 
@@ -260,7 +261,6 @@ const CastContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0px 10px;
 `;
 
 const SectionTitle = styled.div`
@@ -347,15 +347,8 @@ const FullContentWrapper = styled.div`
   }
 `;
 
-const SynopsisInformation = styled.div`
-  @media (min-width: 1200px) {
-    margin: 20px 0px 10px;
-  }
-`;
-
 const SeasonsWrapper = styled.div`
   @media (min-width: 1200px) {
-    margin: 10px 10px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -370,6 +363,7 @@ const SeasonsInformation = styled.div`
     width: 100%;
   }
 `;
+
 const Season = styled.div`
   @media (min-width: 1200px) {
     display: flex;
@@ -507,60 +501,94 @@ const PageMovie = (props: any) => {
               <SynopsisInformation>
                 <SynopsisWrapper>
                   <SectionTitle>Synopsis</SectionTitle>
-                  <Synopsis>{workInformation.overview}</Synopsis>
+                  <Synopsis>
+                    {workInformation.overview
+                      ? workInformation.overview
+                      : "No Information"}
+                  </Synopsis>
                 </SynopsisWrapper>
                 <PageInformation>
                   <SectionTitle>Information</SectionTitle>
                   <InformationWrapper>
                     <Information>
                       <span>Name</span>
-                      <p>{workInformation.name}</p>
+                      <p>
+                        {workInformation.name
+                          ? workInformation.name
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Original Name</span>
-                      <p>{workInformation.original_name}</p>
+                      <p>
+                        {workInformation.original_name
+                          ? workInformation.original_name
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Homepage</span>
-                      <a
-                        href={workInformation.homepage}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {workInformation.homepage}
-                      </a>
+                      {workInformation.homepage ? (
+                        <a
+                          href={workInformation.homepage}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {workInformation.homepage}
+                        </a>
+                      ) : (
+                        "No Information"
+                      )}
                     </Information>
                     <Information>
                       <span>First Air Date</span>
-                      <p>{workInformation.first_air_date}</p>
+                      <p>
+                        {workInformation.first_air_date
+                          ? workInformation.first_air_date
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Last Air Date</span>
-                      <p>{workInformation.last_air_date}</p>
+                      <p>
+                        {workInformation.last_air_date
+                          ? workInformation.last_air_date
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Number of Episodes</span>
-                      <p>{workInformation.number_of_episodes}</p>
+                      <p>
+                        {workInformation.number_of_episodes
+                          ? workInformation.number_of_episodes
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Number of Seasons</span>
-                      <p>{workInformation.number_of_seasons}</p>
+                      <p>
+                        {workInformation.number_of_seasons
+                          ? workInformation.number_of_seasons
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Score</span>
                       <p>
-                        {workInformation.vote_average
-                          .toFixed(1)
-                          .replace(".", "")}
+                        {workInformation.vote_average > 0
+                          ? workInformation.vote_average
+                              .toFixed(1)
+                              .replace(".", "")
+                          : "No Information"}
                       </p>
                     </Information>
                     <Information>
                       <span>Genres</span>
-                      {Object.values(workInformation.genres).map(
-                        (genre, index) => (
-                          <p key={index}>{genre.name}</p>
-                        )
-                      )}
+                      {workInformation.networks[0]
+                        ? Object.values(workInformation.genres).map(
+                            (genre, index) => <p key={index}>{genre.name}</p>
+                          )
+                        : "No Information"}
                     </Information>
                     <Information>
                       <span>In Production?</span>
@@ -568,35 +596,43 @@ const PageMovie = (props: any) => {
                     </Information>
                     <Information>
                       <span>Status</span>
-                      <p>{workInformation.status}</p>
+                      <p>
+                        {workInformation.status
+                          ? workInformation.status
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Networks</span>
-                      {Object.values(workInformation.networks).map(
-                        (network, index) => (
-                          <p key={index}>{network.name}</p>
-                        )
-                      )}
+                      {workInformation.networks[0]
+                        ? Object.values(workInformation.networks).map(
+                            (network, index) => (
+                              <p key={index}>{network.name}</p>
+                            )
+                          )
+                        : "No Information"}
                     </Information>
                     <Information>
                       <span>Production Countries</span>
-                      {Object.values(workInformation.production_countries).map(
-                        (country, index) => (
-                          <p key={index}>
-                            {country.name ? country.name : "No Information"}
-                          </p>
-                        )
-                      )}
+                      {workInformation.production_countries[0]
+                        ? Object.values(
+                            workInformation.production_countries
+                          ).map((country, index) => (
+                            <p key={index}>
+                              {country.name ? country.name : "No Information"}
+                            </p>
+                          ))
+                        : "No Information"}
                     </Information>
                     <Information>
                       <span>Production Companies</span>
-                      {Object.values(workInformation.production_companies).map(
-                        (company, index) => (
-                          <p key={index}>
-                            {company.name ? company.name : "No Information"}
-                          </p>
-                        )
-                      )}
+                      {workInformation.production_companies[0]
+                        ? Object.values(
+                            workInformation.production_companies
+                          ).map((company, index) => (
+                            <p key={index}>{company.name}</p>
+                          ))
+                        : "No Information"}
                     </Information>
                   </InformationWrapper>
                 </PageInformation>
@@ -624,7 +660,9 @@ const PageMovie = (props: any) => {
                             <SeasonContent>
                               <SeasonProfile>
                                 <span>Name</span>
-                                <p>{season.name}</p>
+                                <p>
+                                  {season.name ? season.name : "No Information"}
+                                </p>
                               </SeasonProfile>
                               <SeasonProfile>
                                 <span>Air Date</span>
@@ -644,7 +682,11 @@ const PageMovie = (props: any) => {
                               </SeasonProfile>
                               <SeasonProfile>
                                 <span>Episode Count</span>
-                                <p>{season.episode_count}</p>
+                                <p>
+                                  {season.episode_count
+                                    ? season.episode_count
+                                    : "No Information"}
+                                </p>
                               </SeasonProfile>
                             </SeasonContent>
                           </Season>
@@ -675,11 +717,17 @@ const PageMovie = (props: any) => {
                                 <CastWrapper>
                                   <CastProfile>
                                     <span>Name</span>
-                                    <p>{cast.name}</p>
+                                    <p>
+                                      {cast.name ? cast.name : "No Information"}
+                                    </p>
                                   </CastProfile>
                                   <CastProfile>
                                     <span>Role</span>
-                                    <p>{cast.known_for_department}</p>
+                                    <p>
+                                      {cast.known_for_department
+                                        ? cast.known_for_department
+                                        : "No Information"}
+                                    </p>
                                   </CastProfile>
                                   <CastProfile>
                                     <span>Character</span>

@@ -7,6 +7,8 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { COLORS } from "../Styled";
 
+const no_poster = require("../assets/no_poster.jpg");
+
 type Movies = {
   poster_path: string;
   id: number;
@@ -19,7 +21,7 @@ const PageTitle = styled.div`
   text-align: center;
   color: ${COLORS.PAGE_TITLE_COLOR};
   margin: 20px 10px;
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
 `;
 
@@ -32,20 +34,34 @@ const TypeModelLink = styled(Link)`
   }
 `;
 
-const TypeModelWrapper = styled.div``;
+const TypeModelWrapper = styled.div`
+  max-width: 1400px;
+  margin: auto;
+`;
 
 const TypeModelContentWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 10px 5px;
+    margin: 0px 5px 20px;
+  }
+  @media (min-width: 1200px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 const TypeModelContent = styled.div`
-  width: 145px;
-  height: 280px;
+  @media (max-width: 768px) {
+  }
+  @media (min-width: 1200px) {
+    width: 200px;
+    height: 350px;
+    border-radius: 10px;
+  }
 `;
 
 const TypeModelPoster = styled.div`
@@ -54,7 +70,13 @@ const TypeModelPoster = styled.div`
   img {
     border-radius: 10px;
     width: 100%;
-    height: 230px;
+    height: 250px;
+  }
+  @media (min-width: 1200px) {
+    img {
+      width: 100%;
+      height: 300px;
+    }
   }
 `;
 
@@ -176,8 +198,12 @@ const TypeModel = (props: any) => {
                       : work.vote_average.toFixed(1).replace(".", "")}
                   </TypeModelRating>
                   <img
-                    src={`https://www.themoviedb.org/t/p/original${work.poster_path}`}
-                    alt="any"
+                    src={
+                      work.poster_path
+                        ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
+                        : no_poster
+                    }
+                    alt={work.title ? work.title : work.name}
                   ></img>
                 </TypeModelPoster>
                 <TypeModelTitle>

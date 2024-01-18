@@ -97,6 +97,10 @@ type Work = {
       name: string;
     };
   };
+  belongs_to_collection: {
+    name: string;
+    poster_path: string;
+  };
 };
 
 type Cast = {
@@ -109,6 +113,10 @@ type Cast = {
       id: number;
     };
   };
+};
+
+type Collection = {
+  overview: string;
 };
 
 type Params = {
@@ -150,6 +158,15 @@ const PagePoster = styled.div`
     height: 200px;
     border-radius: 5px;
   }
+  @media (min-width: 1200px) {
+    img {
+      position: relative;
+      margin-top: -80%;
+      width: 160px;
+      height: 250px;
+      border-radius: 5px;
+    }
+  }
 `;
 
 const PageContentWrapper = styled.div`
@@ -167,6 +184,14 @@ const PageStatus = styled.div`
   border-radius: 5px;
   width: 130px;
   text-align: center;
+  @media (min-width: 1200px) {
+    padding: 5px;
+    background-color: ${COLORS.STATUS};
+    color: ${COLORS.PAGE_WHITE};
+    border-radius: 5px;
+    width: 160px;
+    text-align: center;
+  }
 `;
 
 const PageTitle = styled.div`
@@ -189,6 +214,17 @@ const PageTagline = styled.div`
   text-align: center;
 `;
 
+const SynopsisInformation = styled.div`
+  width: 100%;
+  padding: 0px 10px;
+  margin: 20px 0px 10px;
+  @media (min-width: 1200px) {
+    width: 100%;
+    padding: 0px 10px;
+    margin: 20px 0px 10px;
+  }
+`;
+
 const SynopsisWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -198,9 +234,9 @@ const SynopsisWrapper = styled.div`
 
 const Synopsis = styled.div`
   padding: 10px;
-  margin: 0px 10px;
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
+  width: 100%;
 `;
 
 const PageInformation = styled.div`
@@ -208,7 +244,6 @@ const PageInformation = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 0px 10px;
 `;
 
 const InformationWrapper = styled.div`
@@ -235,7 +270,6 @@ const CastContentWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0px 10px;
 `;
 
 const SectionTitle = styled.div`
@@ -281,6 +315,11 @@ const PageCast = styled.div`
 
 const CastProfile = styled.div`
   padding: 5px 5px 0px 0px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
 `;
 
 const CastWrapper = styled.div`
@@ -317,9 +356,49 @@ const FullContentWrapper = styled.div`
   }
 `;
 
-const SynopsisInformation = styled.div`
+const SeasonsWrapper = styled.div`
   @media (min-width: 1200px) {
-    margin: 20px 0px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+`;
+
+const SeasonsInformation = styled.div`
+  width: 100%;
+`;
+
+const Season = styled.div`
+  @media (min-width: 1200px) {
+    display: flex;
+    background-color: ${COLORS.PAGE_WHITE};
+    border-radius: 10px;
+    padding: 10px;
+  }
+`;
+
+const SeasonPoster = styled.div`
+  @media (min-width: 1200px) {
+    img {
+      width: 130px;
+      height: 100%;
+      border-radius: 10px;
+    }
+  }
+`;
+
+const SeasonContent = styled.div`
+  @media (min-width: 1200px) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px 10px;
+  }
+`;
+
+const SeasonProfile = styled.div`
+  span {
+    color: ${COLORS.LINK_COLOR};
   }
 `;
 
@@ -329,6 +408,7 @@ const PageMovie = (props: any) => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAllCast, setShowAllCast] = useState<boolean>(false);
+  const [movieCollection, setMovieCollection] = useState<Collection>();
   const workType = props.type;
   const { workId } = useParams() as Params;
 
@@ -352,7 +432,17 @@ const PageMovie = (props: any) => {
     } else {
       fetch(`https://api.themoviedb.org/3/movie/${numWorkId}`, API_GET_OPTIONS)
         .then((response) => response.json())
-        .then((response) => setWorkInformation(response))
+        .then((response) => {
+          setWorkInformation(response);
+          if (response.belongs_to_collection) {
+            fetch(
+              `https://api.themoviedb.org/3/search/collection?query=${response.belongs_to_collection.name}&include_adult=false&language=en-US&page=1`,
+              API_GET_OPTIONS
+            )
+              .then((response) => response.json())
+              .then((response) => setMovieCollection(response.results[0]));
+          }
+        })
         .catch((err) => setError(`ERROR WHILE FETCHING: ${err}`));
       fetch(
         `https://api.themoviedb.org/3/movie/${numWorkId}/credits`,
@@ -447,37 +537,51 @@ const PageMovie = (props: any) => {
                     </Information>
                     <Information>
                       <span>IMDB</span>
-                      <a
-                        href={`https://www.imdb.com/title/${workInformation.imdb_id}/`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {`https://www.imdb.com/title/${workInformation.imdb_id}/`}
-                      </a>
+                      {workInformation.imdb_id ? (
+                        <a
+                          href={`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {`https://www.imdb.com/title/${workInformation.imdb_id}/`}
+                        </a>
+                      ) : (
+                        "No Information"
+                      )}
                     </Information>
                     <Information>
                       <span>Release Date</span>
-                      <p>{workInformation.release_date}</p>
+                      <p>
+                        {workInformation.release_date
+                          ? workInformation.release_date
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Runtime</span>
-                      <p>{workInformation.runtime} min</p>
+                      <p>
+                        {workInformation.runtime
+                          ? workInformation.runtime + " min"
+                          : "No Information"}
+                      </p>
                     </Information>
                     <Information>
                       <span>Score</span>
                       <p>
-                        {workInformation.vote_average
-                          .toFixed(1)
-                          .replace(".", "")}
+                        {workInformation.vote_average > 0
+                          ? workInformation.vote_average
+                              .toFixed(1)
+                              .replace(".", "")
+                          : "No Information"}
                       </p>
                     </Information>
                     <Information>
                       <span>Genres</span>
-                      {Object.values(workInformation.genres).map(
-                        (genre, index) => (
-                          <p key={index}>{genre.name}</p>
-                        )
-                      )}
+                      {workInformation.production_companies[0]
+                        ? Object.values(workInformation.genres).map(
+                            (genre, index) => <p key={index}>{genre.name}</p>
+                          )
+                        : "No Information"}
                     </Information>
                     <Information>
                       <span>Original Language</span>
@@ -507,75 +611,130 @@ const PageMovie = (props: any) => {
                     </Information>
                     <Information>
                       <span>Production Countries</span>
-                      {Object.values(workInformation.production_countries).map(
-                        (country, index) => (
-                          <p key={index}>{country.name}</p>
-                        )
-                      )}
+                      {workInformation.production_companies[0]
+                        ? Object.values(
+                            workInformation.production_countries
+                          ).map((country, index) => (
+                            <p key={index}>{country.name}</p>
+                          ))
+                        : "No Information"}
                     </Information>
                     <Information>
                       <span>Production Companies</span>
-                      {Object.values(workInformation.production_companies).map(
-                        (companies, index) => (
-                          <p key={index}>{companies.name}</p>
-                        )
-                      )}
+                      {workInformation.production_companies[0]
+                        ? Object.values(
+                            workInformation.production_companies
+                          ).map((companies, index) => (
+                            <p key={index}>{companies.name}</p>
+                          ))
+                        : "No Information"}
                     </Information>
                   </InformationWrapper>
                 </PageInformation>
               </SynopsisInformation>
-              <CastContentWrapper>
-                <SectionTitle>
-                  <p>Cast</p>
-                </SectionTitle>
-                <CastContent>
-                  {workCast.cast[0] && (
-                    <PageCastWrapper>
-                      {Object.values(workCast.cast).map((cast, index) =>
-                        showAllCast || index < 12 ? (
-                          <PageCast key={cast.id}>
-                            <img
-                              src={
-                                cast.profile_path
-                                  ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
-                                  : no_cast_image
-                              }
-                              alt={cast.name}
-                            />
-                            <CastWrapper>
-                              <CastProfile>
-                                <span>Name</span>
-                                <p>{cast.name}</p>
-                              </CastProfile>
-                              <CastProfile>
-                                <span>Role</span>
-                                <p>{cast.known_for_department}</p>
-                              </CastProfile>
-                              <CastProfile>
-                                <span>Character</span>
-                                <p>
-                                  {cast.character.replace(/\(.*?\)/g, "")
-                                    ? cast.character.replace(/\(.*?\)/g, "")
-                                    : "No Information"}
-                                </p>
-                              </CastProfile>
-                            </CastWrapper>
-                          </PageCast>
-                        ) : undefined
-                      )}
-                    </PageCastWrapper>
-                  )}
-                </CastContent>
-                {workCast.cast[11] && (
-                  <ShowMore
-                    onClick={() => {
-                      setShowAllCast(!showAllCast);
-                    }}
-                  >
-                    {showAllCast ? "Show Less" : "Show More"}
-                  </ShowMore>
+              <SynopsisInformation>
+                {workInformation.belongs_to_collection && (
+                  <SeasonsWrapper>
+                    <SectionTitle>
+                      <p>Collection</p>
+                    </SectionTitle>
+                    <SeasonsInformation>
+                      <Season>
+                        <SeasonPoster>
+                          <img
+                            src={
+                              workInformation.belongs_to_collection.poster_path
+                                ? `https://www.themoviedb.org/t/p/original${workInformation.belongs_to_collection.poster_path}`
+                                : no_poster
+                            }
+                            alt={workInformation.belongs_to_collection.name}
+                          />
+                        </SeasonPoster>
+                        <SeasonContent>
+                          <SeasonProfile>
+                            <span>Belongs to Collection</span>
+                            <p>
+                              {workInformation.belongs_to_collection.name
+                                ? workInformation.belongs_to_collection.name
+                                : "No Information"}
+                            </p>
+                          </SeasonProfile>
+                          <SeasonProfile>
+                            <span>Overview</span>
+                            <p>
+                              {movieCollection?.overview
+                                ? movieCollection?.overview
+                                : "No Information"}
+                            </p>
+                          </SeasonProfile>
+                        </SeasonContent>
+                      </Season>
+                    </SeasonsInformation>
+                  </SeasonsWrapper>
                 )}
-              </CastContentWrapper>
+                {workCast.cast[0] && (
+                  <CastContentWrapper>
+                    <SectionTitle>
+                      <p>Cast</p>
+                    </SectionTitle>
+                    <CastContent>
+                      {workCast.cast[0] && (
+                        <PageCastWrapper>
+                          {Object.values(workCast.cast).map((cast, index) =>
+                            showAllCast || index < 12 ? (
+                              <PageCast key={cast.id}>
+                                <img
+                                  src={
+                                    cast.profile_path
+                                      ? `https://www.themoviedb.org/t/p/original${cast.profile_path}`
+                                      : no_cast_image
+                                  }
+                                  alt={cast.name}
+                                />
+                                <CastWrapper>
+                                  <CastProfile>
+                                    <span>Name</span>
+                                    <p>
+                                      {cast.known_for_department
+                                        ? cast.name
+                                        : "No Information"}
+                                    </p>
+                                  </CastProfile>
+                                  <CastProfile>
+                                    <span>Role</span>
+                                    <p>
+                                      {cast.known_for_department
+                                        ? cast.known_for_department
+                                        : "No Information"}
+                                    </p>
+                                  </CastProfile>
+                                  <CastProfile>
+                                    <span>Character</span>
+                                    <p>
+                                      {cast.character.replace(/\(.*?\)/g, "")
+                                        ? cast.character.replace(/\(.*?\)/g, "")
+                                        : "No Information"}
+                                    </p>
+                                  </CastProfile>
+                                </CastWrapper>
+                              </PageCast>
+                            ) : undefined
+                          )}
+                        </PageCastWrapper>
+                      )}
+                    </CastContent>
+                    {workCast.cast[11] && (
+                      <ShowMore
+                        onClick={() => {
+                          setShowAllCast(!showAllCast);
+                        }}
+                      >
+                        {showAllCast ? "Show Less" : "Show More"}
+                      </ShowMore>
+                    )}
+                  </CastContentWrapper>
+                )}
+              </SynopsisInformation>
             </FullContentWrapper>
           </PageBackgroundWrapper>
         </div>
