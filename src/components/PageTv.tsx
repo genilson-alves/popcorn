@@ -13,6 +13,7 @@ const no_image = require("../assets/no_image.png");
 const no_cast_image = require("../assets/no_cast_image.jpg");
 const no_background = require("../assets/no_background.jpg");
 const no_poster = require("../assets/no_poster.jpg");
+const home = require("../assets/home.png");
 
 type Work = {
   backdrop_path: string;
@@ -204,6 +205,7 @@ const PageOriginalTitle = styled.div`
 const PageTagline = styled.div`
   font-style: italic;
   text-align: center;
+  padding: 0px 10px;
 `;
 
 const SynopsisInformation = styled.div`
@@ -353,6 +355,11 @@ const SeasonsWrapper = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const SeasonsInformation = styled.div`
@@ -362,10 +369,22 @@ const SeasonsInformation = styled.div`
     gap: 10px;
     width: 100%;
   }
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
 `;
 
 const Season = styled.div`
   @media (min-width: 1200px) {
+    display: flex;
+    background-color: ${COLORS.PAGE_WHITE};
+    border-radius: 10px;
+    padding: 5px;
+  }
+  @media (max-width: 768px) {
     display: flex;
     background-color: ${COLORS.PAGE_WHITE};
     border-radius: 10px;
@@ -381,6 +400,13 @@ const SeasonPoster = styled.div`
       border-radius: 10px;
     }
   }
+  @media (max-width: 768px) {
+    img {
+      width: 115px;
+      height: 170px;
+      border-radius: 10px;
+    }
+  }
 `;
 
 const SeasonContent = styled.div`
@@ -393,6 +419,15 @@ const SeasonContent = styled.div`
       color: ${COLORS.LINK_COLOR};
     }
   }
+  @media (max-width: 768px) {
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    span {
+      color: ${COLORS.LINK_COLOR};
+    }
+  }
 `;
 
 const SeasonProfile = styled.div`
@@ -401,6 +436,26 @@ const SeasonProfile = styled.div`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   line-clamp: 2;
+  @media (max-width: 768px) {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
+  }
+`;
+
+const Homepage = styled.a`
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  text-decoration: none;
+  img {
+    width: 30px;
+  }
 `;
 
 const PageMovie = (props: any) => {
@@ -446,8 +501,6 @@ const PageMovie = (props: any) => {
     setLoading(false);
   }, []);
 
-  console.log(workInformation);
-
   return (
     <div>
       {isLoading && <Styled.Loading>Loading...</Styled.Loading>}
@@ -490,7 +543,7 @@ const PageMovie = (props: any) => {
                     <p>{workInformation.original_name}</p>
                   </PageOriginalTitle>
                 )}
-                {workInformation.tagline ? (
+                {workInformation.tagline.length > 0 ? (
                   <PageTagline>
                     <p>{`"${workInformation.tagline}"`}</p>
                   </PageTagline>
@@ -528,7 +581,8 @@ const PageMovie = (props: any) => {
                     </Information>
                     <Information>
                       <span>Homepage</span>
-                      {workInformation.homepage ? (
+                      {workInformation.homepage &&
+                      workInformation.homepage.startsWith("https://www.") ? (
                         <a
                           href={workInformation.homepage}
                           target="_blank"
@@ -760,6 +814,9 @@ const PageMovie = (props: any) => {
           </PageBackgroundWrapper>
         </div>
       )}
+      <Homepage href="/">
+        <img src={home} alt="home" />
+      </Homepage>
       <FooterComponent></FooterComponent>
     </div>
   );

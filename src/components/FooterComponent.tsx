@@ -11,12 +11,14 @@ const FooterWrapper = styled.footer`
   color: ${COLORS.FOOTER_COLOR};
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
   padding: 30px 0px 0px;
+  @media (min-width: 1200px) {
+    height: 300px;
+  }
 `;
 
 const Footer = styled.footer`
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
   ul {
     display: flex;
     flex-direction: column;
@@ -36,6 +38,12 @@ const Footer = styled.footer`
       margin-bottom: 3px;
     }
   }
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+    flex-direction: row;
+    justify-content: space-around;
+  }
 `;
 
 const FooterLink = styled(Link)`
@@ -45,13 +53,6 @@ const FooterLink = styled(Link)`
     text-decoration: underline;
     opacity: 0.8;
   }
-`;
-
-const FooterEnd = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
 `;
 
 export const FooterComponent = () => {
@@ -123,9 +124,6 @@ export const FooterComponent = () => {
           </li>
         </ul>
       </Footer>
-      <FooterEnd>
-        <div>Brazil, 2023</div>
-      </FooterEnd>
     </FooterWrapper>
   );
 };

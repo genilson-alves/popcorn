@@ -29,9 +29,7 @@ const LinkDefault = css`
   }
 `;
 
-const OtherWorksWrapper = styled.div`
-  margin: 50px 0px;
-`;
+const OtherWorksWrapper = styled.div``;
 
 const SectionTitleWrapper = styled.div`
   display: flex;
@@ -56,6 +54,11 @@ const WorkInformationWrapper = styled.div`
   gap: 0px 10px;
   margin: 10px;
   overflow: scroll;
+  @media (min-width: 1200px) {
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+  }
 `;
 
 const WorkInformation = styled.div`
@@ -67,7 +70,7 @@ const WorkInformation = styled.div`
 
 const WorkPosterWrapper = styled.div`
   img {
-    border-radius: 5px;
+    border-radius: 10px;
     width: 160px;
     height: 250px;
   }
@@ -80,6 +83,12 @@ const WorkTitleWrapper = styled.div`
 const WorkTitle = styled(Link)`
   ${LinkDefault}
   font-size: 0.9rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  padding: 0px 5px;
 `;
 
 const OtherWorks = (props: any) => {
@@ -90,7 +99,7 @@ const OtherWorks = (props: any) => {
         <ViewMore to={props.to}>View More</ViewMore>
       </SectionTitleWrapper>
       <WorkInformationWrapper>
-        {props.content.map((work: Work) => (
+        {props.content.slice(0, 8).map((work: Work) => (
           <WorkInformation key={work.id}>
             <WorkPosterWrapper>
               <img
@@ -244,11 +253,13 @@ const TopRatedSection = styled.div`
 
 const TopRatedContentWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 5px;
-  flex-wrap: wrap;
   gap: 10px;
+  @media (min-width: 1200px) {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+  }
 `;
 
 const TopRatedContent = styled.div`
@@ -448,39 +459,6 @@ const Home: React.FC = () => {
               type="tv"
             ></OtherWorks>
           </OtherWorksWrapper>
-          <TopRatedWrapper>
-            <TopRated>
-              <TopRatedSection>
-                <p>Our top ranked work!</p>
-              </TopRatedSection>
-              {TOP_RATED_MOVIES.length > 0 && (
-                <TopRatedContentWrapper>
-                  {TOP_RATED_MOVIES.map((work, index) => (
-                    <TopRatedContent key={work.id}>
-                      <TopRatedPosterWrapper>
-                        <TopRatedPosition>
-                          <p>#{index + 1}</p>
-                        </TopRatedPosition>
-                        <img
-                          src={
-                            work.poster_path
-                              ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
-                              : no_poster
-                          }
-                          alt={work.title}
-                        ></img>
-                      </TopRatedPosterWrapper>
-                      <TopRatedTitle>
-                        <TopRatedTitleLink to={`/movie/${work.id}`}>
-                          {work.title}
-                        </TopRatedTitleLink>
-                      </TopRatedTitle>
-                    </TopRatedContent>
-                  ))}
-                </TopRatedContentWrapper>
-              )}
-            </TopRated>
-          </TopRatedWrapper>
         </HomeContentWrapper>
       )}
       <FooterComponent></FooterComponent>

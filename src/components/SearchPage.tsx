@@ -18,7 +18,10 @@ type Movies = {
   media_type: string;
 };
 
-const SearchWrapper = styled.div``;
+const SearchWrapper = styled.div`
+  max-width: 1400px;
+  margin: auto;
+`;
 
 const SearchSectionWrapper = styled.div`
   display: flex;
@@ -32,12 +35,20 @@ const SearchSection = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
   padding: 5px;
+  @media (min-width: 1200px) {
+    margin: 20px;
+  }
 `;
 
 const PageTitle = styled.p`
   font-size: 1.8rem;
   font-weight: bold;
   margin: 20px 0px 10px;
+  @media (min-width: 1200px) {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 20px 0px 10px;
+  }
 `;
 
 const SearchBar = styled.input`
@@ -46,6 +57,12 @@ const SearchBar = styled.input`
   padding: 0px 5px;
   border: none;
   background: ${COLORS.PAGE_WHITE};
+  @media (min-width: 1200px) {
+    width: 500px;
+  }
+  @media (max-width: 768px) {
+    width: 150px;
+  }
 `;
 
 const SearchButton = styled.button`
@@ -66,36 +83,71 @@ const Search = styled.div`
   align-items: center;
   justify-content: center;
   margin-bottom: 20px;
-  gap: 20px;
+  gap: 10px;
+  @media (max-width: 768px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 160px);
+    gap: 0px;
+  }
+  @media (min-width: 1200px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 250px);
+  }
 `;
 
 const SearchContent = styled.div`
-  width: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  height: 400px;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+  }
 `;
 
 const SearchPoster = styled.div`
+  padding: 5px;
   img {
     width: 100%;
     height: 250px;
     border-radius: 10px;
   }
+  @media (max-width: 768px) {
+    padding: 3px;
+    img {
+      width: 100%;
+      height: 240px;
+      border-radius: 10px;
+    }
+  }
+  @media (min-width: 1200px) {
+    img {
+      width: 100%;
+      height: 330px;
+      border-radius: 10px;
+    }
+  }
 `;
 
-const SearchRating = styled.div``;
-
 const SearchTitle = styled.div`
-  padding: 5px;
+  padding: 0px 5px;
   text-align: center;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 const TitleLink = styled(Link)`
   text-decoration: none;
   &:hover {
     text-decoration: underline;
+  }
+  @media (min-width: 1200px) {
+    padding: 0px 10px;
   }
 `;
 
@@ -140,15 +192,18 @@ const SearchPage = () => {
     }
   };
 
-  console.log(POPULAR_DATA);
-  console.log(SEARCH_DATA);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      fetchData();
+    }
+  };
 
   return (
     <div>
+      <Navigation></Navigation>
       <Helmet>
         <title>Search</title>
       </Helmet>
-      <Navigation></Navigation>
       <SearchWrapper>
         <SearchSectionWrapper>
           <PageTitle>Search</PageTitle>
@@ -158,6 +213,7 @@ const SearchPage = () => {
               placeholder="Ex... Game of Thrones"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={handleKeyDown}
             ></SearchBar>
             <SearchButton onClick={fetchData}>Search</SearchButton>
           </SearchSection>
@@ -174,13 +230,13 @@ const SearchPage = () => {
                           ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
                           : no_poster
                       }
-                      alt="any"
+                      alt={work.name ? work.name : work.title}
                     ></img>
                   </SearchPoster>
                   <SearchTitle>
-                    <Styled.RouterLink to={`/${work.media_type}/${work.id}`}>
+                    <TitleLink to={`/${work.media_type}/${work.id}`}>
                       {work.title ? work.title : work.name}
-                    </Styled.RouterLink>
+                    </TitleLink>
                   </SearchTitle>
                 </SearchContent>
               ))}

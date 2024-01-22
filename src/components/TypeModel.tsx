@@ -182,75 +182,81 @@ const TypeModel = (props: any) => {
   return (
     <div>
       <Navigation></Navigation>
-      <TypeModelWrapper>
-        <Helmet>
-          <title>{pageTitle}</title>
-        </Helmet>
-        <PageTitle>{pageTitle}</PageTitle>
-        {POPULAR_MOVIES_DATA.length > 0 && (
-          <TypeModelContentWrapper>
-            {POPULAR_MOVIES_DATA.map((work) => (
-              <TypeModelContent key={work.id}>
-                <TypeModelPoster>
-                  <TypeModelRating>
-                    {work.vote_average === 0
-                      ? "NA"
-                      : work.vote_average.toFixed(1).replace(".", "")}
-                  </TypeModelRating>
-                  <img
-                    src={
-                      work.poster_path
-                        ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
-                        : no_poster
-                    }
-                    alt={work.title ? work.title : work.name}
-                  ></img>
-                </TypeModelPoster>
-                <TypeModelTitle>
-                  <TypeModelLink to={`/${workType}/${work.id}`}>
-                    {work.title ? work.title : work.name}
-                  </TypeModelLink>
-                </TypeModelTitle>
-              </TypeModelContent>
-            ))}
-          </TypeModelContentWrapper>
-        )}
-        <Pagination>
-          {currentPage > 1 && (
-            <PreviousButton
-              onClick={() => {
-                setCurrentPage(currentPage - 1);
-              }}
-            >
-              Previous
-            </PreviousButton>
+      <Helmet>
+        <title>{pageTitle}</title>
+      </Helmet>
+      {isLoading ? (
+        <Styled.Loading>Loading...</Styled.Loading>
+      ) : error ? (
+        <Styled.Error>ERROR: {error}</Styled.Error>
+      ) : (
+        <TypeModelWrapper>
+          <PageTitle>{pageTitle}</PageTitle>
+          {POPULAR_MOVIES_DATA.length > 0 && (
+            <TypeModelContentWrapper>
+              {POPULAR_MOVIES_DATA.map((work) => (
+                <TypeModelContent key={work.id}>
+                  <TypeModelPoster>
+                    <TypeModelRating>
+                      {work.vote_average === 0
+                        ? "NA"
+                        : work.vote_average.toFixed(1).replace(".", "")}
+                    </TypeModelRating>
+                    <img
+                      src={
+                        work.poster_path
+                          ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
+                          : no_poster
+                      }
+                      alt={work.title ? work.title : work.name}
+                    ></img>
+                  </TypeModelPoster>
+                  <TypeModelTitle>
+                    <TypeModelLink to={`/${workType}/${work.id}`}>
+                      {work.title ? work.title : work.name}
+                    </TypeModelLink>
+                  </TypeModelTitle>
+                </TypeModelContent>
+              ))}
+            </TypeModelContentWrapper>
           )}
-          {currentPage > 1 && (
+          <Pagination>
+            {currentPage > 1 && (
+              <PreviousButton
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                }}
+              >
+                Previous
+              </PreviousButton>
+            )}
+            {currentPage > 1 && (
+              <PaginationButtons
+                onClick={() => {
+                  setCurrentPage(currentPage - 1);
+                }}
+              >
+                {currentPage - 1}
+              </PaginationButtons>
+            )}
+            <CurrentPage>{currentPage}</CurrentPage>
             <PaginationButtons
               onClick={() => {
-                setCurrentPage(currentPage - 1);
+                setCurrentPage(currentPage + 1);
               }}
             >
-              {currentPage - 1}
+              {currentPage + 1}
             </PaginationButtons>
-          )}
-          <CurrentPage>{currentPage}</CurrentPage>
-          <PaginationButtons
-            onClick={() => {
-              setCurrentPage(currentPage + 1);
-            }}
-          >
-            {currentPage + 1}
-          </PaginationButtons>
-          <PaginationButtons
-            onClick={() => {
-              setCurrentPage(currentPage + 1);
-            }}
-          >
-            Next
-          </PaginationButtons>
-        </Pagination>
-      </TypeModelWrapper>
+            <PaginationButtons
+              onClick={() => {
+                setCurrentPage(currentPage + 1);
+              }}
+            >
+              Next
+            </PaginationButtons>
+          </Pagination>
+        </TypeModelWrapper>
+      )}
       <FooterComponent></FooterComponent>
     </div>
   );

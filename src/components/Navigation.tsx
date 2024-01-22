@@ -7,37 +7,22 @@ const logo = require("../assets/logo.png");
 const hamburger = require("../assets/hamburger.png");
 const close = require("../assets/close.png");
 
-const NavigationContainer = styled.div<{ showMenu: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
+const NavigationWrapper = styled.div`
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
-  color: ${COLORS.FOOTER_COLOR};
+`;
+
+const NavigationContainer = styled.div<{ showMenu: boolean }>`
   @media (max-width: 768px) {
     flex-direction: ${(props) => (props.showMenu ? "column" : "row")};
     padding: 10px 20px;
     align-items: center;
   }
-`;
-
-const Logo = styled.div`
-  img {
-    height: 50px;
-  }
-`;
-
-const NavigationLinks = styled.div<{ showMenu: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    width: 100%;
-    display: ${(props) => (props.showMenu ? "flex" : "none")};
-    gap: 5px;
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    padding: 10px;
+    margin: auto;
+    display: flex;
+    text-align: center;
   }
 `;
 
@@ -50,27 +35,15 @@ const LogoHamburger = styled.div`
   }
 `;
 
-const NavigationLink = styled(Link)`
-  font-size: 1rem;
-  color: ${COLORS.PAGE_WHITE};
-  text-decoration: none;
-  padding: 10px 0px;
-  &:hover {
-    text-decoration: underline;
-  }
-  @media (max-width: 768px) {
-    font-size: 1rem;
-    color: ${COLORS.PAGE_WHITE};
-    text-decoration: none;
-    margin-top: 30px;
-    font-weight: bold;
+const Logo = styled.div`
+  img {
+    height: 50px;
   }
 `;
 
 const HamburgerButton = styled.div<{ showMenu: boolean }>`
   display: none;
   cursor: pointer;
-
   @media (max-width: 768px) {
     display: ${(props) => (props.showMenu ? "none" : "block")};
     transition: 0.3s;
@@ -92,12 +65,44 @@ const CloseButton = styled.div<{ showMenu: boolean }>`
   }
 `;
 
+const NavigationLinks = styled.div<{ showMenu: boolean }>`
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    display: ${(props) => (props.showMenu ? "flex" : "none")};
+    gap: 5px;
+  }
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+    gap: 20px;
+    display: flex;
+    align-items: center;
+  }
+`;
+
+const NavigationLink = styled(Link)`
+  font-size: 1rem;
+  color: ${COLORS.PAGE_WHITE};
+  text-decoration: none;
+  padding: 10px 0px;
+  &:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    color: ${COLORS.PAGE_WHITE};
+    text-decoration: none;
+    margin-top: 30px;
+    font-weight: bold;
+  }
+`;
+
 const Dropdown = styled.div`
   position: relative;
-  margin-right: 20px;
-
   @media (max-width: 768px) {
-    margin: 10px 0;
+    margin: 10px 0px;
   }
 `;
 
@@ -124,7 +129,7 @@ const DropdownContent = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
   min-width: 160px;
   z-index: 1;
-
+  text-align: left;
   ${Dropdown}:hover & {
     display: block;
     border-radius: 10px;
@@ -186,54 +191,57 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <NavigationContainer showMenu={showMenu}>
-      <LogoHamburger>
-        <Logo>
-          <Link to="/">
-            <img src={logo} alt="logo" />
-          </Link>
-        </Logo>
-        <HamburgerButton showMenu={showMenu} onClick={toggleMenu}>
-          <img src={hamburger} alt="hamburger" />
-        </HamburgerButton>
-        <CloseButton showMenu={showMenu} onClick={toggleMenu}>
-          <img src={close} alt="close" />
-        </CloseButton>
-      </LogoHamburger>
-      <NavigationLinks showMenu={showMenu}>
-        <NavigationLink to="/search">Search</NavigationLink>
-        <Dropdown>
-          <DropdownButton>Movies</DropdownButton>
-          <DropdownContent>
-            <DropdownOption to="/movie/top_rated" onClick={toggleMenu}>
-              Top Rated
-            </DropdownOption>
-            <DropdownOption to="/movie/popular" onClick={toggleMenu}>
-              Popular
-            </DropdownOption>
-            <DropdownOption to="/movie/upcoming" onClick={toggleMenu}>
-              Upcoming
-            </DropdownOption>
-            <DropdownOption to="/movie/now_playing" onClick={toggleMenu}>
-              Now Playing
-            </DropdownOption>
-          </DropdownContent>
-        </Dropdown>
-        <Dropdown>
-          <DropdownButton>TV Shows</DropdownButton>
-          <DropdownContent>
-            <DropdownOption to="/tv/top_rated">Top Rated</DropdownOption>
-            <DropdownOption to="/tv/popular">Popular</DropdownOption>
-            <DropdownOption to="/tv/airing_today">Airing Today</DropdownOption>
-            <DropdownOption to="/tv/on_the_air">On the Air</DropdownOption>
-          </DropdownContent>
-        </Dropdown>
-      </NavigationLinks>
-      <User>
-        <Sign to="/">Sign In</Sign>
-        <Sign to="/">Sign Up</Sign>
-      </User>
-    </NavigationContainer>
+    <NavigationWrapper>
+      <NavigationContainer showMenu={showMenu}>
+        <LogoHamburger>
+          <Logo>
+            <Link to="/">
+              <img src={logo} alt="logo" />
+            </Link>
+          </Logo>
+          <HamburgerButton showMenu={showMenu} onClick={toggleMenu}>
+            <img src={hamburger} alt="hamburger" />
+          </HamburgerButton>
+          <CloseButton showMenu={showMenu} onClick={toggleMenu}>
+            <img src={close} alt="close" />
+          </CloseButton>
+        </LogoHamburger>
+        <NavigationLinks showMenu={showMenu}>
+          <NavigationLink to="/search">Search</NavigationLink>
+          <Dropdown>
+            <DropdownButton>Movies</DropdownButton>
+            <DropdownContent>
+              <DropdownOption to="/movie/top_rated" onClick={toggleMenu}>
+                Top Rated
+              </DropdownOption>
+              <DropdownOption to="/movie/popular" onClick={toggleMenu}>
+                Popular
+              </DropdownOption>
+              <DropdownOption to="/movie/upcoming" onClick={toggleMenu}>
+                Upcoming
+              </DropdownOption>
+              <DropdownOption to="/movie/now_playing" onClick={toggleMenu}>
+                Now Playing
+              </DropdownOption>
+            </DropdownContent>
+          </Dropdown>
+          <Dropdown>
+            <DropdownButton>TV Shows</DropdownButton>
+            <DropdownContent>
+              <DropdownOption to="/tv/top_rated">Top Rated</DropdownOption>
+              <DropdownOption to="/tv/popular">Popular</DropdownOption>
+              <DropdownOption to="/tv/airing_today">
+                Airing Today
+              </DropdownOption>
+              <DropdownOption to="/tv/on_the_air">On the Air</DropdownOption>
+            </DropdownContent>
+          </Dropdown>
+        </NavigationLinks>
+        <User>
+          <Sign to="/">Sign In</Sign>
+        </User>
+      </NavigationContainer>
+    </NavigationWrapper>
   );
 };
 
