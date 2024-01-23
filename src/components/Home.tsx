@@ -55,7 +55,7 @@ const WorkInformationWrapper = styled.div`
   margin: 10px;
   overflow: scroll;
   @media (min-width: 1200px) {
-    overflow: hidden;
+    overflow: scroll;
     display: grid;
     grid-template-columns: repeat(8, 1fr);
   }
@@ -237,68 +237,6 @@ const MobilePreviousButton = styled.button`
 
 const MobileNextButton = styled.button`
   ${ButtonSettings}
-`;
-
-const TopRatedWrapper = styled.div``;
-
-const TopRated = styled.div``;
-
-const TopRatedSection = styled.div`
-  color: ${COLORS.SECTION_COLOR};
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: bold;
-  font-size: 1.5rem;
-`;
-
-const TopRatedContentWrapper = styled.div`
-  display: flex;
-  padding: 5px;
-  gap: 10px;
-  @media (min-width: 1200px) {
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-  }
-`;
-
-const TopRatedContent = styled.div`
-  overflow: hidden;
-  width: 150px;
-  height: 300px;
-`;
-
-const TopRatedPosterWrapper = styled.div`
-  display: inline-block;
-  position: relative;
-  img {
-    width: 150px;
-    height: 230px;
-    border-radius: 10px;
-  }
-`;
-
-const TopRatedPosition = styled.div`
-  position: absolute;
-  background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
-  color: white;
-  font-weight: bold;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 2%;
-  right: 2%;
-  width: 35px;
-  height: 35px;
-`;
-
-const TopRatedTitle = styled.div`
-  text-align: center;
-`;
-
-const TopRatedTitleLink = styled(Link)`
-  ${LinkDefault}
 `;
 
 const Home: React.FC = () => {

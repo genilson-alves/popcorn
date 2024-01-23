@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { COLORS } from "../Styled";
 import styled from "styled-components";
+import { WorkInformationRightContentProductionWrapper } from "./../Styled";
 const linkedin = require("../assets/linkedin.png");
 const github = require("../assets/github.png");
 const mobile = require("../assets/mobile.png");
@@ -10,13 +11,16 @@ const email = require("../assets/email.png");
 const FooterWrapper = styled.footer`
   color: ${COLORS.FOOTER_COLOR};
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
-  padding: 30px 0px 0px;
-  @media (min-width: 1200px) {
-    height: 300px;
-  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
 `;
 
 const Footer = styled.footer`
+  margin-bottom: 30px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   ul {
@@ -40,9 +44,15 @@ const Footer = styled.footer`
   }
   @media (min-width: 1200px) {
     max-width: 1400px;
-    margin: auto;
     flex-direction: row;
     justify-content: space-around;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    ul {
+      align-items: center;
+    }
   }
 `;
 
@@ -52,6 +62,19 @@ const FooterLink = styled(Link)`
   &:hover {
     text-decoration: underline;
     opacity: 0.8;
+  }
+`;
+
+const FooterEnd = styled.div`
+  ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    list-style: none;
+    img {
+      width: 25px;
+    }
   }
 `;
 
@@ -105,25 +128,24 @@ export const FooterComponent = () => {
             </FooterLink>
           </li>
         </ul>
+      </Footer>
+      <FooterEnd>
         <ul>
-          <p>Contact</p>
           <li>
-            <img src={github} alt="GitHub"></img>
             <FooterLink to="https://github.com/genilson-alves" target="_blank">
-              GitHub
+              <img src={github} alt="GitHub"></img>
             </FooterLink>
           </li>
           <li>
-            <img src={linkedin} alt="LinkedIn"></img>
             <FooterLink
               to="https://linkedin.com/in/genilson-alves0"
               target="_blank"
             >
-              LinkedIn
+              <img src={linkedin} alt="LinkedIn"></img>
             </FooterLink>
           </li>
         </ul>
-      </Footer>
+      </FooterEnd>
     </FooterWrapper>
   );
 };

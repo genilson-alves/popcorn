@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { COLORS } from "../Styled";
 import { Link } from "react-router-dom";
-import { click } from "@testing-library/user-event/dist/click";
 const logo = require("../assets/logo.png");
 const hamburger = require("../assets/hamburger.png");
 const close = require("../assets/close.png");
@@ -24,10 +23,22 @@ const NavigationContainer = styled.div<{ showMenu: boolean }>`
     display: flex;
     text-align: center;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    flex-direction: ${(props) => (props.showMenu ? "column" : "row")};
+    padding: 10px 20px;
+    align-items: center;
+  }
 `;
 
 const LogoHamburger = styled.div`
   @media (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 768px) and (max-width: 1199px) {
     width: 100%;
     display: flex;
     align-items: center;
@@ -51,12 +62,26 @@ const HamburgerButton = styled.div<{ showMenu: boolean }>`
       width: 40px;
     }
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: ${(props) => (props.showMenu ? "none" : "block")};
+    transition: 0.3s;
+    img {
+      width: 40px;
+    }
+  }
 `;
 
 const CloseButton = styled.div<{ showMenu: boolean }>`
   display: none;
   cursor: pointer;
   @media (max-width: 768px) {
+    display: ${(props) => (props.showMenu ? "block" : "none")};
+    transition: 0.3s;
+    img {
+      width: 40px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
     display: ${(props) => (props.showMenu ? "block" : "none")};
     transition: 0.3s;
     img {
@@ -80,6 +105,13 @@ const NavigationLinks = styled.div<{ showMenu: boolean }>`
     display: flex;
     align-items: center;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    display: ${(props) => (props.showMenu ? "flex" : "none")};
+    gap: 5px;
+  }
 `;
 
 const NavigationLink = styled(Link)`
@@ -97,11 +129,44 @@ const NavigationLink = styled(Link)`
     margin-top: 30px;
     font-weight: bold;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    font-size: 1rem;
+    color: ${COLORS.PAGE_WHITE};
+    text-decoration: none;
+    margin-top: 30px;
+    font-weight: bold;
+  }
+`;
+const MobileLogin = styled(Link)`
+  font-size: 1rem;
+  color: ${COLORS.PAGE_WHITE};
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    color: ${COLORS.PAGE_WHITE};
+    text-decoration: none;
+    font-weight: bold;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    font-size: 1rem;
+    color: ${COLORS.PAGE_WHITE};
+    text-decoration: none;
+    font-weight: bold;
+  }
+  @media (min-width: 1200px) {
+    display: none;
+  }
 `;
 
 const Dropdown = styled.div`
   position: relative;
   @media (max-width: 768px) {
+    margin: 10px 0px;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
     margin: 10px 0px;
   }
 `;
@@ -117,6 +182,10 @@ const DropdownButton = styled.button`
     text-decoration: underline;
   }
   @media (max-width: 768px) {
+    padding: 5px 0px;
+    font-weight: bold;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
     padding: 5px 0px;
     font-weight: bold;
   }
@@ -140,6 +209,12 @@ const DropdownContent = styled.div`
     width: 100%;
     background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: block;
+    position: static;
+    width: 100%;
+    background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  }
 `;
 
 const DropdownOption = styled(Link)`
@@ -153,7 +228,13 @@ const DropdownOption = styled(Link)`
     background-color: #fff;
     text-decoration: underline;
   }
+
   @media (max-width: 768px) {
+    background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+    color: ${COLORS.PAGE_WHITE};
+    padding: 7px;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
     background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
     color: ${COLORS.PAGE_WHITE};
     padding: 7px;
@@ -167,6 +248,10 @@ const User = styled.div`
     display: none;
     margin: 10px 0;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: none;
+    margin: 10px 0;
+  }
 `;
 
 const Sign = styled(Link)`
@@ -177,7 +262,6 @@ const Sign = styled(Link)`
   padding: 15px;
   color: white;
   background-color: black;
-
   &:hover {
     text-decoration: underline;
   }
@@ -208,6 +292,7 @@ const Navigation: React.FC = () => {
         </LogoHamburger>
         <NavigationLinks showMenu={showMenu}>
           <NavigationLink to="/search">Search</NavigationLink>
+          <MobileLogin to="/login">Login</MobileLogin>
           <Dropdown>
             <DropdownButton>Movies</DropdownButton>
             <DropdownContent>
@@ -238,7 +323,7 @@ const Navigation: React.FC = () => {
           </Dropdown>
         </NavigationLinks>
         <User>
-          <Sign to="/">Sign In</Sign>
+          <Sign to="/login">Sign In</Sign>
         </User>
       </NavigationContainer>
     </NavigationWrapper>

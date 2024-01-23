@@ -360,6 +360,11 @@ const SeasonsWrapper = styled.div`
     flex-direction: column;
     align-items: center;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const SeasonsInformation = styled.div`
@@ -375,6 +380,12 @@ const SeasonsInformation = styled.div`
     width: 100%;
     gap: 10px;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
 `;
 
 const Season = styled.div`
@@ -385,6 +396,12 @@ const Season = styled.div`
     padding: 5px;
   }
   @media (max-width: 768px) {
+    display: flex;
+    background-color: ${COLORS.PAGE_WHITE};
+    border-radius: 10px;
+    padding: 10px;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
     display: flex;
     background-color: ${COLORS.PAGE_WHITE};
     border-radius: 10px;
@@ -407,6 +424,13 @@ const SeasonPoster = styled.div`
       border-radius: 10px;
     }
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    img {
+      width: 115px;
+      height: 170px;
+      border-radius: 10px;
+    }
+  }
 `;
 
 const SeasonContent = styled.div`
@@ -420,6 +444,15 @@ const SeasonContent = styled.div`
     }
   }
   @media (max-width: 768px) {
+    padding: 5px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    span {
+      color: ${COLORS.LINK_COLOR};
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
     padding: 5px 10px;
     display: flex;
     flex-direction: column;
@@ -455,6 +488,10 @@ const Homepage = styled.a`
   text-decoration: none;
   img {
     width: 30px;
+  }
+  @media (min-width: 1200px) {
+    bottom: 50px;
+    right: 20%;
   }
 `;
 

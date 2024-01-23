@@ -46,6 +46,12 @@ const TypeModelContentWrapper = styled.div`
     grid-gap: 10px 5px;
     margin: 0px 5px 20px;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: 10px 5px;
+    margin: 0px 5px 20px;
+  }
   @media (min-width: 1200px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, 250px);
@@ -55,8 +61,6 @@ const TypeModelContentWrapper = styled.div`
 `;
 
 const TypeModelContent = styled.div`
-  @media (max-width: 768px) {
-  }
   @media (min-width: 1200px) {
     width: 200px;
     height: 350px;

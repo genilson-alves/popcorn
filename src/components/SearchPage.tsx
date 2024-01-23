@@ -89,6 +89,11 @@ const Search = styled.div`
     grid-template-columns: repeat(auto-fit, 160px);
     gap: 0px;
   }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 160px);
+    gap: 0px;
+  }
   @media (min-width: 1200px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, 250px);
@@ -100,6 +105,9 @@ const SearchContent = styled.div`
   flex-direction: column;
   align-items: center;
   height: 400px;
+  @media (min-width: 768px) and (max-width: 1200px) {
+    height: 300px;
+  }
   @media (max-width: 768px) {
     display: flex;
     flex-direction: column;

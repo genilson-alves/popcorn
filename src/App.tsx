@@ -7,6 +7,7 @@ import Home from "./components/Home";
 import SearchPage from "./components/SearchPage";
 import TypeModel from "./components/TypeModel";
 import NotFound from "./components/NotFound";
+import Login from "./components/Login";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +103,10 @@ const router = createBrowserRouter([
   {
     path: "/error",
     element: <NotFound></NotFound>,
+  },
+  {
+    path: "/login",
+    element: <Login></Login>,
   },
   {
     path: "*",
