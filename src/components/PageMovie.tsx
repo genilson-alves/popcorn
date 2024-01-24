@@ -239,6 +239,7 @@ const Synopsis = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
   width: 100%;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 `;
 
 const PageInformation = styled.div`
@@ -253,6 +254,7 @@ const InformationWrapper = styled.div`
   width: 100%;
   padding: 10px;
   border-radius: 10px;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 `;
 
 const Information = styled.div`
@@ -303,6 +305,8 @@ const PageCastWrapper = styled.div`
 
 const PageCast = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+
   display: flex;
   padding: 10px;
   border-radius: 10px;
@@ -335,6 +339,7 @@ const CastWrapper = styled.div`
 `;
 
 const ShowMore = styled.button`
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   border: none;
   border-radius: 10px;
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
@@ -380,6 +385,7 @@ const SeasonsWrapper = styled.div`
 
 const SeasonsInformation = styled.div`
   width: 100%;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   @media (max-width: 768px) {
     background-color: ${COLORS.PAGE_WHITE};
     padding: 10px;

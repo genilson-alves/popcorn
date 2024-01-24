@@ -171,6 +171,7 @@ const PageContentWrapper = styled.div`
 `;
 
 const PageStatus = styled.div`
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   padding: 5px;
   background-color: ${COLORS.STATUS};
   color: ${COLORS.PAGE_WHITE};
@@ -229,6 +230,7 @@ const Synopsis = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
   border-radius: 10px;
   width: 100%;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
 `;
 
 const PageInformation = styled.div`
@@ -241,6 +243,7 @@ const PageInformation = styled.div`
 
 const InformationWrapper = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   padding: 10px;
   border-radius: 10px;
   width: 100%;
@@ -294,6 +297,7 @@ const PageCastWrapper = styled.div`
 
 const PageCast = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   display: flex;
   padding: 10px;
   border-radius: 10px;
@@ -326,6 +330,7 @@ const CastWrapper = styled.div`
 `;
 
 const ShowMore = styled.button`
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   border: none;
   border-radius: 10px;
   background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
@@ -389,6 +394,7 @@ const SeasonsInformation = styled.div`
 `;
 
 const Season = styled.div`
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   @media (min-width: 1200px) {
     display: flex;
     background-color: ${COLORS.PAGE_WHITE};

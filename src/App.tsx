@@ -7,7 +7,8 @@ import Home from "./components/Home";
 import SearchPage from "./components/SearchPage";
 import TypeModel from "./components/TypeModel";
 import NotFound from "./components/NotFound";
-import Login from "./components/Login";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -106,7 +107,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login></Login>,
+    element: <SignIn></SignIn>,
+  },
+  {
+    path: "/signup",
+    element: <SignUp></SignUp>,
   },
   {
     path: "*",
