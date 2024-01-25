@@ -261,7 +261,7 @@ const Sign = styled(Link)`
   border-radius: 5px;
   padding: 15px;
   color: white;
-  background-color: #023e8a;
+  background-color: #e43e54;
   &:hover {
     text-decoration: underline;
   }

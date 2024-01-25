@@ -7,20 +7,23 @@ import { Helmet } from "react-helmet";
 import { FooterComponent } from "./FooterComponent";
 import Navigation from "./Navigation";
 const no_poster = require("../assets/no_poster.jpg");
-const previous = require("../assets/previous.png");
-const next = require("../assets/next.png");
 
 type Work = {
   title: string;
   name: string;
   overview: string;
-  release_date: string;
   poster_path: string;
   id: number;
-  vote_average: number;
 };
 
-const LinkDefault = css`
+const HomeWrapper = styled.main`
+  @media (min-width: 1200px) {
+    max-width: 1400px;
+    margin: auto;
+  }
+`;
+
+const DefaultLink = css`
   text-decoration: none;
   color: ${COLORS.LINK_COLOR};
   &:hover {
@@ -29,79 +32,80 @@ const LinkDefault = css`
   }
 `;
 
-const OtherWorksWrapper = styled.div``;
-
-const SectionTitleWrapper = styled.div`
+const MediaSectionTitle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 0px 15px;
+  margin: 10px 15px;
+  padding: 5px;
+  border-bottom: 0.5 solid ${COLORS.SECTION_COLOR};
 `;
 
-const SectionTitle = styled.div`
-  font-size: 1.1rem;
+const Title = styled.div`
   font-weight: bold;
   color: ${COLORS.SECTION_COLOR};
+  &::before {
+    content: "";
+    border: 2px solid ${COLORS.SECTION_COLOR};
+    margin-right: 5px;
+    border-radius: 10px;
+  }
 `;
 
 const ViewMore = styled(Link)`
-  ${LinkDefault}
+  ${DefaultLink}
   font-size: 0.8rem;
 `;
 
-const WorkInformationWrapper = styled.div`
+const CardInformationWrapper = styled.div`
   display: flex;
   gap: 0px 10px;
-  margin: 10px;
-  overflow: scroll;
+  margin: 0px 10px;
   @media (min-width: 1200px) {
-    overflow: scroll;
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    justify-content: space-between;
+    display: flex;
   }
 `;
 
-const WorkInformation = styled.div`
+const CardInformation = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 10px;
+  width: 400px;
+  height: 350px;
 `;
 
-const WorkPosterWrapper = styled.div`
+const CardPoster = styled.div`
   img {
     border-radius: 10px;
-    width: 160px;
-    height: 250px;
+    width: 100%;
+    height: 300px;
   }
 `;
 
-const WorkTitleWrapper = styled.div`
-  text-align: center;
-`;
-
-const WorkTitle = styled(Link)`
-  ${LinkDefault}
+const CardTitle = styled(Link)`
+  ${DefaultLink}
   font-size: 0.9rem;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   line-clamp: 2;
-  padding: 0px 5px;
+  padding: 0px 10px;
+  text-align: center;
 `;
 
-const OtherWorks = (props: any) => {
+const MediaSectionCard = (props: any) => {
   return (
     <div>
-      <SectionTitleWrapper>
-        <SectionTitle>{props.title}</SectionTitle>
+      <MediaSectionTitle>
+        <Title>{props.title}</Title>
         <ViewMore to={props.to}>View More</ViewMore>
-      </SectionTitleWrapper>
-      <WorkInformationWrapper>
-        {props.content.slice(0, 8).map((work: Work) => (
-          <WorkInformation key={work.id}>
-            <WorkPosterWrapper>
+      </MediaSectionTitle>
+      <CardInformationWrapper>
+        {props.content.slice(0, 6).map((work: Work) => (
+          <CardInformation key={work.id}>
+            <CardPoster>
               <img
                 src={
                   work.poster_path
@@ -110,134 +114,16 @@ const OtherWorks = (props: any) => {
                 }
                 alt={work.name ? work.name : work.title}
               ></img>
-            </WorkPosterWrapper>
-            <WorkTitleWrapper>
-              <WorkTitle to={`/${props.type}/${work.id}`}>
-                {work.name ? work.name : work.title}
-              </WorkTitle>
-            </WorkTitleWrapper>
-          </WorkInformation>
+            </CardPoster>
+            <CardTitle to={`/${props.type}/${work.id}`}>
+              {work.name ? work.name : work.title}
+            </CardTitle>
+          </CardInformation>
         ))}
-      </WorkInformationWrapper>
+      </CardInformationWrapper>
     </div>
   );
 };
-
-const HomeContentWrapper = styled.main`
-  @media (min-width: 1200px) {
-    max-width: 1400px;
-    margin: auto;
-  }
-`;
-
-const FeaturedWorksTitle = styled.div`
-  color: ${COLORS.SECTION_COLOR};
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: bold;
-  font-size: 1.5rem;
-`;
-
-const FeaturedContentWrapper = styled.div`
-  margin: 50px 10px;
-`;
-
-const FeaturedWorkWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const FeaturedWorkPosterWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const FeaturedPosterRatingWrapper = styled.div`
-  display: inline-block;
-  position: relative;
-  img {
-    border-radius: 10px;
-    width: 200px;
-    height: 300px;
-  }
-`;
-
-const FeaturedWorkRating = styled.div`
-  position: absolute;
-  padding: 5px;
-  align-items: center;
-  justify-content: center;
-  display: flex;
-  width: 50px;
-  height: 50px;
-  background-color: ${COLORS.RATING_BACKGROUND_COLOR};
-  border-radius: 6px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  top: 1%;
-  left: 74%;
-`;
-
-const FeaturedWorkInformation = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-`;
-
-const WorkInformationSection = styled.span`
-  font-weight: bold;
-  font-style: italic;
-`;
-
-const FeaturedWorkTitleWrapper = styled.div`
-  padding: 5px;
-  text-align: center;
-`;
-
-const FeaturedWorkTitle = styled(Link)`
-  ${LinkDefault}
-  font-size: 1.4rem;
-  font-weight: bold;
-`;
-
-const FeaturedWorkReleaseDate = styled.div``;
-
-const FeaturedWorkOverview = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ButtonSettings = css`
-  height: 50px;
-  width: 50px;
-  border: none;
-  background-color: inherit;
-  cursor: pointer;
-  border-radius: 15px;
-  margin: 5px;
-  img {
-    width: 100%;
-    height: 100%;
-  }
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-const MobilePreviousButton = styled.button`
-  ${ButtonSettings}
-`;
-
-const MobileNextButton = styled.button`
-  ${ButtonSettings}
-`;
 
 const Home: React.FC = () => {
   const [POPULAR_MOVIES, setPopularMovies] = useState<Work[]>([]);
@@ -246,10 +132,8 @@ const Home: React.FC = () => {
   const [ON_THE_AIR_TV_SHOWS, setOnTheAirTvShows] = useState<Work[]>([]);
   const [POPULAR_TV_SHOWS, setPopularTvShows] = useState<Work[]>([]);
   const [TOP_RATED_TV_SHOWS, setTopRatedTvShows] = useState<Work[]>([]);
-  const [TOP_RATED_WORKS, setTopRatedWorks] = useState(true);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
 
   const API_GET = {
     method: "GET",
@@ -289,115 +173,55 @@ const Home: React.FC = () => {
     setLoading(false);
   }, []);
 
-  const handleNextMovie = () => {
-    setCurrentMovieIndex(
-      (prevIndex) => (prevIndex + 1) % POPULAR_MOVIES.length
-    );
-  };
-
-  const handlePreviousMovie = () => {
-    setCurrentMovieIndex(
-      (prevIndex) =>
-        (prevIndex - 1 + POPULAR_MOVIES.length) % POPULAR_MOVIES.length
-    );
-  };
-
   return (
     <div>
       <Navigation></Navigation>
       <Helmet>
-        <title>Home</title>
+        <title>Popcorn</title>
       </Helmet>
       {isLoading ? (
         <Styled.Loading>Loading...</Styled.Loading>
       ) : error ? (
         <Styled.Error>ERROR: {error}</Styled.Error>
       ) : (
-        <HomeContentWrapper>
-          <FeaturedContentWrapper>
-            {POPULAR_MOVIES.length > 0 && (
-              <FeaturedWorkWrapper key={POPULAR_MOVIES[currentMovieIndex].id}>
-                <FeaturedWorksTitle>
-                  <p>Popular Movies</p>
-                </FeaturedWorksTitle>
-                <FeaturedWorkPosterWrapper>
-                  <MobilePreviousButton onClick={handlePreviousMovie}>
-                    <img src={previous} alt="Previous" />
-                  </MobilePreviousButton>
-                  <FeaturedPosterRatingWrapper>
-                    <img
-                      src={
-                        POPULAR_MOVIES[currentMovieIndex].poster_path
-                          ? `https://www.themoviedb.org/t/p/original${POPULAR_MOVIES[currentMovieIndex].poster_path}`
-                          : no_poster
-                      }
-                      alt={POPULAR_MOVIES[0].title}
-                    ></img>
-                    <FeaturedWorkRating>
-                      {POPULAR_MOVIES[currentMovieIndex].vote_average
-                        .toFixed(1)
-                        .replace(".", "")}
-                    </FeaturedWorkRating>
-                  </FeaturedPosterRatingWrapper>
-                  <MobileNextButton onClick={handleNextMovie}>
-                    <img src={next} alt="Next" />
-                  </MobileNextButton>
-                </FeaturedWorkPosterWrapper>
-                <FeaturedWorkInformation>
-                  <FeaturedWorkTitleWrapper>
-                    <FeaturedWorkTitle
-                      to={`/movie/${POPULAR_MOVIES[currentMovieIndex].id}`}
-                    >
-                      {POPULAR_MOVIES[currentMovieIndex].title}
-                    </FeaturedWorkTitle>
-                  </FeaturedWorkTitleWrapper>
-                  <FeaturedWorkReleaseDate>
-                    <WorkInformationSection>
-                      Release Date:
-                    </WorkInformationSection>
-                    <p>{POPULAR_MOVIES[currentMovieIndex].release_date}</p>
-                  </FeaturedWorkReleaseDate>
-                  <FeaturedWorkOverview>
-                    <WorkInformationSection>Synopsis:</WorkInformationSection>
-                    <p>{POPULAR_MOVIES[currentMovieIndex].overview}</p>
-                  </FeaturedWorkOverview>
-                </FeaturedWorkInformation>
-              </FeaturedWorkWrapper>
-            )}
-          </FeaturedContentWrapper>
-          <OtherWorksWrapper>
-            <OtherWorks
-              content={TOP_RATED_MOVIES}
-              title="Top Rated Movies"
-              to="/movie/top_rated"
-              type="movie"
-            ></OtherWorks>
-            <OtherWorks
-              content={UPCOMING_MOVIES}
-              title="Upcoming Movies"
-              to="/movie/upcoming"
-              type="movie"
-            ></OtherWorks>
-            <OtherWorks
-              content={TOP_RATED_TV_SHOWS}
-              title="Top Rated TV Shows"
-              to="/tv/top_rated"
-              type="tv"
-            ></OtherWorks>
-            <OtherWorks
-              content={POPULAR_TV_SHOWS}
-              title="Popular TV Shows"
-              to="/tv/popular"
-              type="tv"
-            ></OtherWorks>
-            <OtherWorks
-              content={ON_THE_AIR_TV_SHOWS}
-              title="On The Air TV Shows"
-              to="/tv/on_the_air"
-              type="tv"
-            ></OtherWorks>
-          </OtherWorksWrapper>
-        </HomeContentWrapper>
+        <HomeWrapper>
+          <MediaSectionCard
+            content={POPULAR_MOVIES}
+            title="POPULAR MOVIES"
+            to="/movie/popular"
+            type="movie"
+          ></MediaSectionCard>
+          <MediaSectionCard
+            content={TOP_RATED_MOVIES}
+            title="TOP RATED MOVIES"
+            to="/movie/top_rated"
+            type="movie"
+          ></MediaSectionCard>
+          <MediaSectionCard
+            content={UPCOMING_MOVIES}
+            title="UPCOMING MOVIES"
+            to="/movie/upcoming"
+            type="movie"
+          ></MediaSectionCard>
+          <MediaSectionCard
+            content={TOP_RATED_TV_SHOWS}
+            title="TOP RATED TV SHOWS"
+            to="/tv/top_rated"
+            type="tv"
+          ></MediaSectionCard>
+          <MediaSectionCard
+            content={POPULAR_TV_SHOWS}
+            title="POPULAR TV SHOWS"
+            to="/tv/popular"
+            type="tv"
+          ></MediaSectionCard>
+          <MediaSectionCard
+            content={ON_THE_AIR_TV_SHOWS}
+            title="ON THE AIR TV SHOWS"
+            to="/tv/on_the_air"
+            type="tv"
+          ></MediaSectionCard>
+        </HomeWrapper>
       )}
       <FooterComponent></FooterComponent>
     </div>

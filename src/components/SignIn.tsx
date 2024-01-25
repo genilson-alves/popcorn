@@ -123,7 +123,7 @@ function SignIn() {
             <Button type="submit">Login</Button>
           </LoginForm>
           <ContentWrapper>
-            <p>Doesn't have a account yet?</p>
+            <p>Doesn't have an account yet?</p>
             <a href="/signup">Sign Up</a>
           </ContentWrapper>
         </LoginWrapper>
