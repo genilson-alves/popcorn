@@ -29,10 +29,15 @@ const Footer = styled.footer`
 const FooterSectionWrapper = styled.div`
   display: grid;
   grid-template-columns: 2fr repeat(3, 1fr);
-  margin-top: 30px;
+  margin: 30px 20px 0px;
   gap: 10px;
   @media (max-width: 768px) {
     display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  @media (min-width: 769px) and (max-width: 1199px) {
+    margin: 30px 20px 0px;
   }
 `;
 
@@ -58,6 +63,9 @@ const FooterLogo = styled.div`
   font-size: 1.6rem;
   font-weight: bold;
   margin-bottom: 30px;
+  @media (max-width: 768px) {
+    margin-bottom: 20px;
+  }
 `;
 
 const FooterTagline = styled.div`
@@ -66,6 +74,9 @@ const FooterTagline = styled.div`
   font-style: italic;
   line-height: 1.5rem;
   width: 50%;
+  @media (max-width: 768px) {
+    width: 60%;
+  }
 `;
 
 const FooterContact = styled.div`
@@ -93,19 +104,19 @@ export const FooterComponent = () => {
           <FooterSection>
             <FooterSectionTitle>MOVIES</FooterSectionTitle>
             <FooterSectionLink>
-              <SectionLink to="#">Top Rated</SectionLink>
-              <SectionLink to="#">Popular</SectionLink>
-              <SectionLink to="#">Upcoming</SectionLink>
-              <SectionLink to="#">Now Playing</SectionLink>
+              <SectionLink to="/movie/top_rated">Top Rated</SectionLink>
+              <SectionLink to="/movie/popular">Popular</SectionLink>
+              <SectionLink to="/movie/upcoming">Upcoming</SectionLink>
+              <SectionLink to="/movie/now_playing">Now Playing</SectionLink>
             </FooterSectionLink>
           </FooterSection>
           <FooterSection>
             <FooterSectionTitle>TV SHOWS</FooterSectionTitle>
             <FooterSectionLink>
-              <SectionLink to="#">Top Rated</SectionLink>
-              <SectionLink to="#">Popular</SectionLink>
-              <SectionLink to="#">Airing Today</SectionLink>
-              <SectionLink to="#">On The Air</SectionLink>
+              <SectionLink to="/tv/top_rated">Top Rated</SectionLink>
+              <SectionLink to="/tv/popular">Popular</SectionLink>
+              <SectionLink to="/tv/airing_today">Airing Today</SectionLink>
+              <SectionLink to="/tv/on_the_air">On The Air</SectionLink>
             </FooterSectionLink>
           </FooterSection>
           <FooterSection>
@@ -117,10 +128,13 @@ export const FooterComponent = () => {
           </FooterSection>
         </FooterSectionWrapper>
         <FooterContact>
-          <Link to="">
+          <Link to="https://github.com/genilson-alves" target="_blank">
             <img src={github} alt="GitHub" />
           </Link>
-          <Link to="">
+          <Link
+            to="https://www.linkedin.com/in/genilson-alves0/"
+            target="_blank"
+          >
             <img src={linkedin} alt="LinkedIn" />
           </Link>
         </FooterContact>

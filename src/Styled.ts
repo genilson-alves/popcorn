@@ -14,6 +14,7 @@ export const COLORS = {
   PAGE_WHITE: "#f8f9fa",
   PAGE_BLACK: "#000000",
   STATUS: "#003566",
+  RED: "#e43e54",
 };
 
 export const GlobalStyle = createGlobalStyle`

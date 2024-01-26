@@ -39,6 +39,9 @@ const MediaSectionTitle = styled.div`
   margin: 10px 15px;
   padding: 5px;
   border-bottom: 0.5 solid ${COLORS.SECTION_COLOR};
+  @media (max-width: 768px) {
+    margin: 10px 10px;
+  }
 `;
 
 const Title = styled.div`
@@ -59,11 +62,14 @@ const ViewMore = styled(Link)`
 
 const CardInformationWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   gap: 0px 10px;
   margin: 0px 10px;
-  @media (min-width: 1200px) {
-    justify-content: space-between;
-    display: flex;
+  @media (max-width: 768px) {
+    overflow: scroll;
+  }
+  @media (min-width: 769px) and (max-width: 1199px) {
+    overflow: scroll;
   }
 `;
 
@@ -71,15 +77,37 @@ const CardInformation = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px;
-  height: 350px;
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+  @media (min-width: 769px) and (max-width: 1199px) {
+    height: 350px;
+  }
+  @media (min-width: 1200px) {
+    width: 400px;
+    height: 350px;
+  }
 `;
 
 const CardPoster = styled.div`
-  img {
-    border-radius: 10px;
-    width: 100%;
-    height: 300px;
+  @media (max-width: 768px) {
+    img {
+      height: 250px;
+      border-radius: 10px;
+    }
+  }
+  @media (min-width: 769px) and (max-width: 1199px) {
+    img {
+      border-radius: 10px;
+      height: 300px;
+    }
+  }
+  @media (min-width: 1200px) {
+    img {
+      border-radius: 10px;
+      width: 100%;
+      height: 300px;
+    }
   }
 `;
 

@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="movie"
         page_type="top_rated"
-        title="Top Rated Movies"
+        title="TOP RATED MOVIES"
       ></TypeModel>
     ),
   },
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="movie"
         page_type="popular"
-        title="Popular Movies"
+        title="POPULAR MOVIES"
       ></TypeModel>
     ),
   },
@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="movie"
         page_type="upcoming"
-        title="Upcoming Movies"
+        title="UPCOMING MOVIES"
       ></TypeModel>
     ),
   },
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="movie"
         page_type="now_playing"
-        title="Now Playing Movies"
+        title="NOW PLAYING TV SHOWS"
       ></TypeModel>
     ),
   },
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="tv"
         page_type="popular"
-        title="Popular TV Shows"
+        title="POPULAR TV SHOWS"
       ></TypeModel>
     ),
   },
@@ -73,7 +73,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="tv"
         page_type="top_rated"
-        title="Top Rated TV Shows"
+        title="TOP RATED TV SHOWS"
       ></TypeModel>
     ),
   },
@@ -83,7 +83,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="tv"
         page_type="airing_today"
-        title="TV Shows Airing Today"
+        title="TV SHOWS AIRING TODAY"
       ></TypeModel>
     ),
   },
@@ -93,7 +93,7 @@ const router = createBrowserRouter([
       <TypeModel
         type="tv"
         page_type="on_the_air"
-        title="TV Shows On The Air"
+        title="ON THE AIR TV SHOWS"
       ></TypeModel>
     ),
   },

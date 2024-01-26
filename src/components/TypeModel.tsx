@@ -19,8 +19,8 @@ type Movies = {
 
 const PageTitle = styled.div`
   text-align: center;
-  color: ${COLORS.PAGE_TITLE_COLOR};
-  margin: 20px 10px;
+  color: ${COLORS.SECTION_COLOR};
+  margin: 50px;
   font-size: 2.5rem;
   font-weight: bold;
 `;

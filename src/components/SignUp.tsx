@@ -9,27 +9,34 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: ${COLORS.PAGE_WHITE};
 `;
 
 const LoginContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 10px;
   flex: 1;
+  margin: 10px;
+  @media (max-width: 768px) {
+    margin: 50px 10px;
+  }
 `;
 
 const LoginWrapper = styled.div`
   padding: 20px;
   justify-content: space-around;
-  background-color: white;
-  border-radius: 10px;
+  background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${COLORS.PAGE_BLACK};
+  color: ${COLORS.PAGE_WHITE};
   a {
-    color: ${COLORS.PAGE_BLACK};
+    color: ${COLORS.PAGE_WHITE};
+    &:hover {
+      opacity: 0.8;
+    }
   }
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   @media (min-width: 1200px) {
@@ -37,10 +44,11 @@ const LoginWrapper = styled.div`
     width: 600px;
   }
   @media (max-width: 768px) {
-    height: 500px;
+    height: 600px;
   }
   @media (min-width: 768px) and (max-width: 1199px) {
     width: 500px;
+    height: 600px;
   }
 `;
 
@@ -57,14 +65,15 @@ const Input = styled.input`
   border: 1px solid gray;
   padding: 15px;
   width: 100%;
-  border-radius: 15px;
+  border-radius: 10px;
   margin: 10px 0px;
 `;
 
 const Button = styled.button`
   padding: 10px;
-  background-color: #023e8a;
-  color: #fff;
+  background-color: ${COLORS.PAGE_WHITE};
+  color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  font-weight: bold;
   cursor: pointer;
   border: none;
   border-radius: 10px;
@@ -98,12 +107,12 @@ function SignUp() {
     <Wrapper>
       <Navigation></Navigation>
       <Helmet>
-        <title>Sign In</title>
+        <title>Sign Up</title>
       </Helmet>
       <LoginContainer>
         <LoginWrapper>
           <ContentWrapper>
-            <Welcome>Welcome!</Welcome>
+            <Welcome>WELCOME!</Welcome>
             <LoginAccount>Create your account</LoginAccount>
           </ContentWrapper>
           <LoginForm>
