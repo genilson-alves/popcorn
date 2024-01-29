@@ -153,6 +153,84 @@ const MediaSectionCard = (props: any) => {
   );
 };
 
+const TopRatedSection = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+  margin: auto;
+  padding: 10px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    @media (min-width: 769px) and (max-width: 1199px) {
+      img {
+        border-radius: 10px;
+        height: 300px;
+      }
+    }
+    @media (min-width: 1200px) {
+      img {
+        border-radius: 10px;
+        width: 100%;
+        height: 300px;
+      }
+    }
+  }
+`;
+
+const TopRatedWrapper = styled.div`
+  width: 100%;
+  margin: 5px;
+`;
+
+const TopRatedTitleWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+`;
+
+const TopRatedContent = styled.div`
+  background-color: white;
+  margin: 10px 10px 10px 0px;
+  border-radius: 10px;
+  padding: 10px;
+  color: ${COLORS.RED};
+`;
+
+const TopRatedName = styled(Link)`
+  text-decoration: none;
+  color: ${COLORS.RED};
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+`;
+
+const TopNumber = styled.span`
+  margin-right: 10px;
+  font-style: italic;
+  font-weight: bold;
+`;
+
+const TopRated = (props: any) => {
+  return (
+    <TopRatedWrapper>
+      <TopRatedTitleWrapper>
+        <Title>{props.title}</Title>
+        <ViewMore to={props.to}>View More</ViewMore>
+      </TopRatedTitleWrapper>
+      {props.content.slice(0, 6).map((work: Work, index: number) => (
+        <TopRatedContent>
+          <TopNumber>{index + 1}</TopNumber>
+          <TopRatedName to={`${props.type}/${work.id}`}>
+            {work.name ? work.name : work.title}
+          </TopRatedName>
+        </TopRatedContent>
+      ))}
+    </TopRatedWrapper>
+  );
+};
+
 const Home: React.FC = () => {
   const [POPULAR_MOVIES, setPopularMovies] = useState<Work[]>([]);
   const [UPCOMING_MOVIES, setUpcomingMovies] = useState<Work[]>([]);
@@ -160,6 +238,7 @@ const Home: React.FC = () => {
   const [ON_THE_AIR_TV_SHOWS, setOnTheAirTvShows] = useState<Work[]>([]);
   const [POPULAR_TV_SHOWS, setPopularTvShows] = useState<Work[]>([]);
   const [TOP_RATED_TV_SHOWS, setTopRatedTvShows] = useState<Work[]>([]);
+
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -212,44 +291,42 @@ const Home: React.FC = () => {
       ) : error ? (
         <Styled.Error>ERROR: {error}</Styled.Error>
       ) : (
-        <HomeWrapper>
-          <MediaSectionCard
-            content={POPULAR_MOVIES}
-            title="POPULAR MOVIES"
-            to="/movie/popular"
-            type="movie"
-          ></MediaSectionCard>
-          <MediaSectionCard
-            content={TOP_RATED_MOVIES}
-            title="TOP RATED MOVIES"
-            to="/movie/top_rated"
-            type="movie"
-          ></MediaSectionCard>
-          <MediaSectionCard
-            content={UPCOMING_MOVIES}
-            title="UPCOMING MOVIES"
-            to="/movie/upcoming"
-            type="movie"
-          ></MediaSectionCard>
-          <MediaSectionCard
-            content={TOP_RATED_TV_SHOWS}
-            title="TOP RATED TV SHOWS"
-            to="/tv/top_rated"
-            type="tv"
-          ></MediaSectionCard>
-          <MediaSectionCard
-            content={POPULAR_TV_SHOWS}
-            title="POPULAR TV SHOWS"
-            to="/tv/popular"
-            type="tv"
-          ></MediaSectionCard>
-          <MediaSectionCard
-            content={ON_THE_AIR_TV_SHOWS}
-            title="ON THE AIR TV SHOWS"
-            to="/tv/on_the_air"
-            type="tv"
-          ></MediaSectionCard>
-        </HomeWrapper>
+        <div>
+          <TopRatedSection>
+            <TopRated
+              title="TOP RATED MOVIES"
+              type="movie"
+              to="/movie/top_rated"
+              content={TOP_RATED_MOVIES}
+            ></TopRated>
+            <TopRated
+              title="TOP RATED TV SHOWS"
+              type="tv"
+              to="/tv/top_rated"
+              content={TOP_RATED_TV_SHOWS}
+            ></TopRated>
+          </TopRatedSection>
+          <HomeWrapper>
+            <MediaSectionCard
+              content={UPCOMING_MOVIES}
+              title="UPCOMING MOVIES"
+              to="/movie/upcoming"
+              type="movie"
+            ></MediaSectionCard>
+            <MediaSectionCard
+              content={POPULAR_MOVIES}
+              title="POPULAR MOVIES"
+              to="/movie/popular"
+              type="movie"
+            ></MediaSectionCard>
+            <MediaSectionCard
+              content={POPULAR_TV_SHOWS}
+              title="POPULAR TV SHOWS"
+              to="/tv/popular"
+              type="tv"
+            ></MediaSectionCard>
+          </HomeWrapper>
+        </div>
       )}
       <FooterComponent></FooterComponent>
     </div>
