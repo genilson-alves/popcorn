@@ -2,7 +2,7 @@ import React from "react";
 import { GlobalStyle } from "./Styled";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PageTv from "./components/PageTv";
-import PageMovie from "./components/PageMovie";
+import MovieProfile from "./components/MovieProfile";
 import Home from "./components/Home";
 import SearchPage from "./components/SearchPage";
 import TypeModel from "./components/TypeModel";
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <Home></Home>,
   },
-  { path: "/tv/:workId", element: <PageTv></PageTv> },
-  { path: "/movie/:workId", element: <PageMovie></PageMovie> },
+  { path: "/tv/:id", element: <PageTv></PageTv> },
+  { path: "/movie/:id", element: <MovieProfile></MovieProfile> },
   {
     path: "/movie/top_rated",
     element: (

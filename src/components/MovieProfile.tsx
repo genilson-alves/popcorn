@@ -189,13 +189,13 @@ const RightBarWrapper = styled.div`
   flex: 3;
 `;
 
-const TvShowProfileImagesWrapper = styled.div`
+const MovieProfileImagesWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
-const TvShowBackground = styled.div<{ background: string }>`
+const MovieBackground = styled.div<{ background: string }>`
   background-image: ${(props) => `url(${props.background})`};
   background-size: cover;
   background-position: center;
@@ -203,7 +203,7 @@ const TvShowBackground = styled.div<{ background: string }>`
   height: 250px;
 `;
 
-const TvShowPoster = styled.div`
+const MoviePoster = styled.div`
   img {
     position: relative;
     margin-top: -80%;
@@ -222,7 +222,7 @@ const TvShowPoster = styled.div`
   }
 `;
 
-const TvShowProfileInformationWrapper = styled.div`
+const MovieProfileInformationWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -230,7 +230,7 @@ const TvShowProfileInformationWrapper = styled.div`
   margin: auto;
 `;
 
-const TvShowStatus = styled.div`
+const MovieStatus = styled.div`
   padding: 5px;
   background-color: ${COLORS.STATUS};
   color: ${COLORS.PAGE_WHITE};
@@ -247,7 +247,7 @@ const TvShowStatus = styled.div`
   }
 `;
 
-const TvShowProfileInformation = styled.div`
+const MovieProfileInformation = styled.div`
   margin: 5px 0px 10px;
   text-align: center;
   display: flex;
@@ -256,22 +256,22 @@ const TvShowProfileInformation = styled.div`
   gap: 5px;
 `;
 
-const TvShowName = styled.div`
+const MovieTitle = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
 `;
 
-const TvShowOriginalName = styled.div`
+const MovieOriginalTitle = styled.div`
   font-size: 0.9rem;
   font-weight: bold;
   font-style: italic;
 `;
 
-const TvShowTagline = styled.div`
+const MovieTagline = styled.div`
   font-style: italic;
 `;
 
-const TvShowInformationWrapper = styled.div``;
+const MovieInformationWrapper = styled.div``;
 
 const Synopsis = styled.div`
   width: 100%;
@@ -311,7 +311,7 @@ const CastContent = styled.div`
   width: 100%;
 `;
 
-const TvShowCastWrapper = styled.div`
+const MovieCastWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -324,7 +324,7 @@ const TvShowCastWrapper = styled.div`
   }
 `;
 
-const TvShowCast = styled.div`
+const MovieCast = styled.div`
   background-color: ${COLORS.PAGE_WHITE};
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -336,71 +336,6 @@ const TvShowCast = styled.div`
     width: 80px;
     height: 130px;
     border-radius: 10px;
-  }
-`;
-
-const SimilarContent = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 5px;
-`;
-
-const SimilarContentWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 150px;
-  img {
-    width: 100%;
-    height: 230px;
-    border-radius: 10px;
-  }
-`;
-
-const SimilarTvShowName = styled(Link)`
-  padding: 5px;
-  text-decoration: none;
-  color: ${COLORS.LINK_COLOR};
-  &:hover {
-    text-decoration: underline;
-    opacity: 0.8;
-  }
-`;
-
-const SeasonsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  width: 100%;
-`;
-
-const SeasonInformation = styled.div`
-  padding: 5px;
-  display: flex;
-  gap: 10px;
-  border-radius: 10px;
-  background-color: ${COLORS.PAGE_WHITE};
-`;
-
-const SeasonPosterWrapper = styled.div`
-  img {
-    width: 100%;
-    height: 200px;
-    border-radius: 10px;
-  }
-`;
-
-const SeasonContent = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  span {
-    color: ${COLORS.LINK_COLOR};
-    font-style: italic;
   }
 `;
 
@@ -436,6 +371,55 @@ const ShowMore = styled.button`
   }
 `;
 
+const CollectionInformationWrapper = styled.div`
+  width: 100%;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  background-color: ${COLORS.PAGE_WHITE};
+  padding: 10px;
+  border-radius: 10px;
+`;
+
+const CollectionInformation = styled.div`
+  display: flex;
+  @media (min-width: 1200px) {
+    background-color: ${COLORS.PAGE_WHITE};
+    border-radius: 10px;
+    padding: 10px;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+const CollectionPoster = styled.div`
+  img {
+    width: 130px;
+    height: 100%;
+    border-radius: 10px;
+  }
+`;
+
+const CollectionContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 5px 10px;
+`;
+
+const CollectionProfile = styled.div`
+  span {
+    color: ${COLORS.LINK_COLOR};
+  }
+  display: flex;
+  flex-direction: column;
+  @media (max-width: 768px) {
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
 const Homepage = styled.a`
   position: fixed;
   bottom: 10px;
@@ -465,20 +449,50 @@ const ProviderLogo = styled.img`
   width: 40px;
 `;
 
+const SimilarContent = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+`;
+
+const SimilarContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 150px;
+  img {
+    width: 100%;
+    height: 230px;
+    border-radius: 10px;
+  }
+`;
+
+const SimilarMovieTitle = styled(Link)`
+  padding: 5px;
+  text-decoration: none;
+  color: ${COLORS.LINK_COLOR};
+  &:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+  }
+`;
+
 const Profile = ({ content }: Content) => {
   return (
     <div>
       {content && (
         <div>
-          <TvShowProfileImagesWrapper>
-            <TvShowBackground
+          <MovieProfileImagesWrapper>
+            <MovieBackground
               background={
                 content.backdrop_path
                   ? `https://www.themoviedb.org/t/p/original${content.backdrop_path}`
                   : no_background
               }
-            ></TvShowBackground>
-            <TvShowPoster>
+            ></MovieBackground>
+            <MoviePoster>
               <img
                 src={
                   content.poster_path
@@ -487,28 +501,28 @@ const Profile = ({ content }: Content) => {
                 }
                 alt={content.title}
               />
-            </TvShowPoster>
-          </TvShowProfileImagesWrapper>
-          <TvShowProfileInformationWrapper>
-            <TvShowStatus>
+            </MoviePoster>
+          </MovieProfileImagesWrapper>
+          <MovieProfileInformationWrapper>
+            <MovieStatus>
               <p>{content.status}</p>
-            </TvShowStatus>
-            <TvShowProfileInformation>
-              <TvShowName>
-                <p>{content.name}</p>
-              </TvShowName>
-              {content.name !== content.original_name && (
-                <TvShowOriginalName>
-                  <p>{content.original_name}</p>
-                </TvShowOriginalName>
+            </MovieStatus>
+            <MovieProfileInformation>
+              <MovieTitle>
+                <p>{content.title}</p>
+              </MovieTitle>
+              {content.title !== content.original_title && (
+                <MovieOriginalTitle>
+                  <p>{content.original_title}</p>
+                </MovieOriginalTitle>
               )}
               {content.tagline ? (
-                <TvShowTagline>
+                <MovieTagline>
                   <p>{`"${content.tagline}"`}</p>
-                </TvShowTagline>
+                </MovieTagline>
               ) : undefined}
-            </TvShowProfileInformation>
-          </TvShowProfileInformationWrapper>
+            </MovieProfileInformation>
+          </MovieProfileInformationWrapper>
         </div>
       )}
     </div>
@@ -519,7 +533,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
   return (
     <div>
       {content && (
-        <TvShowInformationWrapper>
+        <MovieInformationWrapper>
           <DefaultComponent>
             <SectionTitle>Synopsis</SectionTitle>
             <Synopsis>
@@ -669,7 +683,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               </Information>
             </InformationWrapper>
           </DefaultComponent>
-        </TvShowInformationWrapper>
+        </MovieInformationWrapper>
       )}
     </div>
   );
@@ -694,6 +708,52 @@ const WatchProvider = (props: any) => {
   );
 };
 
+const Collection: React.FC<Content> = ({ content, collection }) => {
+  return (
+    <div>
+      {content && (
+        <DefaultComponent>
+          <SectionTitle>
+            <p>Collection</p>
+          </SectionTitle>
+          <CollectionInformationWrapper>
+            <CollectionInformation>
+              <CollectionPoster>
+                <img
+                  src={
+                    content.belongs_to_collection.poster_path
+                      ? `https://www.themoviedb.org/t/p/original${content.belongs_to_collection.poster_path}`
+                      : no_poster
+                  }
+                  alt={content.belongs_to_collection.name}
+                />
+              </CollectionPoster>
+              <CollectionContent>
+                <CollectionProfile>
+                  <span>Belongs to Collection</span>
+                  <p>
+                    {content.belongs_to_collection.name
+                      ? content.belongs_to_collection.name
+                      : "No Information"}
+                  </p>
+                </CollectionProfile>
+                <CollectionProfile>
+                  <span>Overview</span>
+                  <p>
+                    {collection?.overview
+                      ? collection.overview
+                      : "No Information"}
+                  </p>
+                </CollectionProfile>
+              </CollectionContent>
+            </CollectionInformation>
+          </CollectionInformationWrapper>
+        </DefaultComponent>
+      )}
+    </div>
+  );
+};
+
 const SimilarComponent: React.FC<Content> = ({ similar }) => {
   return (
     <div>
@@ -701,68 +761,22 @@ const SimilarComponent: React.FC<Content> = ({ similar }) => {
         <DefaultComponent>
           <SectionTitle>Similar</SectionTitle>
           <SimilarContent>
-            {Object.values(similar).map((tv) => (
-              <SimilarContentWrapper key={tv.id}>
+            {Object.values(similar).map((movie) => (
+              <SimilarContentWrapper key={movie.id}>
                 <img
                   src={
-                    tv.poster_path
-                      ? `https://www.themoviedb.org/t/p/original${tv.poster_path}`
+                    movie.poster_path
+                      ? `https://www.themoviedb.org/t/p/original${movie.poster_path}`
                       : no_poster
                   }
-                  alt={tv.name}
+                  alt={movie.title}
                 />
-                <SimilarTvShowName to={`/tv/${tv.id}`}>
-                  {tv.name}
-                </SimilarTvShowName>
+                <SimilarMovieTitle to={`/movie/${movie.id}`}>
+                  {movie.title}
+                </SimilarMovieTitle>
               </SimilarContentWrapper>
             ))}
           </SimilarContent>
-        </DefaultComponent>
-      )}
-    </div>
-  );
-};
-
-const Seasons: React.FC<Content> = ({ content }) => {
-  return (
-    <div>
-      {content && (
-        <DefaultComponent>
-          <SectionTitle>Seasons</SectionTitle>
-          <SeasonsWrapper>
-            {Object.values(content.seasons).map((season) => (
-              <SeasonInformation>
-                <SeasonPosterWrapper>
-                  <img
-                    src={
-                      season.poster_path
-                        ? `https://www.themoviedb.org/t/p/original${season.poster_path}`
-                        : no_poster
-                    }
-                    alt={season.name}
-                  ></img>
-                </SeasonPosterWrapper>
-                <SeasonContent>
-                  <div>
-                    <span>Name</span>
-                    <p>{season.name}</p>
-                  </div>
-                  <div>
-                    <span>Number of Episodes</span>
-                    <p>{season.episode_count}</p>
-                  </div>
-                  <div>
-                    <span>Release Date</span>
-                    <p>{season.air_date}</p>
-                  </div>
-                  <div>
-                    <span>Score</span>
-                    <p>{season.vote_average}</p>
-                  </div>
-                </SeasonContent>
-              </SeasonInformation>
-            ))}
-          </SeasonsWrapper>
         </DefaultComponent>
       )}
     </div>
@@ -779,10 +793,10 @@ const CastComponent: React.FC<Content> = ({ cast }) => {
             <p>Cast</p>
           </SectionTitle>
           <CastContent>
-            <TvShowCastWrapper>
+            <MovieCastWrapper>
               {Object.values(cast.cast).map((cast, index) =>
                 showAllCast || index <= 11 ? (
-                  <TvShowCast key={cast.id}>
+                  <MovieCast key={cast.id}>
                     <img
                       src={
                         cast.profile_path
@@ -813,10 +827,10 @@ const CastComponent: React.FC<Content> = ({ cast }) => {
                         </p>
                       </CastInformation>
                     </CastWrapper>
-                  </TvShowCast>
+                  </MovieCast>
                 ) : undefined
               )}
-            </TvShowCastWrapper>
+            </MovieCastWrapper>
           </CastContent>
           {cast.cast[12] && (
             <ShowMore
@@ -836,9 +850,10 @@ const CastComponent: React.FC<Content> = ({ cast }) => {
 const MovieProfile = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [tvShowInformation, setTvShowInformation] = useState<Work>();
+  const [movieInformation, setMovieInformation] = useState<Work>();
+  const [movieCollection, setMovieCollection] = useState<CollectionProps>();
   const [watchProvider, setWatchProvider] = useState<Provider>();
-  const [similarTvShows, setSimilarTvshows] = useState<Similar>();
+  const [similarMovies, setSimilarMovies] = useState<Similar>();
   const [workCast, setCast] = useState<Cast>();
   const { id } = useParams() as Params;
   const navigate = useNavigate();
@@ -854,24 +869,35 @@ const MovieProfile = () => {
   useEffect(() => {
     setLoading(true);
     setError(null);
-    const TV_ID = Number(id);
-    if (isNaN(TV_ID)) {
+    const MOVIE_ID = Number(id);
+    if (isNaN(MOVIE_ID)) {
       navigate("/error");
     } else {
-      fetch(`https://api.themoviedb.org/3/tv/${TV_ID}`, API_GET_OPTIONS)
+      fetch(`https://api.themoviedb.org/3/movie/${MOVIE_ID}`, API_GET_OPTIONS)
         .then((response) => response.json())
-        .then((response) => setTvShowInformation(response))
-        .catch((err) => {
-          setError(`ERROR WHILE FETCHING: ${err}`);
-        });
-      fetch(`https://api.themoviedb.org/3/tv/${TV_ID}/credits`, API_GET_OPTIONS)
+        .then((response) => {
+          setMovieInformation(response);
+          if (response.belongs_to_collection) {
+            fetch(
+              `https://api.themoviedb.org/3/search/collection?query=${response.belongs_to_collection.name}&include_adult=false&language=en-US&page=1`,
+              API_GET_OPTIONS
+            )
+              .then((response) => response.json())
+              .then((response) => setMovieCollection(response.results[0]));
+          }
+        })
+        .catch((err) => setError(`ERROR WHILE FETCHING COLLECTION: ${err}`));
+      fetch(
+        `https://api.themoviedb.org/3/movie/${MOVIE_ID}/credits`,
+        API_GET_OPTIONS
+      )
         .then((response) => response.json())
         .then((response) => setCast(response))
         .catch((err) => {
           setError(`ERROR WHILE FETCHING CAST: ${err}`);
         });
       fetch(
-        `https://api.themoviedb.org/3/tv/${TV_ID}/watch/providers`,
+        `https://api.themoviedb.org/3/movie/${MOVIE_ID}/watch/providers`,
         API_GET_OPTIONS
       )
         .then((response) => response.json())
@@ -880,11 +906,11 @@ const MovieProfile = () => {
           setError(`ERROR WHILE FETCHING WATCH PROVIDERS: ${err}`);
         });
       fetch(
-        `https://api.themoviedb.org/3/tv/${TV_ID}/similar?language=en-US&page=1`,
+        `https://api.themoviedb.org/3/movie/${MOVIE_ID}/similar?language=en-US&page=1`,
         API_GET_OPTIONS
       )
         .then((response) => response.json())
-        .then((response) => setSimilarTvshows(response.results.slice(0, 6)))
+        .then((response) => setSimilarMovies(response.results.slice(0, 6)))
         .catch((err) => {
           setError(`ERROR WHILE FETCHING SIMILAR MOVIES: ${err}`);
         });
@@ -899,23 +925,28 @@ const MovieProfile = () => {
       ) : error ? (
         <Styled.Error>ERROR: {error}</Styled.Error>
       ) : (
-        tvShowInformation && (
+        movieInformation && (
           <div>
             <ProfileWrapper>
               <Helmet>
-                <title>{tvShowInformation.title}</title>
+                <title>{movieInformation.title}</title>
               </Helmet>
-              <Profile content={tvShowInformation}></Profile>
+              <Profile content={movieInformation}></Profile>
               <ContentWrapper>
                 <LeftBarWrapper>
                   <LeftBar
-                    content={tvShowInformation}
+                    content={movieInformation}
                     provider={watchProvider}
                   ></LeftBar>
                 </LeftBarWrapper>
                 <RightBarWrapper>
-                  <SimilarComponent similar={similarTvShows}></SimilarComponent>
-                  <Seasons content={tvShowInformation}></Seasons>
+                  {movieInformation.belongs_to_collection && (
+                    <Collection
+                      content={movieInformation}
+                      collection={movieCollection}
+                    ></Collection>
+                  )}
+                  <SimilarComponent similar={similarMovies}></SimilarComponent>
                   <CastComponent cast={workCast}></CastComponent>
                 </RightBarWrapper>
               </ContentWrapper>
