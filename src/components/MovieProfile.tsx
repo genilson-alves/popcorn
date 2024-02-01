@@ -940,13 +940,13 @@ const MovieProfile = () => {
                   ></LeftBar>
                 </LeftBarWrapper>
                 <RightBarWrapper>
+                  <SimilarComponent similar={similarMovies}></SimilarComponent>
                   {movieInformation.belongs_to_collection && (
                     <Collection
                       content={movieInformation}
                       collection={movieCollection}
                     ></Collection>
                   )}
-                  <SimilarComponent similar={similarMovies}></SimilarComponent>
                   <CastComponent cast={workCast}></CastComponent>
                 </RightBarWrapper>
               </ContentWrapper>

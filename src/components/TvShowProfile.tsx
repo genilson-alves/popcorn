@@ -12,35 +12,22 @@ const no_poster = require("../assets/no_poster.jpg");
 const home = require("../assets/home.png");
 
 type Work = {
-  backdrop_path: string;
-  poster_path: string;
+  id: number;
+  vote_average: number;
   name: string;
-  title: string;
   original_name: string;
-  original_title: string;
   overview: string;
-  original_language: string;
+  tagline: string;
   release_date: string;
   status: string;
   homepage: string;
   first_air_date: string;
   last_air_date: string;
-  tagline: string;
-  vote_average: number;
-  vote_count: number;
-  budget: number;
   number_of_episodes: number;
   number_of_seasons: number;
-  runtime: number;
-  imdb_id: number;
-  revenue: number;
-  id: number;
+  poster_path: string;
+  backdrop_path: string;
   in_production: boolean;
-  spoken_languages: {
-    [key: number]: {
-      english_name: string;
-    };
-  };
   genres: {
     [key: number]: {
       id: number;
@@ -57,28 +44,11 @@ type Work = {
       vote_average: number;
     };
   };
-  languages: {
-    [key: number]: string;
-  };
   networks: {
     [key: number]: {
       logo_path: string;
       name: string;
       origin_country: string;
-    };
-  };
-  episode_run_time: {
-    [key: number]: number;
-  };
-  next_episode_to_air: {
-    [key: number]: {
-      air_date: number;
-      episode_number: number;
-      name: string;
-      overview: string;
-      runtime: number;
-      season_name: number;
-      still_path: string;
     };
   };
   production_companies: {
@@ -92,10 +62,6 @@ type Work = {
     [key: number]: {
       name: string;
     };
-  };
-  belongs_to_collection: {
-    name: string;
-    poster_path: string;
   };
 };
 
@@ -174,6 +140,12 @@ const ContentWrapper = styled.div`
   max-width: 1400px;
   margin: auto;
   display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    flex-direction: column;
+  }
 `;
 
 const LeftBarWrapper = styled.div`
@@ -345,6 +317,7 @@ const SimilarContent = styled.div`
   justify-content: space-between;
   gap: 10px;
   padding: 5px;
+  overflow: scroll;
 `;
 
 const SimilarContentWrapper = styled.div`
@@ -357,6 +330,15 @@ const SimilarContentWrapper = styled.div`
     width: 100%;
     height: 230px;
     border-radius: 10px;
+  }
+  @media (max-width: 768px) {
+    width: 200px;
+    img {
+      width: 150px;
+      height: 250px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
   }
 `;
 
@@ -375,6 +357,14 @@ const SeasonsWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
   width: 100%;
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const SeasonInformation = styled.div`
@@ -388,7 +378,7 @@ const SeasonInformation = styled.div`
 const SeasonPosterWrapper = styled.div`
   img {
     width: 100%;
-    height: 200px;
+    height: 180px;
     border-radius: 10px;
   }
 `;
@@ -397,10 +387,17 @@ const SeasonContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   span {
     color: ${COLORS.LINK_COLOR};
     font-style: italic;
+  }
+  p {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    line-clamp: 2;
   }
 `;
 
@@ -485,7 +482,7 @@ const Profile = ({ content }: Content) => {
                     ? `https://www.themoviedb.org/t/p/original${content.poster_path}`
                     : no_poster
                 }
-                alt={content.title}
+                alt={content.name}
               />
             </TvShowPoster>
           </TvShowProfileImagesWrapper>
@@ -530,9 +527,21 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
             <SectionTitle>Information</SectionTitle>
             <InformationWrapper>
               <Information>
+                <span>Name</span>
+                <p>{content.name ? content.name : "No Information"}</p>
+              </Information>
+              <Information>
+                <span>Original Name</span>
+                <p>
+                  {content.original_name
+                    ? content.original_name
+                    : "No Information"}
+                </p>
+              </Information>
+              <Information>
                 <span>Homepage</span>
                 {content.homepage &&
-                /^(http:\/\/www\.|https:\/\/www\.)/.test(content.homepage) ? (
+                content.homepage.startsWith("https://www.") ? (
                   <a href={content.homepage} target="_blank" rel="noreferrer">
                     {content.homepage}
                   </a>
@@ -541,32 +550,34 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
                 )}
               </Information>
               <Information>
-                <span>IMDB</span>
-                {content.imdb_id ? (
-                  <a
-                    href={`https://www.imdb.com/title/${content.imdb_id}/`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {`https://www.imdb.com/title/${content.imdb_id}/`}
-                  </a>
-                ) : (
-                  "No Information"
-                )}
-              </Information>
-              <Information>
-                <span>Release Date</span>
+                <span>First Air Date</span>
                 <p>
-                  {content.release_date
-                    ? content.release_date
+                  {content.first_air_date
+                    ? content.first_air_date
                     : "No Information"}
                 </p>
               </Information>
               <Information>
-                <span>Runtime</span>
+                <span>Last Air Date</span>
                 <p>
-                  {content.runtime
-                    ? content.runtime + " min"
+                  {content.last_air_date
+                    ? content.last_air_date
+                    : "No Information"}
+                </p>
+              </Information>
+              <Information>
+                <span>Number of Episodes</span>
+                <p>
+                  {content.number_of_episodes
+                    ? content.number_of_episodes
+                    : "No Information"}
+                </p>
+              </Information>
+              <Information>
+                <span>Number of Seasons</span>
+                <p>
+                  {content.number_of_seasons
+                    ? content.number_of_seasons
                     : "No Information"}
                 </p>
               </Information>
@@ -580,43 +591,37 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               </Information>
               <Information>
                 <span>Genres</span>
-                {content.genres[0]
+                {content.networks[0]
                   ? Object.values(content.genres).map((genre, index) => (
                       <p key={index}>{genre.name}</p>
                     ))
                   : "No Information"}
               </Information>
               <Information>
-                <span>Original Language</span>
-                <p>{content.original_language.toUpperCase()}</p>
+                <span>In Production?</span>
+                <p>{content.in_production ? "Yes" : "No"}</p>
               </Information>
               <Information>
-                <span>Budget</span>
-                <p>
-                  {content.budget > 0
-                    ? content.budget.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })
-                    : "No Information"}
-                </p>
+                <span>Status</span>
+                <p>{content.status ? content.status : "No Information"}</p>
               </Information>
               <Information>
-                <span>Revenue</span>
-                <p>
-                  {content.revenue > 0
-                    ? content.revenue.toLocaleString("en-US", {
-                        style: "currency",
-                        currency: "USD",
-                      })
-                    : "No Information"}
-                </p>
+                <span>Networks</span>
+                {content.networks[0]
+                  ? Object.values(content.networks).map((network, index) => (
+                      <p key={index}>{network.name}</p>
+                    ))
+                  : "No Information"}
               </Information>
               <Information>
                 <span>Production Countries</span>
                 {content.production_countries[0]
                   ? Object.values(content.production_countries).map(
-                      (country, index) => <p key={index}>{country.name}</p>
+                      (country, index) => (
+                        <p key={index}>
+                          {country.name ? country.name : "No Information"}
+                        </p>
+                      )
                     )
                   : "No Information"}
               </Information>
@@ -745,19 +750,29 @@ const Seasons: React.FC<Content> = ({ content }) => {
                 <SeasonContent>
                   <div>
                     <span>Name</span>
-                    <p>{season.name}</p>
+                    <p>{season.name ? season.name : "No Information"}</p>
                   </div>
                   <div>
                     <span>Number of Episodes</span>
-                    <p>{season.episode_count}</p>
-                  </div>
-                  <div>
-                    <span>Release Date</span>
-                    <p>{season.air_date}</p>
+                    <p>
+                      {season.episode_count
+                        ? season.episode_count
+                        : "No Information"}
+                    </p>
                   </div>
                   <div>
                     <span>Score</span>
-                    <p>{season.vote_average}</p>
+                    <p>
+                      {season.vote_average > 0
+                        ? season.vote_average
+                        : "No Information"}
+                    </p>
+                  </div>
+                  <div>
+                    <span>Release Date</span>
+                    <p>
+                      {season.air_date ? season.air_date : "No Information"}
+                    </p>
                   </div>
                 </SeasonContent>
               </SeasonInformation>
@@ -833,7 +848,7 @@ const CastComponent: React.FC<Content> = ({ cast }) => {
   );
 };
 
-const MovieProfile = () => {
+const TvShowProfile = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [tvShowInformation, setTvShowInformation] = useState<Work>();
@@ -903,7 +918,7 @@ const MovieProfile = () => {
           <div>
             <ProfileWrapper>
               <Helmet>
-                <title>{tvShowInformation.title}</title>
+                <title>{tvShowInformation.name}</title>
               </Helmet>
               <Profile content={tvShowInformation}></Profile>
               <ContentWrapper>
@@ -931,4 +946,4 @@ const MovieProfile = () => {
   );
 };
 
-export default MovieProfile;
+export default TvShowProfile;
