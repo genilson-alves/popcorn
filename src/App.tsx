@@ -5,7 +5,7 @@ import Home from "./components/Home";
 import TvShowProfile from "./components/TvShowProfile";
 import MovieProfile from "./components/MovieProfile";
 import SearchPage from "./components/SearchPage";
-import TypeModel from "./components/TypeModel";
+import TopModel from "./components/TopModel";
 import NotFound from "./components/NotFound";
 import SignIn from "./components/SignIn";
 import SignUp from "./components/SignUp";
@@ -20,81 +20,81 @@ const router = createBrowserRouter([
   {
     path: "/movie/top_rated",
     element: (
-      <TypeModel
+      <TopModel
         type="movie"
         page_type="top_rated"
         title="TOP RATED MOVIES"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {
     path: "/movie/popular",
     element: (
-      <TypeModel
+      <TopModel
         type="movie"
         page_type="popular"
         title="POPULAR MOVIES"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {
     path: "/movie/upcoming",
     element: (
-      <TypeModel
+      <TopModel
         type="movie"
         page_type="upcoming"
         title="UPCOMING MOVIES"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {
     path: "/movie/now_playing",
     element: (
-      <TypeModel
+      <TopModel
         type="movie"
         page_type="now_playing"
         title="NOW PLAYING TV SHOWS"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {
     path: "/tv/popular",
     element: (
-      <TypeModel
+      <TopModel
         type="tv"
         page_type="popular"
         title="POPULAR TV SHOWS"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {
     path: "/tv/top_rated",
     element: (
-      <TypeModel
+      <TopModel
         type="tv"
         page_type="top_rated"
         title="TOP RATED TV SHOWS"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {
     path: "/tv/airing_today",
     element: (
-      <TypeModel
+      <TopModel
         type="tv"
         page_type="airing_today"
         title="TV SHOWS AIRING TODAY"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {
     path: "/tv/on_the_air",
     element: (
-      <TypeModel
+      <TopModel
         type="tv"
         page_type="on_the_air"
         title="ON THE AIR TV SHOWS"
-      ></TypeModel>
+      ></TopModel>
     ),
   },
   {

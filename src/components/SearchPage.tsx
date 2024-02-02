@@ -3,7 +3,6 @@ import Navigation from "./Navigation";
 import styled from "styled-components";
 import * as Styled from "../Styled";
 import { COLORS } from "../Styled";
-import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { FooterComponent } from "./FooterComponent";
 const no_image = require("../assets/no_image.png");
@@ -175,6 +174,13 @@ const SearchPage = () => {
   };
 
   useEffect(() => {
+    document.title = `Search`;
+    return () => {
+      document.title = "Search";
+    };
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     setError(null);
     fetch(`https://api.themoviedb.org/3/movie/popular`, API_GET_OPTIONS)
@@ -209,9 +215,6 @@ const SearchPage = () => {
   return (
     <div>
       <Navigation></Navigation>
-      <Helmet>
-        <title>Search</title>
-      </Helmet>
       <SearchWrapper>
         <SearchSectionWrapper>
           <PageTitle>Search</PageTitle>

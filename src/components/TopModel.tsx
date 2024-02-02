@@ -1,7 +1,6 @@
 import * as Styled from "../Styled";
 import React, { useState, useEffect } from "react";
 import Navigation from "./Navigation";
-import { Helmet } from "react-helmet";
 import { FooterComponent } from "./FooterComponent";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -25,7 +24,7 @@ const PageTitle = styled.div`
   font-weight: bold;
 `;
 
-const TypeModelLink = styled(Link)`
+const TopModelLink = styled(Link)`
   text-decoration: none;
   color: ${COLORS.LINK_COLOR};
   &:hover {
@@ -34,24 +33,17 @@ const TypeModelLink = styled(Link)`
   }
 `;
 
-const TypeModelWrapper = styled.div`
+const TopModelWrapper = styled.div`
   max-width: 1400px;
   margin: auto;
 `;
 
-const TypeModelContentWrapper = styled.div`
-  @media (max-width: 768px) {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-gap: 10px 5px;
-    margin: 0px 5px 20px;
-  }
-  @media (min-width: 768px) and (max-width: 1199px) {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    grid-gap: 10px 5px;
-    margin: 0px 5px 20px;
-  }
+const TopModelContentWrapper = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+  margin: 5px 0px 50px;
   @media (min-width: 1200px) {
     display: grid;
     grid-template-columns: repeat(auto-fit, 250px);
@@ -60,7 +52,14 @@ const TypeModelContentWrapper = styled.div`
   }
 `;
 
-const TypeModelContent = styled.div`
+const TopModelContent = styled.div`
+  @media (max-width: 768px) {
+    width: 150px;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    width: 200px;
+    text-align: center;
+  }
   @media (min-width: 1200px) {
     width: 200px;
     height: 350px;
@@ -68,7 +67,7 @@ const TypeModelContent = styled.div`
   }
 `;
 
-const TypeModelPoster = styled.div`
+const TopModelPoster = styled.div`
   display: inline-block;
   position: relative;
   img {
@@ -84,7 +83,7 @@ const TypeModelPoster = styled.div`
   }
 `;
 
-const TypeModelRating = styled.div`
+const TopModelRating = styled.div`
   position: absolute;
   right: 5px;
   top: 5px;
@@ -95,7 +94,7 @@ const TypeModelRating = styled.div`
   font-size: 1.1rem;
 `;
 
-const TypeModelTitle = styled.div`
+const TopModelTitle = styled.div`
   text-align: center;
   padding: 2px 5px;
   display: -webkit-box;
@@ -152,8 +151,8 @@ const CurrentPage = styled.button`
   padding: 10px;
 `;
 
-const TypeModel = (props: any) => {
-  const [POPULAR_MOVIES_DATA, setMoviesPopular] = useState<Movies[]>([]);
+const TopModel = (props: any) => {
+  const [workData, setWorkData] = useState<Movies[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -170,6 +169,13 @@ const TypeModel = (props: any) => {
   };
 
   useEffect(() => {
+    document.title = `${props.title}`;
+    return () => {
+      document.title = `${props.title}`;
+    };
+  }, [props.title]);
+
+  useEffect(() => {
     setLoading(true);
     setError(null);
     fetch(
@@ -177,35 +183,33 @@ const TypeModel = (props: any) => {
       API_GET_OPTIONS
     )
       .then((response) => response.json())
-      .then((response) => setMoviesPopular(response.results))
+      .then((response) => setWorkData(response.results))
       .catch((err) => setError(`ERROR FETCHING : ${err}`));
     setLoading(false);
-    console.log(POPULAR_MOVIES_DATA);
   }, [currentPage, workType, pageType]);
+
+  console.log(workData);
 
   return (
     <div>
       <Navigation></Navigation>
-      <Helmet>
-        <title>{pageTitle}</title>
-      </Helmet>
       {isLoading ? (
         <Styled.Loading>Loading...</Styled.Loading>
       ) : error ? (
         <Styled.Error>ERROR: {error}</Styled.Error>
       ) : (
-        <TypeModelWrapper>
+        <TopModelWrapper>
           <PageTitle>{pageTitle}</PageTitle>
-          {POPULAR_MOVIES_DATA.length > 0 && (
-            <TypeModelContentWrapper>
-              {POPULAR_MOVIES_DATA.map((work) => (
-                <TypeModelContent key={work.id}>
-                  <TypeModelPoster>
-                    <TypeModelRating>
-                      {work.vote_average === 0
+          {workData.length > 0 && (
+            <TopModelContentWrapper>
+              {workData.map((work) => (
+                <TopModelContent key={work.id}>
+                  <TopModelPoster>
+                    <TopModelRating>
+                      {work.vote_average === 0 || !work.vote_average
                         ? "NA"
                         : work.vote_average.toFixed(1).replace(".", "")}
-                    </TypeModelRating>
+                    </TopModelRating>
                     <img
                       src={
                         work.poster_path
@@ -214,15 +218,15 @@ const TypeModel = (props: any) => {
                       }
                       alt={work.title ? work.title : work.name}
                     ></img>
-                  </TypeModelPoster>
-                  <TypeModelTitle>
-                    <TypeModelLink to={`/${workType}/${work.id}`}>
+                  </TopModelPoster>
+                  <TopModelTitle>
+                    <TopModelLink to={`/${workType}/${work.id}`}>
                       {work.title ? work.title : work.name}
-                    </TypeModelLink>
-                  </TypeModelTitle>
-                </TypeModelContent>
+                    </TopModelLink>
+                  </TopModelTitle>
+                </TopModelContent>
               ))}
-            </TypeModelContentWrapper>
+            </TopModelContentWrapper>
           )}
           <Pagination>
             {currentPage > 1 && (
@@ -259,11 +263,11 @@ const TypeModel = (props: any) => {
               Next
             </PaginationButtons>
           </Pagination>
-        </TypeModelWrapper>
+        </TopModelWrapper>
       )}
       <FooterComponent></FooterComponent>
     </div>
   );
 };
 
-export default TypeModel;
+export default TopModel;

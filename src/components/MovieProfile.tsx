@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import * as Styled from "../Styled";
 import { COLORS } from "../Styled";
 import { FooterComponent } from "./FooterComponent";
@@ -12,74 +11,30 @@ const no_poster = require("../assets/no_poster.jpg");
 const home = require("../assets/home.png");
 
 type Work = {
-  backdrop_path: string;
-  poster_path: string;
-  name: string;
+  id: number;
   title: string;
-  original_name: string;
   original_title: string;
-  overview: string;
-  original_language: string;
-  release_date: string;
+  tagline: string;
   status: string;
   homepage: string;
-  first_air_date: string;
-  last_air_date: string;
-  tagline: string;
+  release_date: string;
+  overview: string;
   vote_average: number;
-  vote_count: number;
+  original_language: string;
+  revenue: number;
   budget: number;
-  number_of_episodes: number;
-  number_of_seasons: number;
   runtime: number;
   imdb_id: number;
-  revenue: number;
-  id: number;
-  in_production: boolean;
-  spoken_languages: {
-    [key: number]: {
-      english_name: string;
-    };
-  };
+  backdrop_path: string;
+  poster_path: string;
   genres: {
     [key: number]: {
       id: number;
       name: string;
     };
   };
-  seasons: {
-    [key: number]: {
-      air_date: string;
-      episode_count: number;
-      id: number;
-      name: string;
-      poster_path: string;
-      vote_average: number;
-    };
-  };
   languages: {
     [key: number]: string;
-  };
-  networks: {
-    [key: number]: {
-      logo_path: string;
-      name: string;
-      origin_country: string;
-    };
-  };
-  episode_run_time: {
-    [key: number]: number;
-  };
-  next_episode_to_air: {
-    [key: number]: {
-      air_date: number;
-      episode_number: number;
-      name: string;
-      overview: string;
-      runtime: number;
-      season_name: number;
-      still_path: string;
-    };
   };
   production_companies: {
     [key: number]: {
@@ -174,6 +129,12 @@ const ContentWrapper = styled.div`
   max-width: 1400px;
   margin: auto;
   display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
+    flex-direction: column;
+  }
 `;
 
 const LeftBarWrapper = styled.div`
@@ -454,6 +415,8 @@ const SimilarContent = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
+  overflow: scroll;
+  padding: 5px 0px;
 `;
 
 const SimilarContentWrapper = styled.div`
@@ -466,6 +429,15 @@ const SimilarContentWrapper = styled.div`
     width: 100%;
     height: 230px;
     border-radius: 10px;
+  }
+  @media (max-width: 768px) {
+    width: 200px;
+    img {
+      width: 150px;
+      height: 250px;
+    }
+  }
+  @media (min-width: 768px) and (max-width: 1199px) {
   }
 `;
 
@@ -480,6 +452,13 @@ const SimilarMovieTitle = styled(Link)`
 `;
 
 const Profile = ({ content }: Content) => {
+  useEffect(() => {
+    document.title = `${content?.title}`;
+    return () => {
+      document.title = "Movie";
+    };
+  }, [content?.title]);
+
   return (
     <div>
       {content && (
@@ -587,7 +566,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               <Information>
                 <span>Score</span>
                 <p>
-                  {content.vote_average > 0
+                  {content.vote_average === 0 || !content.vote_average
                     ? content.vote_average.toFixed(1).replace(".", "")
                     : "No Information"}
                 </p>
@@ -694,8 +673,8 @@ const WatchProvider = (props: any) => {
     <div>
       <p>{props.title}</p>
       <ProviderWrapper>
-        {props.content.map((provider: ProviderProps) => (
-          <div key={provider.provider_id}>
+        {props.content.map((provider: ProviderProps, index: number) => (
+          <div key={index}>
             <ProviderLogo
               src={`https://www.themoviedb.org/t/p/original${provider.logo_path}`}
               alt={provider.provider_name}
@@ -761,8 +740,8 @@ const SimilarComponent: React.FC<Content> = ({ similar }) => {
         <DefaultComponent>
           <SectionTitle>Similar</SectionTitle>
           <SimilarContent>
-            {Object.values(similar).map((movie) => (
-              <SimilarContentWrapper key={movie.id}>
+            {Object.values(similar).map((movie, index) => (
+              <SimilarContentWrapper key={index}>
                 <img
                   src={
                     movie.poster_path
@@ -796,7 +775,7 @@ const CastComponent: React.FC<Content> = ({ cast }) => {
             <MovieCastWrapper>
               {Object.values(cast.cast).map((cast, index) =>
                 showAllCast || index <= 11 ? (
-                  <MovieCast key={cast.id}>
+                  <MovieCast key={index}>
                     <img
                       src={
                         cast.profile_path
@@ -928,9 +907,6 @@ const MovieProfile = () => {
         movieInformation && (
           <div>
             <ProfileWrapper>
-              <Helmet>
-                <title>{movieInformation.title}</title>
-              </Helmet>
               <Profile content={movieInformation}></Profile>
               <ContentWrapper>
                 <LeftBarWrapper>

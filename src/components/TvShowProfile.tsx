@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { Helmet } from "react-helmet";
 import * as Styled from "../Styled";
 import { COLORS } from "../Styled";
 import { FooterComponent } from "./FooterComponent";
@@ -81,10 +80,6 @@ type Params = {
   id: string;
 };
 
-type CollectionProps = {
-  overview: string;
-};
-
 type ProviderProps = {
   provider_name: string;
   provider_id: number;
@@ -120,7 +115,6 @@ type Similar = {
 
 type Content = {
   content?: Work;
-  collection?: CollectionProps;
   cast?: Cast;
   similar?: Similar;
   provider?: Provider;
@@ -316,8 +310,8 @@ const SimilarContent = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  padding: 5px;
   overflow: scroll;
+  padding: 5px 0px;
 `;
 
 const SimilarContentWrapper = styled.div`
@@ -463,6 +457,13 @@ const ProviderLogo = styled.img`
 `;
 
 const Profile = ({ content }: Content) => {
+  useEffect(() => {
+    document.title = `${content?.name}`;
+    return () => {
+      document.title = "Tv Show";
+    };
+  }, [content?.name]);
+
   return (
     <div>
       {content && (
@@ -584,7 +585,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               <Information>
                 <span>Score</span>
                 <p>
-                  {content.vote_average > 0
+                  {content.vote_average === 0 || !content.vote_average
                     ? content.vote_average.toFixed(1).replace(".", "")
                     : "No Information"}
                 </p>
@@ -685,8 +686,8 @@ const WatchProvider = (props: any) => {
     <div>
       <p>{props.title}</p>
       <ProviderWrapper>
-        {props.content.map((provider: ProviderProps) => (
-          <div key={provider.provider_id}>
+        {props.content.map((provider: ProviderProps, index: number) => (
+          <div key={index}>
             <ProviderLogo
               src={`https://www.themoviedb.org/t/p/original${provider.logo_path}`}
               alt={provider.provider_name}
@@ -706,8 +707,8 @@ const SimilarComponent: React.FC<Content> = ({ similar }) => {
         <DefaultComponent>
           <SectionTitle>Similar</SectionTitle>
           <SimilarContent>
-            {Object.values(similar).map((tv) => (
-              <SimilarContentWrapper key={tv.id}>
+            {Object.values(similar).map((tv, index) => (
+              <SimilarContentWrapper key={index}>
                 <img
                   src={
                     tv.poster_path
@@ -735,8 +736,8 @@ const Seasons: React.FC<Content> = ({ content }) => {
         <DefaultComponent>
           <SectionTitle>Seasons</SectionTitle>
           <SeasonsWrapper>
-            {Object.values(content.seasons).map((season) => (
-              <SeasonInformation>
+            {Object.values(content.seasons).map((season, index) => (
+              <SeasonInformation key={index}>
                 <SeasonPosterWrapper>
                   <img
                     src={
@@ -763,7 +764,7 @@ const Seasons: React.FC<Content> = ({ content }) => {
                   <div>
                     <span>Score</span>
                     <p>
-                      {season.vote_average > 0
+                      {content.vote_average === 0 || !content.vote_average
                         ? season.vote_average
                         : "No Information"}
                     </p>
@@ -797,7 +798,7 @@ const CastComponent: React.FC<Content> = ({ cast }) => {
             <TvShowCastWrapper>
               {Object.values(cast.cast).map((cast, index) =>
                 showAllCast || index <= 11 ? (
-                  <TvShowCast key={cast.id}>
+                  <TvShowCast key={index}>
                     <img
                       src={
                         cast.profile_path
@@ -917,9 +918,6 @@ const TvShowProfile = () => {
         tvShowInformation && (
           <div>
             <ProfileWrapper>
-              <Helmet>
-                <title>{tvShowInformation.name}</title>
-              </Helmet>
               <Profile content={tvShowInformation}></Profile>
               <ContentWrapper>
                 <LeftBarWrapper>

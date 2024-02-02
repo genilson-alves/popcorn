@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { COLORS } from "../Styled";
 import styled from "styled-components";
+
 const linkedin = require("../assets/linkedin.png");
 const github = require("../assets/github.png");
 

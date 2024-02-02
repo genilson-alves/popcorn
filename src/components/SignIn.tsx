@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import Navigation from "./Navigation";
 import { COLORS } from "../Styled";
 import { FooterComponent } from "./FooterComponent";
-import { Helmet } from "react-helmet";
 
 const Wrapper = styled.div`
   display: flex;
@@ -109,12 +108,15 @@ const ContentWrapper = styled.div`
 `;
 
 function SignIn() {
+  useEffect(() => {
+    document.title = `Sign In`;
+    return () => {
+      document.title = "Sign In";
+    };
+  }, []);
   return (
     <Wrapper>
       <Navigation></Navigation>
-      <Helmet>
-        <title>Login</title>
-      </Helmet>
       <LoginContainer>
         <LoginWrapper>
           <ContentWrapper>

@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 import * as Styled from "../Styled";
 import { COLORS } from "../Styled";
-import { Helmet } from "react-helmet";
 import { FooterComponent } from "./FooterComponent";
 import Navigation from "./Navigation";
+
 const no_poster = require("../assets/no_poster.jpg");
 
 type Work = {
@@ -131,8 +131,8 @@ const MediaSectionCard = (props: any) => {
         <ViewMore to={props.to}>View More</ViewMore>
       </MediaSectionTitle>
       <CardInformationWrapper>
-        {props.content.slice(0, 6).map((work: Work) => (
-          <CardInformation key={work.id}>
+        {props.content.slice(0, 6).map((work: Work, index: number) => (
+          <CardInformation key={index}>
             <CardPoster>
               <img
                 src={
@@ -162,18 +162,18 @@ const TopRatedSection = styled.div`
   padding: 10px;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    @media (min-width: 769px) and (max-width: 1199px) {
-      img {
-        border-radius: 10px;
-        height: 300px;
-      }
+  }
+  @media (min-width: 769px) and (max-width: 1199px) {
+    img {
+      border-radius: 10px;
+      height: 300px;
     }
-    @media (min-width: 1200px) {
-      img {
-        border-radius: 10px;
-        width: 100%;
-        height: 300px;
-      }
+  }
+  @media (min-width: 1200px) {
+    img {
+      border-radius: 10px;
+      width: 100%;
+      height: 300px;
     }
   }
 `;
@@ -220,7 +220,7 @@ const TopRated = (props: any) => {
         <ViewMore to={props.to}>View More</ViewMore>
       </TopRatedTitleWrapper>
       {props.content.slice(0, 6).map((work: Work, index: number) => (
-        <TopRatedContent>
+        <TopRatedContent key={index}>
           <TopNumber>{index + 1}</TopNumber>
           <TopRatedName to={`${props.type}/${work.id}`}>
             {work.name ? work.name : work.title}
@@ -235,14 +235,13 @@ const Home: React.FC = () => {
   const [POPULAR_MOVIES, setPopularMovies] = useState<Work[]>([]);
   const [UPCOMING_MOVIES, setUpcomingMovies] = useState<Work[]>([]);
   const [TOP_RATED_MOVIES, setTopRatedMovies] = useState<Work[]>([]);
-  const [ON_THE_AIR_TV_SHOWS, setOnTheAirTvShows] = useState<Work[]>([]);
   const [POPULAR_TV_SHOWS, setPopularTvShows] = useState<Work[]>([]);
   const [TOP_RATED_TV_SHOWS, setTopRatedTvShows] = useState<Work[]>([]);
 
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const API_GET = {
+  const API_GET_OPTIONS = {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -251,29 +250,32 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
+    document.title = `Popcorn`;
+    return () => {
+      document.title = "Popcorn";
+    };
+  }, []);
+
+  useEffect(() => {
     setLoading(true);
     setError(null);
-    fetch("https://api.themoviedb.org/3/movie/popular", API_GET)
+    fetch("https://api.themoviedb.org/3/movie/popular", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setPopularMovies(response.results))
       .catch((err) => setError(`ERROR FETCHING POPULAR MOVIES: ${err}`));
-    fetch("https://api.themoviedb.org/3/movie/upcoming", API_GET)
+    fetch("https://api.themoviedb.org/3/movie/upcoming", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setUpcomingMovies(response.results))
       .catch((err) => setError(`ERROR FETCHING UPCOMING MOVIES: ${err}`));
-    fetch("https://api.themoviedb.org/3/movie/top_rated", API_GET)
+    fetch("https://api.themoviedb.org/3/movie/top_rated", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setTopRatedMovies(response.results))
       .catch((err) => setError(`ERROR FETCHING TOP RATED MOVIES: ${err}`));
-    fetch("https://api.themoviedb.org/3/tv/popular", API_GET)
+    fetch("https://api.themoviedb.org/3/tv/popular", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setPopularTvShows(response.results))
       .catch((err) => setError(`ERROR FETCHING POPULAR TV SHOWS: ${err}`));
-    fetch("https://api.themoviedb.org/3/tv/on_the_air", API_GET)
-      .then((response) => response.json())
-      .then((response) => setOnTheAirTvShows(response.results))
-      .catch((err) => setError(`ERROR FETCHING ON THE AIR TV SHOWS: ${err}`));
-    fetch("https://api.themoviedb.org/3/tv/top_rated", API_GET)
+    fetch("https://api.themoviedb.org/3/tv/top_rated", API_GET_OPTIONS)
       .then((response) => response.json())
       .then((response) => setTopRatedTvShows(response.results))
       .catch((err) => setError(`ERROR FETCHING TOP RATED TV SHOWS: ${err}`));
@@ -283,9 +285,6 @@ const Home: React.FC = () => {
   return (
     <div>
       <Navigation></Navigation>
-      <Helmet>
-        <title>Popcorn</title>
-      </Helmet>
       {isLoading ? (
         <Styled.Loading>Loading...</Styled.Loading>
       ) : error ? (
