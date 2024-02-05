@@ -12,6 +12,7 @@ const FooterWrapper = styled.footer`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 50px;
   a {
     color: ${COLORS.PAGE_WHITE};
     text-decoration: none;

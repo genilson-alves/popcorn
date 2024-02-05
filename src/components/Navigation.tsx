@@ -224,7 +224,7 @@ const Navigation: React.FC = () => {
             <img src={close} alt="close" />
           </CloseButton>
         </LogoHamburger>
-        <NavigationLinks $show={showNavigation} onClick={handleButtonClick}>
+        <NavigationLinks $show={showNavigation}>
           <NavigationLink to="/search" onClick={handleButtonClick}>
             Search
           </NavigationLink>

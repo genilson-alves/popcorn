@@ -161,8 +161,8 @@ const TvShowProfileImagesWrapper = styled.div`
   align-items: center;
 `;
 
-const TvShowBackground = styled.div<{ background: string }>`
-  background-image: ${(props) => `url(${props.background})`};
+const TvShowBackground = styled.div<{ $background: string }>`
+  background-image: ${(props) => `url(${props.$background})`};
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -470,7 +470,7 @@ const Profile = ({ content }: Content) => {
         <div>
           <TvShowProfileImagesWrapper>
             <TvShowBackground
-              background={
+              $background={
                 content.backdrop_path
                   ? `https://www.themoviedb.org/t/p/original${content.backdrop_path}`
                   : no_background
@@ -703,7 +703,7 @@ const WatchProvider = (props: any) => {
 const SimilarComponent: React.FC<Content> = ({ similar }) => {
   return (
     <div>
-      {similar && (
+      {similar && similar[0] && (
         <DefaultComponent>
           <SectionTitle>Similar</SectionTitle>
           <SimilarContent>

@@ -142,6 +142,7 @@ const LeftBarWrapper = styled.div`
   margin-bottom: 5px;
   padding: 5px;
   flex: 1;
+  display: flex;
 `;
 
 const RightBarWrapper = styled.div`
@@ -156,8 +157,8 @@ const MovieProfileImagesWrapper = styled.div`
   align-items: center;
 `;
 
-const MovieBackground = styled.div<{ background: string }>`
-  background-image: ${(props) => `url(${props.background})`};
+const MovieBackground = styled.div<{ $background: string }>`
+  background-image: ${(props) => `url(${props.$background}) `};
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -232,7 +233,9 @@ const MovieTagline = styled.div`
   font-style: italic;
 `;
 
-const MovieInformationWrapper = styled.div``;
+const MovieInformationWrapper = styled.div`
+  height: 100%;
+`;
 
 const Synopsis = styled.div`
   width: 100%;
@@ -248,6 +251,7 @@ const InformationWrapper = styled.div`
   border-radius: 10px;
   background-color: ${COLORS.PAGE_WHITE};
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+  height: 100%;
 `;
 
 const Information = styled.div`
@@ -465,7 +469,7 @@ const Profile = ({ content }: Content) => {
         <div>
           <MovieProfileImagesWrapper>
             <MovieBackground
-              background={
+              $background={
                 content.backdrop_path
                   ? `https://www.themoviedb.org/t/p/original${content.backdrop_path}`
                   : no_background

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Navigation from "./Navigation";
 import { COLORS } from "../Styled";
 import { FooterComponent } from "./FooterComponent";
+const logo = require("../assets/logo.png");
 
 const Wrapper = styled.div`
   display: flex;
@@ -16,82 +17,80 @@ const LoginContainer = styled.div`
   align-items: center;
   justify-content: center;
   flex: 1;
-  margin: 10px;
   @media (max-width: 768px) {
     margin: 50px 10px;
   }
 `;
 
 const LoginWrapper = styled.div`
-  padding: 20px;
-  justify-content: space-around;
-  background-color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
-  border-radius: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: ${COLORS.PAGE_WHITE};
+  justify-content: space-around;
   a {
-    color: ${COLORS.PAGE_WHITE};
+    color: #0047ab;
     &:hover {
       opacity: 0.8;
     }
   }
-  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-  @media (min-width: 1200px) {
-    height: 600px;
-    width: 600px;
+  img {
+    width: 50px;
   }
   @media (max-width: 768px) {
+    border: none;
     height: 600px;
   }
   @media (min-width: 768px) and (max-width: 1199px) {
     width: 500px;
     height: 600px;
   }
+  @media (min-width: 1200px) {
+    height: 600px;
+    width: 600px;
+  }
 `;
 
 const LoginForm = styled.form`
   display: flex;
   flex-direction: column;
-  max-width: 300px;
+  max-width: 400px;
   width: 100%;
-  gap: 15px;
+  span {
+    color: ${COLORS.SECTION_COLOR};
+  }
 `;
 
 const Input = styled.input`
   border: none;
-  border: 1px solid gray;
+  border: 1px solid ${COLORS.SECTION_COLOR};
+  outline: none;
   padding: 15px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 10px 0px;
+  &:focus {
+    border: 2px solid #0047ab;
+  }
 `;
 
 const Button = styled.button`
+  background-color: #0047ab;
+  color: ${COLORS.PAGE_WHITE};
   padding: 10px;
-  background-color: ${COLORS.PAGE_WHITE};
-  color: ${COLORS.NAVIGATION_FOOTER_BACKGROUND_COLOR};
+  border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
   border: none;
-  border-radius: 10px;
-  font-weight: bold;
   &:hover {
     opacity: 0.8;
   }
 `;
 
-const Welcome = styled.p`
-  font-size: 1.8rem;
-  font-weight: bold;
-  padding: 10px;
-`;
-
 const LoginAccount = styled.p`
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
   padding: 10px;
+  text-align: center;
 `;
 
 const ContentWrapper = styled.div`
@@ -113,8 +112,8 @@ function SignUp() {
       <Navigation></Navigation>
       <LoginContainer>
         <LoginWrapper>
+          <img src={logo} alt="logo"></img>
           <ContentWrapper>
-            <Welcome>WELCOME!</Welcome>
             <LoginAccount>Create your account</LoginAccount>
           </ContentWrapper>
           <LoginForm>
@@ -130,7 +129,7 @@ function SignUp() {
           </LoginForm>
           <ContentWrapper>
             <p>Already have an account?</p>
-            <a href="/login">Sign In</a>
+            <a href="/login">Login to your account</a>
           </ContentWrapper>
         </LoginWrapper>
       </LoginContainer>

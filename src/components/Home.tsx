@@ -11,7 +11,6 @@ const no_poster = require("../assets/no_poster.jpg");
 type Work = {
   title: string;
   name: string;
-  overview: string;
   poster_path: string;
   id: number;
 };
@@ -123,39 +122,10 @@ const CardTitle = styled(Link)`
   text-align: center;
 `;
 
-const MediaSectionCard = (props: any) => {
-  return (
-    <div>
-      <MediaSectionTitle>
-        <Title>{props.title}</Title>
-        <ViewMore to={props.to}>View More</ViewMore>
-      </MediaSectionTitle>
-      <CardInformationWrapper>
-        {props.content.slice(0, 6).map((work: Work, index: number) => (
-          <CardInformation key={index}>
-            <CardPoster>
-              <img
-                src={
-                  work.poster_path
-                    ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
-                    : no_poster
-                }
-                alt={work.name ? work.name : work.title}
-              ></img>
-            </CardPoster>
-            <CardTitle to={`/${props.type}/${work.id}`}>
-              {work.name ? work.name : work.title}
-            </CardTitle>
-          </CardInformation>
-        ))}
-      </CardInformationWrapper>
-    </div>
-  );
-};
-
 const TopRatedSection = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  width: 100%;
   gap: 20px;
   max-width: 1400px;
   margin: auto;
@@ -194,12 +164,12 @@ const TopRatedContent = styled.div`
   margin: 10px 10px 10px 0px;
   border-radius: 10px;
   padding: 10px;
-  color: ${COLORS.RED};
+  color: ${COLORS.SECTION_COLOR};
 `;
 
 const TopRatedName = styled(Link)`
   text-decoration: none;
-  color: ${COLORS.RED};
+  color: ${COLORS.LINK_COLOR};
   &:hover {
     text-decoration: underline;
     opacity: 0.8;
@@ -212,6 +182,36 @@ const TopNumber = styled.span`
   font-weight: bold;
 `;
 
+const MediaSectionCard = (props: any) => {
+  return (
+    <div>
+      <MediaSectionTitle>
+        <Title>{props.title}</Title>
+        <ViewMore to={props.to}>View More</ViewMore>
+      </MediaSectionTitle>
+      <CardInformationWrapper>
+        {props.content.slice(0, 6).map((work: Work, index: number) => (
+          <CardInformation key={index}>
+            <CardPoster>
+              <img
+                src={
+                  work.poster_path
+                    ? `https://www.themoviedb.org/t/p/original${work.poster_path}`
+                    : no_poster
+                }
+                alt={work.name ? work.name : work.title}
+              ></img>
+            </CardPoster>
+            <CardTitle to={`/${props.type}/${work.id}`}>
+              {work.name ? work.name : work.title}
+            </CardTitle>
+          </CardInformation>
+        ))}
+      </CardInformationWrapper>
+    </div>
+  );
+};
+
 const TopRated = (props: any) => {
   return (
     <TopRatedWrapper>
@@ -219,7 +219,7 @@ const TopRated = (props: any) => {
         <Title>{props.title}</Title>
         <ViewMore to={props.to}>View More</ViewMore>
       </TopRatedTitleWrapper>
-      {props.content.slice(0, 6).map((work: Work, index: number) => (
+      {props.content.slice(0, 5).map((work: Work, index: number) => (
         <TopRatedContent key={index}>
           <TopNumber>{index + 1}</TopNumber>
           <TopRatedName to={`${props.type}/${work.id}`}>
