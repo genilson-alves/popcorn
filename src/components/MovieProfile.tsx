@@ -234,7 +234,17 @@ const MovieTagline = styled.div`
 `;
 
 const MovieInformationWrapper = styled.div`
-  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const MovieInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 `;
 
 const Synopsis = styled.div`
@@ -247,11 +257,11 @@ const Synopsis = styled.div`
 
 const InformationWrapper = styled.div`
   width: 100%;
+  height: 100%;
   padding: 10px;
   border-radius: 10px;
   background-color: ${COLORS.PAGE_WHITE};
   box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-  height: 100%;
 `;
 
 const Information = styled.div`
@@ -419,8 +429,10 @@ const SimilarContent = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  overflow: scroll;
   padding: 5px 0px;
+  @media (max-width: 768px) {
+    overflow: scroll;
+  }
 `;
 
 const SimilarContentWrapper = styled.div`
@@ -514,7 +526,7 @@ const Profile = ({ content }: Content) => {
 
 const LeftBar: React.FC<Content> = ({ content, provider }) => {
   return (
-    <div>
+    <>
       {content && (
         <MovieInformationWrapper>
           <DefaultComponent>
@@ -523,7 +535,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               <p>{content.overview ? content.overview : "No Information"}</p>
             </Synopsis>
           </DefaultComponent>
-          <DefaultComponent>
+          <MovieInformation>
             <SectionTitle>Information</SectionTitle>
             <InformationWrapper>
               <Information>
@@ -570,7 +582,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               <Information>
                 <span>Score</span>
                 <p>
-                  {content.vote_average === 0 || !content.vote_average
+                  {content.vote_average
                     ? content.vote_average.toFixed(1).replace(".", "")
                     : "No Information"}
                 </p>
@@ -665,10 +677,10 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
                 )}
               </Information>
             </InformationWrapper>
-          </DefaultComponent>
+          </MovieInformation>
         </MovieInformationWrapper>
       )}
-    </div>
+    </>
   );
 };
 
@@ -740,7 +752,7 @@ const Collection: React.FC<Content> = ({ content, collection }) => {
 const SimilarComponent: React.FC<Content> = ({ similar }) => {
   return (
     <div>
-      {similar && (
+      {similar && similar[0] && (
         <DefaultComponent>
           <SectionTitle>Similar</SectionTitle>
           <SimilarContent>

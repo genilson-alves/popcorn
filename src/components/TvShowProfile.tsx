@@ -147,6 +147,7 @@ const LeftBarWrapper = styled.div`
   margin-bottom: 5px;
   padding: 5px;
   flex: 1;
+  display: flex;
 `;
 
 const RightBarWrapper = styled.div`
@@ -237,7 +238,19 @@ const TvShowTagline = styled.div`
   font-style: italic;
 `;
 
-const TvShowInformationWrapper = styled.div``;
+const TvShowInformationWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+const TvShowInformation = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+`;
 
 const Synopsis = styled.div`
   width: 100%;
@@ -249,6 +262,7 @@ const Synopsis = styled.div`
 
 const InformationWrapper = styled.div`
   width: 100%;
+  height: 100%;
   padding: 10px;
   border-radius: 10px;
   background-color: ${COLORS.PAGE_WHITE};
@@ -310,8 +324,10 @@ const SimilarContent = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 10px;
-  overflow: scroll;
   padding: 5px 0px;
+  @media (max-width: 768px) {
+    overflow: scroll;
+  }
 `;
 
 const SimilarContentWrapper = styled.div`
@@ -331,8 +347,6 @@ const SimilarContentWrapper = styled.div`
       width: 150px;
       height: 250px;
     }
-  }
-  @media (min-width: 768px) and (max-width: 1199px) {
   }
 `;
 
@@ -515,7 +529,7 @@ const Profile = ({ content }: Content) => {
 
 const LeftBar: React.FC<Content> = ({ content, provider }) => {
   return (
-    <div>
+    <>
       {content && (
         <TvShowInformationWrapper>
           <DefaultComponent>
@@ -524,7 +538,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               <p>{content.overview ? content.overview : "No Information"}</p>
             </Synopsis>
           </DefaultComponent>
-          <DefaultComponent>
+          <TvShowInformation>
             <SectionTitle>Information</SectionTitle>
             <InformationWrapper>
               <Information>
@@ -585,7 +599,7 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
               <Information>
                 <span>Score</span>
                 <p>
-                  {content.vote_average === 0 || !content.vote_average
+                  {content.vote_average
                     ? content.vote_average.toFixed(1).replace(".", "")
                     : "No Information"}
                 </p>
@@ -674,10 +688,10 @@ const LeftBar: React.FC<Content> = ({ content, provider }) => {
                 )}
               </Information>
             </InformationWrapper>
-          </DefaultComponent>
+          </TvShowInformation>
         </TvShowInformationWrapper>
       )}
-    </div>
+    </>
   );
 };
 
@@ -764,9 +778,11 @@ const Seasons: React.FC<Content> = ({ content }) => {
                   <div>
                     <span>Score</span>
                     <p>
-                      {content.vote_average === 0 || !content.vote_average
-                        ? season.vote_average
-                        : "No Information"}
+                      <p>
+                        {content.vote_average
+                          ? content.vote_average.toFixed(1).replace(".", "")
+                          : "No Information"}
+                      </p>
                     </p>
                   </div>
                   <div>
