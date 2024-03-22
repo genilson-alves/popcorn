@@ -2,7 +2,7 @@
 
 Popcorn is a website that allows users to discover new Movies and TV Shows, while providing detailed information about their favorite works. The site offers data such as budget, revenue, seasons, number of episodes, release date, score, and more.
 
-Status: In progress
+Status: Complete
 
 ## Features
 
